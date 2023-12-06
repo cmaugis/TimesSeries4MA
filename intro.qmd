@@ -1,0 +1,204 @@
+# Introduction {#sec-introduction}
+
+::: {.content-hidden unless-format="html"}
+$$
+\newcommand\N{{\mathbb{N}}}
+\newcommand\Z{{\mathbb{Z}}}
+\newcommand\R{{\mathbb{R}}}
+$$
+:::
+
+::: {.content-hidden unless-format="pdf"}
+```{=latex}
+\newcommand\N{{\mathbb{N}}}
+\newcommand\Z{{\mathbb{Z}}}
+\newcommand\R{{\mathbb{R}}}
+```
+:::
+
+<!------------------------------>
+
+```{r}
+#| echo: false
+#| message: false
+library(caschrono)
+library(forecast)
+library(ggplot2)
+library(gridExtra)
+library(fpp3)
+library(cowplot)
+```
+
+L'objectif de ce cours est de donner les bases pour modéliser l'évolution dans le temps, ici supposé discret, d'un phénomène aléatoire. On parle de **série temporelle**.
+
+Nous allons ici donner quelques exemples de séries temporelles pour fixer les idées et introduire les questions qui peuvent être adressées autour de l'étude des séries temporelles. 
+
+## Quelques exemples de séries temporelles
+
+Les séries temporelles sont présentes dans de nombreux domaines d'applications. On donne ici quelques exemples illustratifs.
+
+::: {#exm-pop .example}
+On peut par exemple s'intéresser à l'évolution de la taille d'une population. La @fig-demogr représente la population (en million d'habitants) en France entre 1846 à 1951 (à gauche) et aux USA entre 1790 et 1990 (à droite). Ces deux séries temporelles n'ont pas la même tendance générale.
+
+```{r}
+#| echo: false
+#| message: false
+#| label: fig-demogr 
+#| fig-height: 3.5
+#| fig-cap: Taille de la population en France (à gauche) et aux USA (à droite). 
+
+# Population française de 1846 à 1951
+data(popfr)
+g1<-autoplot(popfr)+xlab("Année")+ylab("Nb d'habitants (en million)")
+
+# Population USA entre 1790 et 1990
+data(uspop)
+g2<-autoplot(uspop)+xlab("Année")+ylab("Nb d'habitants (en million)")
+grid.arrange(g1,g2,ncol=2)
+```
+:::
+
+<br>
+
+::: {#exm-lynx .example}
+On donne ici un exemple bien connu en écologie. La @fig-lynx représente le nombre de fourrures de lièvres (Hare) et de lynx échangées à la Compagnie de la Baie d'Hudson de 1845 à 1935. On constate la présence de cycles des populations de lynx (le prédateur) et du lièvre (sa proie). Ce jeu de données est disponible dans la librairie `fpp3` sous le nom de `pelt`.
+
+```{r}
+#| echo: false
+#| message: false
+#| label: fig-lynx
+#| fig-height: 3.5
+#| fig-cap: Nombre de fourrures échangées de lièvres et de lynx à la Compagnie de la Baie d'Hudson de 1845 à 1935.
+
+data("pelt")
+autoplot(pelt, vars(Hare, Lynx)) +
+labs(x = "Année", y = "Nb de fourrures")
+```
+:::
+
+<br>
+
+::: {#exm-seaice .example}
+On peut aussi donner un exemple en climatologie. La @fig-seaice représente l'évolution de la surface de la glace dans l'Artique de 1972 à 2018. On peut observer sur cette série temporelle une périodicité et une tendance à décroitre.
+
+```{=html}
+<!--
+@[pmarchand](https://pmarchand1.github.io/ECL8202/notes_cours/11-Series_temporelles.pdf)
+-->
+```
+```{r}
+#| echo: false
+#| fig-height: 5
+#| message: false
+#| warning: false
+#| label: fig-seaice
+#| fig-cap: Evolution de la surface de la glace dans l'Artique.
+
+ice <- read.table("sea-ice.txt")
+colnames(ice) <- c("year", "month", "day", "ice_km2")
+ice <- mutate(ice, date = make_date(year, month, day),
+ice_Mkm2 = ice_km2 / 1E6) %>%
+select(-year, -month, -day, -ice_km2)
+ice <- as_tsibble(ice, index = date)
+ice <- index_by(ice, month = yearmonth(date)) %>%
+summarize(ice_Mkm2 = mean(ice_Mkm2))
+g1<-autoplot(ice)+xlab("")
+g2<-gg_season(ice)+xlab("")+
+  theme(axis.text.x = element_text(angle = 90))
+g3<-ggmonthplot(ts(ice$ice_Mkm2,start=c(1980,1),frequency = 12))+
+  xlab("")+ylab("ice_Mkm2")
+#grid.arrange(g1,g2,g3,ncol=2)
+
+ggdraw()+
+  draw_plot(g1,0,0.5,0.5,0.5)+
+  draw_plot(g2,0.5,0.5,0.5,0.5)+
+  draw_plot(g3,0,0,1,0.5)
+
+#d'autres codes dans le pdf page 6
+```
+:::
+
+<br>
+
+::: {#exm-AirP .example}
+Comme dernier exemple, on s'intéresse à la célèbre série temporelle *AirPassengers* donnant le nombre mensuel (en milliers) de passagers des lignes aériennes entre les années 1949 et 1960 (à gauche de la @fig-AirP). On peut observer une périodicité dans la série temporelle et une croissance exponentielle avec une augmentation de la variabilité. On peut transformer cette dernière série en considérant le logarithme népérien du nombre de passagers aériens (à droite de la @fig-AirP).
+
+```{r}
+#| echo: false
+#| fig-height: 3.5
+#| label: fig-AirP
+#| fig-cap: Nombre de passagers (en milliers) ayant emprunté les lignes aériennes de 1949 à 1960. 
+#Nombre mensuel de passagers (en milliers) entre les années 1949 et 1960 dans les lignes aériennes.
+g1<-autoplot(AirPassengers)+xlab("")
+
+#Logarithme du nombre mensuel de passagers (en milliers) entre les années 1949 et 1960 dans les lignes aériennes.
+g2<-autoplot(log(AirPassengers))+xlab("")
+
+grid.arrange(g1,g2,ncol=2)
+```
+:::
+
+<br>
+
+Les exemples de séries temporelles ne manquent pas. On pourrait encore citer l'évolution de la température sur une période donnée, la concentration en polluants au cours du temps, le cours d'une action en finance, la consommation en électricité, l'évolution des recherches d'un mot sur internet, l'électrocardiogramme d'une personne en médecine, ....
+
+Dans la suite de ce cours, on suppose que la séries observée est une réalisation d'une suite de variables aléatoires. Il faut bien noter que **l'ordre est important** puisque l'on étudie un phénomène au cours du temps.
+
+On note $Y_t$ la valeur du phénomène au temps $t\in T$ où $T$ est l'espace de **temps discret** (souvent $T=\N$ voire $\Z$). Le processus $(Y_t)_{t\in T}$ est alors appelé **série temporelle**.
+
+## Quelles questions autour de l'étude d'une série temporelle ?
+
+Nous sommes tout d'abord confronter au problème de la **modélisation** d'une série temporelle. On va chercher à ajuster un modèle qui décrit "au mieux" le comportement de la série temporelle. Ceci va nécessiter d'estimer les paramètres pour ajuster le modèle, tester son adéquation à la série temporelle étudiée, voire faire de la sélection de modèle entre plusieurs modèles en compétition.
+
+Il est important de noter que l'on ne recherche pas un ajustement exact aux données. L'objectif est d'extraire la structure générale du signal et d'éliminer le bruit. On va en particulier chercher à déceler la présence d'une tendance, d'une saisonnalité dans les données.
+
+Si l'on reprend la série temporelle du nombre de passagers aériens (voir @exm-AirP), on peut estimer une saisonnalité et en déduire la série corrigée des variations saisonnières (voir @fig-AirPCV). On reviendra plus tard sur cette notion.
+
+```{r}
+#| echo: False
+#| fig-height: 6
+#| label: fig-AirPCV
+#| fig-cap: Série corrigée des variations saisonnières de la série temporelle AirPassengers (logtransformée).
+
+# Série AirPassengers corrigée des variations saisonnières.
+
+
+t=1:144
+for (i in 1:12)
+{
+su=rep(0,times=12)
+su[i]=1
+s=rep(su,times=12)
+assign(paste("s",i,sep=""),s)
+}
+y=log(AirPassengers)
+reg=lm(y~t+s1+s2+s3+s4+s5+s6+s7+s8+s9+s10+s11+s12-1)
+a=mean(reg$coefficients[2:13])
+b=reg$coefficients[1]
+c=reg$coefficients[2:13]-mean(reg$coefficients[2:13])
+y_cvs=y-(c[1]*s1+c[2]*s2+c[3]*s3+c[4]*s4+c[5]*s5+c[6]*s6+c[7]*s7+c[8]*s8+c[9]*s9+c[10]*s10+c[11]*s11+c[12]*s12)
+x_cvs=exp(y_cvs)
+
+autoplot(log(AirPassengers),series="Y")+
+  forecast::autolayer(ts(y_cvs,start=c(1949,1),frequency=12),series="Ycvs")+
+  theme(legend.position = "bottom",legend.title= element_blank())  
+  
+#ts.plot(AirPassengers,x_cvs,xlab="t",ylab="Airpass",col=c(1,2),lwd=c(1,2))
+#legend("topleft",legend=c("X","X_CVS"),col=c(1,2),lwd=c(1,2))
+#Aux<-cbind(AirPassengers,x_cvs)
+#Aux<-cbind(y,y_cvs)
+#colnames(Aux)<-c("Y","Ycvs")
+#autoplot(ts(Aux,start=c(1949,1),frequency=12),facet=FALSE)+ylab("log(AirPAssengers)")+ theme(legend.position = "bottom",legend.title= element_blank())  
+```
+
+Après l'analyse et la modélisation d'une série temporelle, on est souvent intéressé par la **prévision** des futures valeurs de la série. Par exemple, on peut chercher à prédire la température dans les jours à venir, la concentration en ozone, ... Plus formellement, à partir des $n$ premiers instants $Y_1,\ldots,Y_n$ de la série, on souhaite prévoir la valeur suivante $Y_{n+1}$ ou plus éloignée dans le temps $Y\_{n+h}$. Un exemple de prévision sur l'année suivante de la série temporelle AirPassengers est données en @fig-AirPPrev. On devra s'intéresser alors à l'erreur de prédiction, à la taille des intervalles de prédiction, ...
+
+```{r}
+#| echo: False
+#| fig-height: 4
+#| fig-cap: Prévision sur l'année suivante pour la série AirPassengers avec intervalle de prédiction. 
+#| label: fig-AirPPrev
+hw=ets(AirPassengers,model="MMM")
+hw.pred=predict(hw,12)
+autoplot(hw.pred)+ggtitle("")+xlab("")
+```

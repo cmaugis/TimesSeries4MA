@@ -1,0 +1,40 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Introduction aux séries temporelles"
+  output-file: "book-TimesSeries"
+  author: "Cathy Maugis-Rabusseau"
+  date: last-modified
+  date-format: "[Last Updated on] MMMM, YYYY"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - chap1.qmd
+    - chap2.qmd
+    - chap3.qmd
+    - chap4.qmd
+    - references.qmd
+  sidebar:
+    style: docked
+  cover-image: insa.jpg
+
+bibliography: biblioSeriesTemp.bib
+
+
+
+format:
+  html:
+    theme: cosmo
+    css: style.css
+    
+  pdf:
+    documentclass: scrreprt
+ 
+editor: visual
+
+
+
+
+

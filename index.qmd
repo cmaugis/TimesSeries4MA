@@ -1,0 +1,17 @@
+# Préface {.unnumbered}
+
+Ce polycopié a été rédigé dans le cadre de l'UF de Processus Stochastiques de 4ème année, spécialité Mathématiques Appliquées de l'INSA Toulouse.
+
+*Je tiens tout particulièrement à remercier Jean-Yves DAUXOIS qui a accepté de partager ses sources de cours pour mes premiers pas dans l'enseignement des séries temporelles !*
+
+::: {.content-hidden unless-format="html"}
+$$
+\newcommand\mcy{{\mathcal{y}}}
+$$
+:::
+
+::: {.content-hidden unless-format="pdf"}
+```{=latex}
+\newcommand\mcy{{\mathcal{y}}}
+```
+:::
