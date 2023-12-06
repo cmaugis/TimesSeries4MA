@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction aux séries temporelles - 4&nbsp; Statistique des processus stationnaires du second ordre</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chap4.html" rel="next">
+<link href="./chap2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap3.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistique des processus stationnaires du second ordre</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction aux séries temporelles</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tendances et saisonnalités</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modélisation aléatoire des séries temporelles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistique des processus stationnaires du second ordre</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Les modèles ARMA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#quelques-estimateurs" id="toc-quelques-estimateurs" class="nav-link active" data-scroll-target="#quelques-estimateurs"><span class="header-section-number">4.1</span> Quelques estimateurs</a>
+  <ul class="collapse">
+  <li><a href="#estimateur-de-la-moyenne-du-processus-stationnaire" id="toc-estimateur-de-la-moyenne-du-processus-stationnaire" class="nav-link" data-scroll-target="#estimateur-de-la-moyenne-du-processus-stationnaire"><span class="header-section-number">4.1.1</span> Estimateur de la moyenne du processus stationnaire</a></li>
+  <li><a href="#estimateur-de-la-fonction-dauto-covariance--corrélation" id="toc-estimateur-de-la-fonction-dauto-covariance--corrélation" class="nav-link" data-scroll-target="#estimateur-de-la-fonction-dauto-covariance--corrélation"><span class="header-section-number">4.1.2</span> Estimateur de la fonction d’auto-covariance / -corrélation</a></li>
+  <li><a href="#estimateur-de-la-matrice-dauto-covariance--corrélation" id="toc-estimateur-de-la-matrice-dauto-covariance--corrélation" class="nav-link" data-scroll-target="#estimateur-de-la-matrice-dauto-covariance--corrélation"><span class="header-section-number">4.1.3</span> Estimateur de la matrice d’auto-covariance / -corrélation</a></li>
+  <li><a href="#estimateur-de-la-densité-spectrale" id="toc-estimateur-de-la-densité-spectrale" class="nav-link" data-scroll-target="#estimateur-de-la-densité-spectrale"><span class="header-section-number">4.1.4</span> Estimateur de la densité spectrale</a></li>
+  </ul></li>
+  <li><a href="#prévision-linéaire-optimale" id="toc-prévision-linéaire-optimale" class="nav-link" data-scroll-target="#prévision-linéaire-optimale"><span class="header-section-number">4.2</span> Prévision linéaire optimale</a>
+  <ul class="collapse">
+  <li><a href="#espaces-linéaires-engendrés-par-un-processus-du-second-ordre" id="toc-espaces-linéaires-engendrés-par-un-processus-du-second-ordre" class="nav-link" data-scroll-target="#espaces-linéaires-engendrés-par-un-processus-du-second-ordre"><span class="header-section-number">4.2.1</span> Espaces linéaires engendrés par un processus du second ordre</a></li>
+  <li><a href="#régression-linéaire" id="toc-régression-linéaire" class="nav-link" data-scroll-target="#régression-linéaire"><span class="header-section-number">4.2.2</span> Régression linéaire</a></li>
+  <li><a href="#prévision-linéaire-optimale-1" id="toc-prévision-linéaire-optimale-1" class="nav-link" data-scroll-target="#prévision-linéaire-optimale-1"><span class="header-section-number">4.2.3</span> Prévision linéaire optimale</a></li>
+  <li><a href="#prévision-linéaire-optimale-dans-le-cas-dun-passé-fini" id="toc-prévision-linéaire-optimale-dans-le-cas-dun-passé-fini" class="nav-link" data-scroll-target="#prévision-linéaire-optimale-dans-le-cas-dun-passé-fini"><span class="header-section-number">4.2.4</span> Prévision linéaire optimale dans le cas d’un passé fini</a></li>
+  <li><a href="#evolution-des-prévisions-linéaires-optimales-en-fonction-de-la-taille-de-la-mémoire" id="toc-evolution-des-prévisions-linéaires-optimales-en-fonction-de-la-taille-de-la-mémoire" class="nav-link" data-scroll-target="#evolution-des-prévisions-linéaires-optimales-en-fonction-de-la-taille-de-la-mémoire"><span class="header-section-number">4.2.5</span> Evolution des prévisions linéaires optimales en fonction de la taille de la mémoire</a></li>
+  </ul></li>
+  <li><a href="#autocorrélations-partielles" id="toc-autocorrélations-partielles" class="nav-link" data-scroll-target="#autocorrélations-partielles"><span class="header-section-number">4.3</span> Autocorrélations partielles</a></li>
+  <li><a href="#tests-de-blancheur-dun-processus" id="toc-tests-de-blancheur-dun-processus" class="nav-link" data-scroll-target="#tests-de-blancheur-dun-processus"><span class="header-section-number">4.4</span> Tests de blancheur d’un processus</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chap3" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistique des processus stationnaires du second ordre</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><span class="math display">\[
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\C}{\text{Cov}}
+\newcommand{\V}{\mathrm{Var}}
+\newcommand{\EL}{\text{EL}}
+\newcommand{\H}{\mathcal H}
+\]</span></p>
+<!----------------------------------->
+<p>Dans ce chapitre, nous abordons quemques points d’inférence statistique dans le cadre de l’étude des séries temporelles. Nous allons nous intéresser à la construction d’estimateurs pour la moyenne, la fonction d’autocovariance, la fonction d’autocorrélation et la densité spectrale d’un processus stationnaire. Nous aborderons ensuite la problématique de la prévision des valeurs futures d’une série temporelle. Enfin, nous verrons quelques tests statistiques qui permettent de se prononcer sur la stationnarité d’un processus.</p>
+<p>Dans tout ce chapitre, nous supposons que l’on observe le processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> sur les instants <span class="math inline">\(t=1,\ldots,n\)</span>.</p>
+<section id="quelques-estimateurs" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="quelques-estimateurs"><span class="header-section-number">4.1</span> Quelques estimateurs</h2>
+<section id="estimateur-de-la-moyenne-du-processus-stationnaire" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="estimateur-de-la-moyenne-du-processus-stationnaire"><span class="header-section-number">4.1.1</span> Estimateur de la moyenne du processus stationnaire</h3>
+<p>Rappelons que la fonction moyenne <span class="math inline">\(\mu_X\)</span> est constante pour un processus stationnaire. Ainsi, on l’estime facilement par la moyenne empirique</p>
+<p><span class="math display">\[
+\hat \mu_X=\bar X_n=\frac{1}{n} \sum_{t=1}^n X_t.
+\]</span></p>
+<p>Cet estimateur est sans biais et <span class="math inline">\(L^2\)</span>-consistant d’après le théorème suivant.</p>
+<div id="thm-estmoy" class="theoreme theorem">
+<p><span class="theorem-title"><strong>Theorem 4.1 </strong></span>Si <span class="math inline">\((X_t)_{t\in \Z}\)</span> est un processus stationnaire de moyenne <span class="math inline">\(\mu_X\)</span> et de fonction d’autocovariance <span class="math inline">\(\gamma_X(\cdot)\)</span> alors :</p>
+<ul>
+<li><p>si <span class="math inline">\(\gamma_X(h)\underset{h\to +\infty}{\longrightarrow} 0\)</span> alors <span class="math inline">\(\V (\bar X_n)\underset{n\to+\infty}{\longrightarrow} 0\)</span></p></li>
+<li><p>si de plus <span class="math inline">\(\underset{h\in \Z}{\sum}\ |\gamma_X(h)|&lt;+\infty\)</span> alors <span class="math display">\[
+n \V(\bar X_n)\underset{n\to+\infty}{\longrightarrow} \sum_{h\in \Z}\gamma_X(h)= 2\pi f_X(0)
+\]</span></p></li>
+</ul>
+</div>
+<p><br></p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On peut écrire <span class="math display">\[\begin{eqnarray*}
+n \V(\bar X_n)
+&amp;=&amp; \C\left(\frac{1}{n} \sum_{i=1}^n X_i, \frac{1}{n} \sum_{j=1}^n X_j\right)\\
+&amp;=&amp;\frac{1}{n}\sum_{i,j=1}^n \C(X_i,X_j)\\
+&amp;=&amp;\frac{1}{n}\sum_{i,j=1}^n \gamma_X(i-j)\\
+&amp;=&amp;\frac{1}{n}\sum_{h:|h|&lt;n} (n-|h|)\gamma_X(h)\\
+&amp;=&amp;\sum_{h:|h|&lt;n} \left(1-\frac{|h|}{n}\right)\gamma_X(h)\\
+&amp;\leq&amp;\sum_{h:|h|&lt;n} | \gamma_X(h)|= |\gamma_X(0)|+2\sum_{h=1}^n |\gamma_X(h)|.
+\end{eqnarray*}\]</span></p>
+<p>Par le théorème de Césaro, on sait que l’on a la convergence de la moyenne de Césaro <span class="math display">\[
+\lim_{n \to +\infty}\frac{1}{n}\sum_{h=1}^n |\gamma_X(h)|=\lim_{h\to\infty}|\gamma_X(h)|,
+\]</span> dès lors que cette dernière limite existe. Donc comme par hypothèse <span class="math inline">\(\gamma_X(h)\underset{h\to +\infty}{\longrightarrow} 0\)</span>, on obtient que <span class="math inline">\(\V (\bar X_n)\underset{n\to+\infty}{\longrightarrow} 0\)</span>.</p>
+<p>Maintenant, sous l’hypothèse<br>
+<span class="math display">\[
+\sum_{h\in \Z}|\gamma_X(h)|&lt;+\infty,
+\]</span> on peut appliquer le théorème de convergence dominée pour inverser limite et somme et obtenir <span class="math display">\[\begin{eqnarray*}
+\lim_{n \to +\infty}n \V(\bar X_n)
+&amp;=&amp;\lim_{n \to +\infty}\sum_{h:|h|&lt;n} \left(1-\frac{|h|}{n}\right)\gamma_X(h)\\
+&amp;=&amp;\lim_{n \to +\infty}\sum_{h\in\Z} \left(1-\frac{|h|}{n}\right)\gamma_X(h)\mathbb{1}_{|h|&lt;n}\\
+&amp;=&amp;\sum_{h\in \Z} \gamma_X(h),
+\end{eqnarray*}\]</span> car <span class="math inline">\(g_n(h):=\left(1-\frac{|h|}{n}\right)\gamma_X(h)\mathbb{1}_{|h|&lt;n}\underset{n\to +\infty}{\longrightarrow}\gamma_X(h)\)</span>.<br>
+Enfin, par définition de la densité spectrale, <span class="math inline">\(\sum_{h\in \Z}\gamma_X(h) = 2 \pi f_X(0)\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Le premier résultat prouve la convergence dans <span class="math inline">\(L^2\)</span> de l’estimateur vers la moyenne <span class="math inline">\(\mu_X\)</span> du processus. Le second donne la variance asymptotique de l’estimateur normalisé.</p>
+<p>Sous des hypothèses supplémentaires, on peut obtenir le comportement asymptotique gaussien de <span class="math inline">\(\bar X_n\)</span>.</p>
+<div id="prp-cvestmoy" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.1 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus stationnaire défini, pour tout <span class="math inline">\(t\in \Z\)</span>, par <span class="math display">\[
+X_t=\mu_X+\sum_{j\in \Z}\psi_j \varepsilon_{t-j}
+\]</span> où <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> est un <span class="math inline">\(\text{bbF}(0,\sigma^2)\)</span> tel que <span class="math inline">\(\E[\varepsilon_t^4]&lt;+\infty\)</span> et où la suite des coefficients <span class="math inline">\((\psi_j)_{j\in \Z}\)</span> est sommable et de somme non nulle <span class="math display">\[
+\sum_{j\in \Z}|\psi_j | &lt;+\infty \text{ et }\sum_{j\in \Z}\psi_j \neq 0.
+\]</span></p>
+<p>On a alors <span class="math display">\[
+\sqrt n \left( \bar X_n -\mu_X\right)\underset{n \to +\infty}{\overset{\mathcal L}{\longrightarrow}} \mathcal N\left(0,\sum_{h\in \Z}\gamma_X(h)\right).
+\]</span></p>
+</div>
+</section>
+<section id="estimateur-de-la-fonction-dauto-covariance--corrélation" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="estimateur-de-la-fonction-dauto-covariance--corrélation"><span class="header-section-number">4.1.2</span> Estimateur de la fonction d’auto-covariance / -corrélation</h3>
+<p>On rappelle que la fonction d’autocovariance est définie par <span class="math display">\[
+\forall h\in\Z,\ \gamma_X(h) = \C(X_t,X_{t+h}) = \E\left[(X_t - \E[X_t])(X_{t+h} - \E[X_{t+h}])\right].
+\]</span> Donc à partir de <span class="math inline">\(X_1,\ldots,X_n\)</span>, on peut estimer, pour les valeurs de <span class="math inline">\(h\)</span> telles que <span class="math inline">\(|h|&lt;n-1\)</span>, l’autocovariance <span class="math inline">\(\gamma_X(h)\)</span> par <span class="math display">\[
+\left\{\begin{array}{l l}
+    \hat \gamma_{X,n}(h)=\displaystyle\frac{1}{n}\underset{t=1}{\stackrel{n-h}{\sum}}\left(X_{t+h} -\bar X_n \right)\left(X_{t} -\bar X_n \right) &amp; \textrm{ si } h\geq0\\
+    \\
+    \hat \gamma_{X,n}(h)=\hat \gamma_{X,n}(-h) &amp; \textrm{ si } h&lt;0
+\end{array}\right.
+\]</span></p>
+<div id="prp-estcovconsistant" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.2 </strong></span>L’estimateur <span class="math inline">\(\hat \gamma_{X,n}(h)\)</span> est asymptotiquement sans biais et consistant pour <span class="math inline">\(\gamma_X(h)\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Remarque">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En pratique, on utilise cet estimateur pour <span class="math inline">\(h\leq \frac n 4\)</span>.</p>
+</div>
+</div>
+<!--
+Si $(X_t)_{t\in\Z}\sim\text{bbF}(0,\sigma^2)$, on peut rendre cet estimateur sans biais en remplaçant le coefficient de normalisation $\frac 1 n$ par $\frac{1}{n-(|h|+1)}$.
+-->
+<p>A partir de l’estimateur de la fonction covariance, on en déduit l’estimateur suivant pour la fonction d’autocorrélation : Pour tout <span class="math inline">\(|h|&lt;n-1\)</span>, <span class="math display">\[
+\hat \rho_{X,n}(h)=\frac{\hat \gamma_{X,n}(h)}{\hat\gamma_{X,n}(0)} = \displaystyle\frac{\underset{t=1}{\stackrel{n-|h|}{\sum}}\left(X_t -\bar X_n \right)\left( X_{t+|h|} -\bar X_n \right)}{\underset{t=1}{\stackrel{n}{\sum}} \left(X_t-\bar X_n\right)^2}.
+\]</span></p>
+<div id="prp-estcorrconsistant" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.3 </strong></span>L’estimateur <span class="math inline">\(\hat \rho_{X,n}(h)\)</span> est consistant.</p>
+<p>En pratique on estime <span class="math inline">\(\rho_X(h)\)</span> pour <span class="math inline">\(h \leq \frac n 4\)</span>.</p>
+</div>
+<p>On a de plus le comportement asymptotique suivant :</p>
+<div id="prp-estrho" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.4 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus stationnaire défini par <span class="math inline">\(X_t=\mu_X+\underset{j\in \Z}{\sum}\psi_j \varepsilon_{t-j}\)</span> où <span class="math inline">\((\varepsilon_t)_{t\in \Z}\sim\text{bbF}(0,\sigma^2)\)</span> tel que <span class="math inline">\(\E[\varepsilon_t^4]&lt;+\infty\)</span> et où la suite des coefficients <span class="math inline">\((\psi_j)_{j\in \Z}\)</span> est sommable (<span class="math inline">\(\underset{j\in \Z}{\sum}|\psi_j|&lt;+\infty\)</span> et de somme non nulle (<span class="math inline">\(\underset{j\in \Z}{\sum}\psi_j\neq 0\)</span>).</p>
+<p>On a alors, pour tout <span class="math inline">\(k&gt;0\)</span> fixé, <span class="math display">\[
+\sqrt n \left(
+\begin{array}{c}
+\hat \rho_{X,n}(1) - \rho_X(1)   \\
+  \vdots   \\
+\hat \rho_{X,n}(k) - \rho_X(k)
+\end{array}
+\right)\underset{n\to +\infty}{\overset{\mathcal L}{\longrightarrow}}\mathcal{N}\left(0,\Sigma^{[k]}\right),
+\]</span> où <span class="math inline">\(\Sigma^{[k]}=\left(\Sigma_{ij}^{[k]}\right)_{1\leq i,j\leq k}\)</span> est la matrice de covariance asymptotique déterminée par <span class="math display">\[
+\Sigma_{ij}^{[k]}
+=\sum_{h\in \Z}\left\{\left(\rho_X(h+i)+\rho_X(h-i)-2\rho_X(i)\rho_X(h)\right) \times  \left( \rho_X(h+j)+\rho_X(h-j)-2\rho_X(j)\rho_X(h)\right)\right\}
+\]</span> (formule de Bartlett).</p>
+</div>
+</section>
+<section id="estimateur-de-la-matrice-dauto-covariance--corrélation" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="estimateur-de-la-matrice-dauto-covariance--corrélation"><span class="header-section-number">4.1.3</span> Estimateur de la matrice d’auto-covariance / -corrélation</h3>
+<p>On s’intéresse maintenant à l’estimation des matrices d’autocovariance et d’autocorrélation.</p>
+<div id="def-estmatcov" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1 </strong></span>La matrice <span class="math display">\[
+\hat \Gamma_{X,n} := \left(
+\begin{array}{c c c c}
+\hat \gamma_{X,n}(0)&amp; \hat \gamma_{X,n}(1) &amp; \ldots &amp; \hat \gamma_{X,n}(n-1)\\
+\hat \gamma_{X,n}(1)&amp; \hat \gamma_{X,n}(0) &amp; \ldots &amp; \hat \gamma_{X,n}(n-2)\\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+\hat \gamma_{X,n}(n-1)&amp; \hat \gamma_{X,n}(n-2) &amp; \ldots &amp; \hat \gamma_{X,n}(0)
+\end{array}
+\right)
+\]</span></p>
+<p>est un estimateur de la matrice d’autocovariance.</p>
+<p>La matrice <span class="math inline">\(\hat R_{X,n} = \frac{\hat\Gamma_{X,n}}{\hat \gamma_{X,n}(0)}\)</span> est un estimateur de la matrice d’autocorrélation <span class="math inline">\(R_{X,n}\)</span>.</p>
+</div>
+<p><br></p>
+<div id="prp-estmatcorsemidef" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.5 </strong></span>Les matrices <span class="math inline">\(\hat \Gamma_{X,n}\)</span> et <span class="math inline">\(\hat R_{X,n}\)</span> sont des matrices semi-définies positives.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On commence par remarquer que l’on peut écrire <span class="math inline">\(\hat \Gamma_{X,n}= \frac 1 n T T'\)</span> avec <span class="math display">\[
+T=\left(
+\begin{array}{l l l l l l l l l l l l}
+0 &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots &amp; 0 &amp; Y_1 &amp; Y_2 &amp; 0 &amp; \ldots &amp; 0 &amp; Y_n\\
+0 &amp; \ldots &amp; \ldots &amp; \ldots &amp; 0 &amp; Y_1 &amp; Y_2 &amp; 0 &amp; \ldots &amp; \ldots &amp; Y_n &amp; 0\\
+\vdots &amp; &amp; &amp; &amp; &amp; &amp; \vdots &amp; &amp; &amp; &amp; &amp; \vdots\\
+0 &amp; Y_1 &amp; Y_2 &amp; 0 &amp; \ldots &amp; 0 &amp; Y_n &amp; 0 &amp; \ldots &amp; \ldots &amp; \ldots &amp; 0
+\end{array}
+\right)\in\mathcal{M}_{n\times 2 n}(\R)
+\]</span> et <span class="math inline">\(Y_t = X_t - \bar X_n\)</span>, <span class="math inline">\(t\in\{1,\ldots,n\}\)</span>. Alors <span class="math inline">\(\forall a\in\R^n\)</span>, <span class="math inline">\(a' \hat \Gamma_{X,n} a = \frac 1 n (a'T)(a'T)'\geq 0\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="estimateur-de-la-densité-spectrale" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="estimateur-de-la-densité-spectrale"><span class="header-section-number">4.1.4</span> Estimateur de la densité spectrale</h3>
+<p>Soit <span class="math inline">\((X_t)_{t\in\Z}\)</span> un processus stationnaire de moyenne <span class="math inline">\(\mu_X\)</span> et de fonction d’autocovariance <span class="math inline">\(\gamma_X(.)\)</span> telle que <span class="math inline">\(\underset{h\in\Z}{\sum}|\gamma_X(h)|&lt;+\infty\)</span></p>
+<p>Sous ces hypothèses, on a vu (voir <a href="chap2.html#def-denspect">Definition&nbsp;<span>3.20</span></a> et <a href="chap2.html#prp-existdenspect">Proposition&nbsp;<span>3.6</span></a>) que la densité spectrale existe et est définie par <span class="math display">\[
+f_X(\omega)= \frac{1}{2\pi} \underset{h\in\Z}{\sum}\gamma_X(h) e^{-ih \omega},\ \forall \omega\in\R
+\]</span></p>
+<p>Pour rappel, <span class="math inline">\(f_X(.)\)</span> est une fonction paire, <span class="math inline">\(2\pi\)</span>-périodique, continue, positive.</p>
+<p>Pour construire un estimateur de la densité spectrale, on commence par définir le périodogramme.</p>
+<div id="def-period" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.2 </strong></span>Le <strong>périodogramme</strong> associé à <span class="math inline">\((X_1,\ldots,X_n)\)</span> est défini par <span class="math display">\[
+I_n(\omega_j) = \frac 1 n \left|\underset{t=1}{\stackrel{n}{\sum}} X_t e^{-i t \omega_j} \right|^2,\ \forall\omega_j\in \Omega_n:= \left\{\omega_j=\frac{2\pi j}{n};\ \omega_j\in]-\pi,\pi]\right\}
+\]</span></p>
+</div>
+<p><br></p>
+<p>Nous allons maintenant relier le périodogramme et l’estimateur <span class="math inline">\(\hat \gamma_{X,n}\)</span>.</p>
+<div id="prp-Inhatgamma" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.6 </strong></span><span class="math display">\[
+\left\{\begin{array}{l l }
+I_n(0) = n |\bar X_n|^2 &amp; \\
+\\
+I_n(\omega_j) = \underset{|h|&lt;n}{\sum} \hat \gamma_{X,n}(h)e^{-ih\omega_j} &amp; \textrm{ si }\omega_j\in\Omega_n,\ \omega_j\neq 0
+\end{array}\right.
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><br></p>
+<ul>
+<li><p>Pour <span class="math inline">\(\omega_j=0\)</span> : <span class="math inline">\(I_n(0)=\frac 1 n \left|\underset{t=1}{\stackrel{n}{\sum}} X_t\right|^2 = n |\bar X_n|^2\)</span></p></li>
+<li><p>Soit <span class="math inline">\(\omega_j\neq 0\)</span>. On a <span class="math display">\[\begin{eqnarray*}
+I_n(\omega_j)
+&amp;=&amp; \frac 1 n \left|\underset{t=1}{\stackrel{n}{\sum}} X_t e^{-i t \omega_j} \right|^2 \\
+&amp;=&amp; \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} X_s X_t e^{-i t \omega_j} e^{i s \omega_j} \\
+&amp;=&amp; \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} (X_s-\bar X_n) (X_t-\bar X_n) e^{-i (t-s) \omega_j}\\
+&amp;+&amp; \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} \bar X_n X_t e^{-i (t-s) \omega_j}\\
+&amp;+&amp; \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} X_s\bar X_n e^{-i (t-s) \omega_j}\\
+&amp;-&amp; \frac 1 n (\bar X_n)^2 \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} e^{-i (t-s) \omega_j}\\
+\end{eqnarray*}\]</span></p></li>
+</ul>
+<p>Or <span class="math inline">\(\underset{s=1}{\stackrel{n}{\sum}} e^{i s \omega_j} = \underset{t=1}{\stackrel{n}{\sum}} e^{- i t \omega_j} =0\)</span> si <span class="math inline">\(\omega_j\neq 0\)</span>, donc les trois dernières sommes sont nulles. Ainsi</p>
+<span class="math display">\[\begin{eqnarray*}
+I_n(\omega_j)
+&amp;=&amp; \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} (X_s-\bar X_n) (X_t-\bar X_n) e^{-i (t-s) \omega_j}\\
+&amp;=&amp; \underset{|h|&lt;n}{\sum} \frac 1 n \underset{s=1}{\stackrel{n-|h|}{\sum}} (X_s-\bar X_n) (X_{s+h}-\bar X_n) e^{-i h \omega_j}\\
+&amp;=&amp; \underset{|h|&lt;n}{\sum} \hat \gamma_{X,n}(h) e^{-i h \omega_j}
+\end{eqnarray*}\]</span>
+</div>
+</div>
+</div>
+<p>On peut alors proposer naturellement d’estimer</p>
+<ul>
+<li><span class="math inline">\(f_X(\omega_j) = \frac{1}{2\pi} \underset{h\in\Z}{\sum} \gamma_X(h) e^{-h\omega_j}\)</span> par <span class="math inline">\(\hat f_X(\omega_j): =\frac{I_n(\omega_j)}{2\pi}\)</span> pour <span class="math inline">\(\omega_j\neq 0\)</span>.<br>
+</li>
+<li><span class="math inline">\(f_X(0)=\frac{1}{2\pi} \underset{h\in\Z}{\sum} \gamma_X(h)\)</span> par <span class="math inline">\(\hat f_X(0) = \frac{1}{2\pi} \underset{|h|&lt;n}{\sum} \hat \gamma_{X,n}(0)\)</span>.</li>
+</ul>
+<p>On cherche ensuite à étendre <span class="math inline">\(\hat f_X\)</span> à tout l’intervalle <span class="math inline">\([-\pi,\pi]\)</span> pour estimer <span class="math inline">\(f_X(.)\)</span> (qui est paire et <span class="math inline">\(2\pi\)</span>-périodique). On peut le faire en obtenant un estimateur <span class="math inline">\(\hat f_X(.)\)</span> contant par morceaux</p>
+<div class="definition">
+<p><span class="math display">\[
+\hat f_X(\omega)
+=\left\{\begin{array}{l l}
+\hat f_X(\omega_j) &amp; \textrm{ si } \omega_j-\frac{\pi}{n} &lt; \omega \leq \omega_j+\frac{\pi}{n}, \omega\in[0,\pi]\\
+\\
+\hat f_X(-\omega) &amp; \textrm{ si } \omega\in [-\pi,0[
+\end{array}\right.
+\]</span></p>
+</div>
+<p><br></p>
+<div id="prp-p1" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.7 </strong></span>Si <span class="math inline">\((X_t)_{t\in\Z}\)</span> est un processus stationnaire de moyenne <span class="math inline">\(\mu_X\)</span> et de fonction d’autocovariance <span class="math inline">\(\gamma_X(.)\)</span> telle que <span class="math inline">\(\underset{h\in\Z}{\sum}|\gamma_X(h)|&lt;+\infty\)</span>, alors</p>
+<ul>
+<li><span class="math inline">\(\E\left[I_n(0)\right] - n\mu_X^2 \underset{n\to +\infty}{\longrightarrow} 2\pi f_X(0)\)</span></li>
+<li><span class="math inline">\(\E\left[I_n(\omega)\right] \underset{n\to +\infty}{\longrightarrow} 2\pi f_X(\omega)\)</span> si <span class="math inline">\(\omega\neq 0\)</span></li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>A FAIRE - Peut-être écrire la proposition précédente par rapport à <span class="math inline">\(\hat f_X(.)\)</span></p>
+</div>
+</div>
+</div>
+<p>Une autre stratégie est d’utiliser un noyau sur les <span class="math inline">\(I_n(\omega_j)\)</span> pour construire un estimateur lissé.</p>
+<div class="definition">
+<p>Soit <span class="math inline">\((m_n)_n\)</span> une suite d’entiers positifs tels que <span class="math inline">\(m_n\underset{n\to +\infty}{\longrightarrow} +\infty\)</span> et <span class="math inline">\(\frac{m_n}{n}\underset{n\to +\infty}{\longrightarrow} 0\)</span>. Soit un noyau <span class="math inline">\(W_n(.)\)</span> tel que</p>
+<ul>
+<li><span class="math inline">\(W_n(-j)=W_n(j) \geq 0,\ \forall j\)</span></li>
+<li><span class="math inline">\(\underset{|j|\leq m_n}{\sum}W_n(j)=1\)</span></li>
+<li><span class="math inline">\(\underset{|j|\leq m_n}{\sum}W_n(j)^2\underset{n\to +\infty}{\longrightarrow}0\)</span></li>
+</ul>
+<p>Soit <span class="math inline">\(g(n,\omega)=\underset{\omega_k\in\Omega_n}{\mbox{argmin}} \left|\omega_k - \omega\right|\)</span></p>
+<p>Alors <span class="math display">\[
+\hat f_X(\omega) = \frac{1}{2\pi}\underset{|j|\leq m_n}{\sum}W_n(j)\ I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right)
+\]</span></p>
+</div>
+<p><br></p>
+<p>Par les hypothèses sur la suite <span class="math inline">\((M-n)_n\)</span> et le noyau <span class="math inline">\(W_n\)</span>, on a que cet estimateur lissé <span class="math inline">\(\hat f_X(.)\)</span> est asymptotiquement sans biais.</p>
+<div id="prp-p2" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.8 </strong></span><span class="math display">\[
+\forall \omega,\ \E\left[\hat f(\omega)\right] \underset{n\to +\infty}{\longrightarrow} f_X(\omega).
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>A FAIRE</p>
+</div>
+</div>
+</div>
+<div id="exm-MAestf" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 4.1 </strong></span>Soit le processus <span class="math inline">\((X_t)\_{t\in\Z}\)</span> défini par <span class="math inline">\(X_t = \varepsilon_t + 0.7 \varepsilon_{t-1},\ (\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,1)\)</span>.</p>
+<p>D’après <a href="chap2.html#exm-ACVFMA1">Example&nbsp;<span>3.4</span></a>, la fonction d’autocovariance de ce processus MA(1) vaut <span class="math display">\[
+\gamma_X(h)=\left\{
+\begin{array}{l l}
+(1+0.7^2) &amp; \textrm{ si } h=0\\
+0.7 &amp; \textrm{ si } |h|=1\\
+0 &amp; \textrm{ si } |h|&gt;1\\
+\end{array}
+\right.
+\]</span></p>
+<p>La densité spectrale de ce processus vaut alors <span class="math display">\[
+f_X(\omega) = \underset{h\in\Z}{\sum} \gamma_X(h) e^{-i \omega h} = 1+ (0.7)^2 + 2\times 0.7 \times\cos(\omega),\ \forall \omega\in\R
+\]</span></p>
+<p>Sur la <a href="#fig-exestf">Figure&nbsp;<span>4.1</span></a>, la densité spectrale du processus est représentée en rouge et deux estimateurs par lissage (obtenus pour deux paramètres différents de lissage de la fonction <code>smooth.periodogram</code>) en bleu et en magenta. Les points correspondent aux valeurs de <span class="math inline">\(2\pi I_n(\omega_j)\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exestf" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exestf-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.1: Illustration de l’estimation de la densité spectrale d’un processus MA(1)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="prévision-linéaire-optimale" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="prévision-linéaire-optimale"><span class="header-section-number">4.2</span> Prévision linéaire optimale</h2>
+<p>Un objectif important dans l’étude des séries temporelles est de pouvoir <strong>prédire les valeurs non encore observées</strong> de la série et cela à des horizons plus ou moins éloignés. Nous allons dans cette section introduire la méthode de prévision la plus courammennt utilisée appelée <strong>la prévision linéaire optimale.</strong> Cette méthode s’appuie sur la propriété d’espace de Hilbert de <span class="math inline">\(L^2(\Omega,\mathcal{A},P)\)</span>.</p>
+<section id="espaces-linéaires-engendrés-par-un-processus-du-second-ordre" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="espaces-linéaires-engendrés-par-un-processus-du-second-ordre"><span class="header-section-number">4.2.1</span> Espaces linéaires engendrés par un processus du second ordre</h3>
+<div id="def-espvectferme" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.3 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span>, un processus du second ordre. On appelle <span style="color:blue;"><strong>espace vectoriel fermé engendré</strong></span> par une famille <span class="math inline">\((X_t)_{t\in I}\)</span>, où <span class="math inline">\(I \subset \Z\)</span>, le plus petit sous-espace vectoriel fermé de <span class="math inline">\(L^2 (\Omega,\mathcal A,P)\)</span> qui contient tous les <span class="math inline">\(X_t\)</span> pour <span class="math inline">\(t\in I\)</span>. On le note <span class="math inline">\(\overline{\text{Vect}}(X_t,t\in I)\)</span>.</p>
+</div>
+<p><br></p>
+<div id="prp-p3" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.9 </strong></span>Le sous-espace vectoriel fermé engendré par une famille <strong>finie</strong> <span class="math inline">\((X_t)_{t\in I}\)</span>, où <span class="math inline">\(I \subset \Z\)</span>, est l’ensemble de toutes les combinaisons linéaires, i.e.&nbsp;l’ensemble des v.a. <span class="math inline">\(Y\)</span> de la forme <span class="math inline">\(Y=\sum_{i\in I}\alpha_i X_i\)</span>.</p>
+</div>
+<div id="def-proj" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.4 </strong></span>Soit l’espace vectoriel fermé engendré par une famille finie <span class="math inline">\((X_t)_{t\in I}\)</span> de v.a. de <span class="math inline">\(L^2 (\Omega,\mathcal A,P)\)</span>, où <span class="math inline">\(I\subset\Z\)</span> fini : <span class="math inline">\(\mathcal H=\overline{\text{Vect}}(X_t,t\in I)\)</span>.</p>
+<p>La <span style="color:blue;"><strong>projection orthogonale</strong></span> d’une v.a. <span class="math inline">\(X\)</span> sur <span class="math inline">\(\mathcal H\)</span> est l’unique élément</p>
+<p><span class="math display">\[
+\hat X=P_{\mathcal H} X=\sum_{i\in I}\alpha_i X_i
+\textrm{ tel que }
+\langle X-\hat X,Z\rangle_{L^2}=0,\ \ \forall Z\in \mathcal H.
+\]</span> On a que <span class="math inline">\(\langle \hat X,X_i\rangle_{L^2}=\langle X,X_i\rangle_{L^2}, \text{ pour tout } i\in I.\)</span></p>
+</div>
+<p><br></p>
+<p>Dans la suite, on note</p>
+<ul>
+<li><span class="math inline">\(\mathcal H^n_1=\overline{\text{Vect}}(1,X_1,\ldots, X_n)\)</span></li>
+<li><span class="math inline">\(\mathcal H^n_{-\infty}=\overline{\text{Vect}}(1,X_t, t\leq n)\)</span>.</li>
+</ul>
+</section>
+<section id="régression-linéaire" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="régression-linéaire"><span class="header-section-number">4.2.2</span> Régression linéaire</h3>
+<p>Pour prédire <span class="math inline">\(X_{n+1}\)</span> (ou <span class="math inline">\(X_{n+h}\)</span>) à partir de l’observation des <span class="math inline">\(X_1,\ldots,X_n\)</span>, on pourrait s’appuyer sur la projection dans <span class="math inline">\(L^2\)</span> de <span class="math inline">\(X_{n+1}\)</span> (ou <span class="math inline">\(X_{n+h}\)</span>) sur le sous-espace vectoriel fermé des fonctions <span class="math inline">\(\sigma(X_1,\ldots,X_n)\)</span>-mesurables <span class="math display">\[\begin{eqnarray*}
+\hat X&amp;=&amp;\E[X|\sigma(X_1,\ldots,X_n)]\\
+    &amp;=&amp;P_{\mathcal M(X_1,\ldots,X_n)}(X)\\
+    &amp;=&amp;\mbox{arg inf}_{Y\in  \mathcal M(X_1,\ldots,X_n)}||X-Y||_{L^2}
+\end{eqnarray*}\]</span> où <span class="math inline">\(\mathcal M(X_1,\ldots,X_n)=\left\{g(X_1,\ldots,X_n); g \text{ fonction borélienne de } \R^n \text{ vers } \R\right\}\)</span> et <span class="math inline">\(\sigma(X_1,\ldots,X_n)\)</span> est la tribu engendrée par les v.a. <span class="math inline">\(X_1,\ldots,X_n\)</span>.</p>
+<p>Mais une telle espérance conditionnelle est souvent difficilement calculable. Aussi l’idée est de se restreindre à un espace plus simple, inclus dans <span class="math inline">\(\mathcal M(X_1,\ldots,X_n)\)</span> pour lequel l’espérance conditionnelle est accessible. On va donc ici se restreindre à projeter sur l’espace vectoriel fermé <span class="math inline">\(\mathcal H^n_1: =\overline{\text{Vect}}(1,X_1,\ldots, X_n) \subset \mathcal M(X_1,\ldots,X_n)\)</span>. Ainsi on cherche une v.a. <span class="math inline">\(\hat X\)</span> comme une combinaison linéaire des v.a. <span class="math inline">\(1,X_1,\ldots, X_n\)</span> plutôt qu’une fonction mesurable quelconque de ces variables.</p>
+<div id="def-reglin" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.5 </strong></span>On appelle <span style="color:blue;"><strong>régression linéaire</strong></span> d’une v.a. <span class="math inline">\(Y\)</span> de <span class="math inline">\(L^2(\Omega,\mathcal A,P)\)</span> sur <span class="math inline">\(\mathcal H^n_1=\overline{\text{Vect}}(1,X_1,\ldots, X_n),\)</span> la projection orthogonale, au sens de la norme <span class="math inline">\(L^2\)</span>, de <span class="math inline">\(Y\)</span> sur cet espace. On la note <span class="math inline">\(\EL(Y|\mathcal H^n_1)\)</span>.</p>
+</div>
+<p><br></p>
+<div id="prp-caractproj" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.10 (Caractérisation) </strong></span><br></p>
+<p>Soit <span class="math inline">\(Y\)</span> dans <span class="math inline">\(L^2(\Omega,\mathcal A,P)\)</span>. La régression linéaire <span class="math inline">\(\hat Y=\EL(Y|\mathcal H^n_1)\)</span> est la v.a. <span class="math display">\[\hat Y= \alpha_0 +\sum_{t=1}^n \alpha_t X_t\]</span> telle que <span class="math inline">\(\E[\hat Y]=\E[Y]\)</span> et <span class="math inline">\(\E[\hat Y X_t]=\E[Y X_t]\)</span> pour <span class="math inline">\(t=1,\ldots,n\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Pour la preuve, il suffit de traduire que <span class="math inline">\(Y-\hat Y\)</span> est orthogonal à <span class="math inline">\(1,X_1,\ldots,X_n\)</span> donc<br>
+<span class="math display">\[\begin{eqnarray*}
+\langle Y-\hat Y,1\rangle_{L^2}=\E[(Y-\hat Y) 1] = 0 &amp;\Leftrightarrow &amp; \E[Y]=\E[\hat Y]\\
+\langle Y-\hat Y,X_t\rangle_{L^2}= \E[(Y-\hat Y)X_t]=0
+&amp;\Leftrightarrow &amp; \E[Y X_t]=\E[\hat Y X_t]\ \text{ pour }t=1,\ldots,n
+\end{eqnarray*}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="prévision-linéaire-optimale-1" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="prévision-linéaire-optimale-1"><span class="header-section-number">4.2.3</span> Prévision linéaire optimale</h3>
+<div id="def-EL" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.6 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un série temporelle stationnaire. La <span style="color:blue;"><strong>prévision linéaire optimale</strong></span> de <span class="math inline">\(X_{n+1}\)</span> sachant son passé observé est</p>
+<ul>
+<li><span class="math inline">\(\hat X_{n+1}=\EL(X_{n+1}|\mathcal H^n_1)\)</span> dans le cas d’un passé fini</li>
+<li><span class="math inline">\(\hat X_{n+1}=\EL(X_{n+1}|\mathcal H^n_{-\infty})\)</span> dans le cas d’un passé infini</li>
+</ul>
+</div>
+<p><br></p>
+<div id="def-innov" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.7 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> une série temporelle stationnaire et, pour tout <span class="math inline">\(t\in\Z\)</span>, la prévision linéaire optimale <span class="math inline">\(\hat X_t=\EL(X_t|\mathcal H^{t-1}_{-\infty})\)</span> de <span class="math inline">\(X_t\)</span> sachant le passé (infini) du processus.</p>
+<p>On appelle <span style="color:blue;"><strong>processus des innovations</strong></span> le processus <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> des erreurs de prévision successives <span class="math display">\[
+\varepsilon_t=X_t-\hat X_t,\ \forall t\in\Z.
+\]</span></p>
+</div>
+<p><br></p>
+<div id="prp-innov" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.11 </strong></span>Le processus des innovations <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> est un bruit blanc.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><br></p>
+<ul>
+<li><p>Par définition de <span class="math inline">\(\H^{t-1}_{-\infty}\)</span> et de <span class="math inline">\(\hat X_t\)</span>, on a <span class="math display">\[
+\langle X_t-\hat X_t,1\rangle_{L^2}=0
+\]</span> donc <span class="math inline">\(\E[X_t]=\E[\hat X_t]\)</span>, ce qui prouve que le processus des innovations est centré.</p></li>
+<li><p>Soit <span class="math inline">\(h\in \N^*\)</span>. On a aussi <span class="math display">\[
+\C(\varepsilon_t,\varepsilon_{t+h}) = \E[\varepsilon_t\varepsilon_{t+h}]=\langle \varepsilon_t,\varepsilon_{t+h} \rangle.
+\]</span></p></li>
+</ul>
+<p>Or <span class="math inline">\(\varepsilon_{t+h} \perp \mathcal{H}_{-\infty}^{t+h-1}\)</span> et <span class="math inline">\(\varepsilon_t = X_t - \EL(X_t|\mathcal{H}_{-\infty}^{t-1}) \subset \mathcal{H}_{-\infty}^{t+h-1}\)</span>. Donc</p>
+<p><span class="math display">\[
+\C(\varepsilon_t,\varepsilon_{t+h}) =\langle \varepsilon_t,\varepsilon_{t+h} \rangle = 0.
+\]</span></p>
+<ul>
+<li>Montrons que la variance du processus des innovations est constante :</li>
+</ul>
+<p>Tout élément de <span class="math inline">\(\H^{t-1}_{-\infty}\)</span> s’écrit sous la forme <span class="math inline">\(\sum_{i=1}^{+\infty}\alpha_i X_{t-i}\)</span> donc <span class="math inline">\(\varepsilon_t = X_t - \sum_{i=1}^{+\infty}\alpha_i X_{t-i}\)</span>. Ainsi, <span class="math display">\[\begin{eqnarray*}
+\V(\varepsilon_t)
+&amp;=&amp;\V\left(X_t -\EL(X_t|\H^{t-1}_{-\infty})\right)\\
+&amp;=&amp;\V\left(X_t-\sum_{i=1}^{+\infty}\alpha_i X_{t-i}\right)\\
+&amp;=&amp;\V\left(-\sum_{i=0}^{+\infty}\alpha_i X_{t-i}\right)\ \ \ \text{ avec }\alpha_0=-1\\
+&amp;=&amp;\sum_{i=0}^{+\infty}\sum_{j=0}^{+\infty}\alpha_i \alpha_j \C(X_{t-i},X_{t-j})\\
+&amp;=&amp;\sum_{i=0}^{+\infty}\sum_{j=0}^{+\infty}\alpha_i \alpha_j \gamma_X(i-j)
+\end{eqnarray*}\]</span> donc la variance est constante.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="prévision-linéaire-optimale-dans-le-cas-dun-passé-fini" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="prévision-linéaire-optimale-dans-le-cas-dun-passé-fini"><span class="header-section-number">4.2.4</span> Prévision linéaire optimale dans le cas d’un passé fini</h3>
+<p>On se place ici dans le cas particulier où l’on observe qu’un passé fini <span class="math inline">\(X_1,\ldots,X_n\)</span> et on souhaite prédire des valeurs futures.</p>
+<div id="prp-ELO" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.12 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un série temporelle stationnaire de moyenne <span class="math inline">\(\mu_X\)</span> et d’ACVF <span class="math inline">\(\gamma_X(\cdot)\)</span>. La <strong>prévision linéaire optimale</strong> de <span class="math inline">\(X_{n+h}\)</span>, pour <span class="math inline">\(h\in \N^*\)</span>, ayant observé le passé <span class="math inline">\(X_1,\ldots,X_n\)</span>, est <span class="math display">\[
+\hat X_{n}(h)=\hat X_{n +h}=\alpha_0 +\sum_{t=1}^n \alpha_t X_t,
+\]</span></p>
+<p>où les coefficients <span class="math inline">\(\alpha_0,\ldots,\alpha_n\)</span> sont donnés par <span class="math display">\[
+\left(
+\begin{array}{c}
+  \alpha_1  \\
+  \vdots  \\
+  \alpha_n  
+\end{array}
+\right)=\Gamma_{X,n}^{-1}\left(
+\begin{array}{c}
+  \gamma_X(n+h-1) \\
+  \vdots  \\
+  \gamma_X(h)   
+\end{array}
+\right)
+\]</span> avec la matrice de covariance du vecteur <span class="math inline">\((X_1,\ldots,X_n)\)</span>, supposée inversible, <span class="math display">\[
+\Gamma_{X,n}=
+\left(
+\begin{array}{cccc}
+\gamma_X(0)   &amp; \gamma_X(1)  &amp; \cdots &amp; \gamma_X(n-1)  \\
+\gamma_X(1)  &amp;\gamma_X(0)   &amp; \ddots &amp;\gamma_X(n-2)  \\
+\vdots  &amp;  \ddots &amp;   \ddots &amp;\vdots\\
+\gamma_X(n-1) &amp;\cdots&amp;\gamma_X(1)&amp; \gamma_X(0)
+\end{array}
+\right)
+\]</span> et <span class="math display">\[
+\mu_X=\alpha_0+\mu_X\sum_{t=1}^n \alpha_t.
+\]</span></p>
+</div>
+<p>Notons que si le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> est centré, alors le premier coefficient <span class="math inline">\(\alpha_0\)</span> est nul et <span class="math display">\[
+\hat X_{n}(h)=\hat X_{n +h}=\sum_{t=1}^n \alpha_t X_t.
+\]</span></p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Par définition de la prévision linéaire optimale et grâce à la <a href="#prp-caractproj">Proposition&nbsp;<span>4.10</span></a>, on a que <span class="math display">\[\begin{eqnarray*}
+\E[\hat X_{n}(h)]=\E[X_{n +h}]
+&amp;\Leftrightarrow &amp; \E\left[\alpha_0 +\sum_{t=1}^n \alpha_t X_t\right] = \E[X_{n+h}]\\
+&amp;\Leftrightarrow &amp; \alpha_0+\mu_X\sum_{t=1}^n \alpha_t=\mu_X
+\end{eqnarray*}\]</span> car le processus <span class="math inline">\((X_t)_{t\in\Z}\)</span> est stationnaire. De plus, pour tout <span class="math inline">\(i=1,\ldots, n\)</span>, <span class="math inline">\(\E[X_{n +h}X_i]=\E[\hat X_{n}(h)X_i]\)</span> se réécrit <span class="math display">\[
+\E[X_{n +h}X_i] = \alpha_0\E[X_i]+\sum_{t=1}^n\alpha_t\E[X_tX_i].
+\]</span> On a ainsi, pour tout <span class="math inline">\(i=1,\ldots, n\)</span>, <span class="math display">\[\begin{eqnarray*}
+\E[X_{n +h}X_i]-\E[X_{n +h}]\E[X_i]
+&amp;=&amp;\alpha_0\E[X_i]+\sum_{t=1}^n\alpha_t\E[X_tX_i]-\mu_X\E[X_i]\\
+&amp;=&amp;\alpha_0\E[X_i]+\sum_{t=1}^n\alpha_t\E[X_tX_i]-\E[X_i]\left\{\alpha_0+\sum_{t=1}^n \alpha_t \mu_X\right\}\\
+&amp;=&amp;\sum_{t=1}^n\alpha_t\left( \E[X_tX_i] -\mu_X^2 \right)=\sum_{t=1}^n\alpha_t \C(X_t,X_i).
+\end{eqnarray*}\]</span> On a donc obtenu, pour tout <span class="math inline">\(i=1,\ldots, n\)</span>, <span class="math inline">\(\gamma_X(n+h-i)=\sum_{t=1}^n\alpha_t \gamma_X(t-i)\)</span>, ce qui donne l’équation matricielle <span class="math display">\[
+\left(
+\begin{array}{c}
+  \gamma_X(n+h-1) \\
+  \vdots  \\
+  \gamma_X(h)   
+\end{array}
+\right)
+=\Gamma_{X,n}
+\left(
+\begin{array}{c}
+  \alpha_1  \\
+  \vdots  \\
+  \alpha_n  
+\end{array}
+\right).
+\]</span> L’hypothèse d’inversibilité de la matrice <span class="math inline">\(\Gamma_{X,n}\)</span> permet d’obtenir l’équation donnée dans la proposition.</p>
+</div>
+</div>
+</div>
+<div id="exm-AR" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 4.2 (Processus autorégressif d’ordre 1 AR(1)) </strong></span><br> Soit <span class="math inline">\(X_t=\phi X_{t-1}+\varepsilon_t,\ \forall t\in \mathbb Z,\)</span> où <span class="math inline">\((\varepsilon_t)\sim \text{WN}(0,\sigma^2)\)</span> et <span class="math inline">\(0&lt;|\phi|&lt;1\)</span>. On rappelle que les <span class="math inline">\(\varepsilon_t\)</span> sont indépendants du passé de la série temporelle et <span class="math inline">\(\gamma_X(h)=\phi^{|h|}\gamma_X(0),\ \forall h\in \Z\)</span>.</p>
+<p>La prévision linéaire optimale de <span class="math inline">\(X_{n+1}\)</span> sur la base des observations de <span class="math inline">\(X_1,\ldots,X_n\)</span> est de la forme <span class="math display">\[
+\hat X_{n}(1)=\hat X_{n+1}=\sum_{t=1}^n \alpha_t X_t,
+\]</span> avec <span class="math display">\[
+    \left(
+    \begin{array}{cccc}
+    1   &amp; \phi  &amp; \cdots &amp; \phi^{n-1}  \\
+    \phi &amp;1   &amp; \ddots &amp;\phi^{n-2}  \\
+    \vdots  &amp;  \ddots &amp;   \ddots &amp;\vdots\\
+    \phi^{n-1} &amp;\cdots&amp;\phi&amp; 1
+    \end{array}
+    \right)
+    \left(
+    \begin{array}{c}
+    \alpha_1  \\
+    \alpha_2 \\
+    \vdots  \\
+    \alpha_n
+    \end{array}
+    \right)=
+    \left(
+    \begin{array}{c}
+    \phi^n  \\
+    \phi^{n-1}   \\
+    \vdots  \\
+    \phi
+    \end{array}
+    \right).
+\]</span></p>
+<p>Comme <span class="math inline">\((\alpha_1,\ldots,\alpha_n)=(0,\ldots,0,\phi)\)</span> est une solution de cette équation et l’unicité de la projection orthogonale donne <span class="math display">\[
+\hat X_{n}(1)=\hat X_{n+1}=\phi X_n.
+\]</span></p>
+</div>
+</section>
+<section id="evolution-des-prévisions-linéaires-optimales-en-fonction-de-la-taille-de-la-mémoire" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="evolution-des-prévisions-linéaires-optimales-en-fonction-de-la-taille-de-la-mémoire"><span class="header-section-number">4.2.5</span> Evolution des prévisions linéaires optimales en fonction de la taille de la mémoire</h3>
+<p>Soit un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> tel que ses matrices d’autocorrélation <span class="math inline">\(R_X(h)\)</span> sont inversibles pour tout <span class="math inline">\(h\)</span> dans <span class="math inline">\(\N\)</span>. On s’intéresse ici à la prévision linéaire optimale de <span class="math inline">\(X_t\)</span> pour une taille de mémoire <span class="math inline">\(k\)</span>, c’est-à-dire en fonction de l’observation des v.a. <span class="math inline">\(X_{t-1},\ldots,X_{t-k}\)</span>.</p>
+<p>Sans perte de généralité, on suppose le processus est centré.</p>
+<p>D’après la <a href="#prp-ELO">Proposition&nbsp;<span>4.12</span></a>, on a vu comment obtenir les coefficients <span class="math inline">\(\alpha_1(k),\ldots, \alpha_k(k)\)</span> de la prévision linéaire optimale de <span class="math inline">\(X_t\)</span> en fonction du passé observé <span class="math inline">\(X_{t-1},\ldots,X_{t-k}\)</span> : <span class="math display">\[
+\EL(X_t|\mathcal H_{t-k}^{t-1})=\alpha_1(k)X_{t-1}+\cdots+\alpha_k(k)X_{t-k}
+\]</span><br>
+avec <span class="math display">\[
+    \left(
+    \begin{array}{c}
+    \alpha_1(k)  \\
+    \vdots  \\
+    \alpha_k(k)  
+    \end{array}
+    \right)=R_X(k)^{-1}\left(
+    \begin{array}{c}
+    \rho_X(1) \\
+    \vdots  \\
+    \rho_X(k)   
+    \end{array}
+    \right)
+\]</span></p>
+<p>Si on augmente la taille de la mémoire, il faut à chaque instant d’observation supplémentaire inverser la matrice de corrélation d’après l’expression précédente. Nous allons donc chercher une <strong>méthode itérative</strong> permettant de déterminer les nouveaux coefficients (avec une mémoire de taille <span class="math inline">\(k+1\)</span>) en fonction des anciens (avec une mémoire de taille <span class="math inline">\(k\)</span>). Pour cela, nous avons besoin de quelques lemmes techniques.</p>
+<div id="lem-lemma1" class="lemma theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 4.1 </strong></span>Les coefficients de la régression de <span class="math inline">\(X_t\)</span> sur le passé de taille de mémoire <span class="math inline">\(k\)</span> sont les mêmes que ceux de la régression de <span class="math inline">\(X_t\)</span> sur les <span class="math inline">\(k\)</span> prochaines variables du processus : <span class="math display">\[
+\EL(X_t|\mathcal H_{t-k}^{t-1})=\sum_{i=1}^k\alpha_i(k)X_{t-i}\implies \EL(X_t|\mathcal H_{t+1}^{t+k})=\sum_{i=1}^k\alpha_i(k)X_{t+i}
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On note <span class="math inline">\(\beta_1(k), \ldots,\beta_k(k)\)</span> les coefficients de la régression de <span class="math inline">\(X_t\)</span> sur <span class="math inline">\(\mathcal H_{t+1}^{t+k}\)</span> (engendré par les <span class="math inline">\(k\)</span> variables futures). Par le même raisonnement, ces coefficients vérifient <span class="math display">\[
+\left(
+\begin{array}{c}
+  \beta_1(k)  \\
+  \vdots  \\
+  \beta_k(k)  
+\end{array}
+\right)=R_X(k)^{-1}\left(
+\begin{array}{c}
+  \rho_X(-1) \\
+  \vdots  \\
+  \rho_X(-k)   
+\end{array}
+\right),
+\]</span> puisque la matrice de corrélation ne dépend que des écarts temporels. Par parité de la fonction d’autocorrélation, le vecteur des corrélations à droite n’est autre que le vecteur <span class="math inline">\((\rho_X(1),\ldots, \rho_X(k))\)</span>. Ainsi les <span class="math inline">\(\beta_i(k)\)</span> et les <span class="math inline">\(:alpha_i(k)\)</span> satisfont la même équation donc <span class="math inline">\(\alpha_i(k)=\beta_i(k)\)</span>, pour <span class="math inline">\(i=1,\ldots,k\)</span>.</p>
+</div>
+</div>
+</div>
+<div id="lem-lemma2" class="lemma theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 4.2 </strong></span>On a l’équation récursive suivante exprimant les coefficients pour une mémoire de taille <span class="math inline">\(k\)</span> en fonction de ceux d’une mémoire de taille <span class="math inline">\(k-1\)</span> <span class="math display">\[
+\alpha_i(k)=\alpha_i(k-1)-\alpha_k(k)\alpha_{k-i}(k-1),\ \forall i=1,\ldots, k-1.
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On commence par remarquer que <span class="math display">\[
+\mathcal H_{t-(k-1)}^{t-1} = \overline{\text{Vect}}(X_{t-(k-1)},\ldots,X_{t-1})
+\subset \overline{\text{Vect}}(X_{t-(k-1)},\ldots,X_{t}) =\mathcal H_{t-(k-1)}^{t}
+\]</span></p>
+<p>donc en terme de projection orthogonale, on a que</p>
+<p><span class="math display">\[
+P_{\H_{t-(k-1)}^{t-1}}(X_t)=P_{\H_{t-(k-1)}^{t-1}}\circ P_{\H_{t-k}^{t-1}} (X_t).
+\]</span> Ainsi, on a : <span class="math display">\[\begin{eqnarray*}
+\EL(X_t|\H_{t-(k-1)}^{t-1})&amp;=&amp;
+P_{\H_{t-(k-1)}^{t-1}}\left(\alpha_1(k)X_{t-1}+\cdots+\alpha_{k-1}(k)X_{t-(k-1)}+\alpha_k(k) x_{t-k}\right)\\
+&amp;=&amp;\alpha_1(k)X_{t-1}+\cdots+\alpha_{k-1}(k)X_{t-(k-1)}+\alpha_k(k)\EL(X_{t-k}|\H_{t-(k-1)}^{t-1}).
+\end{eqnarray*}\]</span> Mais on a aussi que <span class="math display">\[
+\EL(X_t|\H_{t-(k-1)}^{t-1})=\alpha_1(k-1)X_{t-1}+\cdots+\alpha_{k-1}(k-1)X_{t-(k-1)}.
+\]</span> Or d’après le <a href="#lem-lemma1">Lemma&nbsp;<span>4.1</span></a>, <span class="math display">\[\begin{eqnarray*}
+\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})
+&amp;=&amp; \EL(X_{t-k}|\H_{t-k+1}^{(t-k)+(k-1)})\\
+&amp;=&amp; \sum_{i=1}^{k-1} \alpha_i(k-1) X_{(t-k)+i}\\
+&amp;=&amp; \alpha_1(k-1)X_{t-k+1}+\alpha_2(k-1)X_{t-k+2}+\cdots+\alpha_{k-1}(k-1)X_{t-1}
+\end{eqnarray*}\]</span></p>
+<p>En rassemblant les expressions, on a <span class="math display">\[\begin{eqnarray*}
+&amp; &amp;\alpha_1(k-1)X_{t-1}+\cdots+\alpha_{k-1}(k-1)X_{t-(k-1)}\\
+&amp;=&amp; \alpha_1(k)X_{t-1}+\cdots+\alpha_{k-1}(k)X_{t-(k-1)}\\
+&amp; &amp; +\alpha_k(k) \left\{\alpha_1(k-1)X_{t-k+1}+\alpha_2(k-1)X_{t-k+2}+\cdots+\alpha_{k-1}(k-1)X_{t-1}\right\}
+\end{eqnarray*}\]</span> Donc <span class="math display">\[
+\left\{
+\begin{array}{l l l}
+\alpha_1(k-1) &amp;=&amp; \alpha_1(k)+\alpha_k(k)\alpha_{k-1}(k-1)\\
+\alpha_2(k-1) &amp;=&amp; \alpha_2(k)+\alpha_k(k)\alpha_{k-2}(k-1)\\
+&amp;\vdots&amp;\\
+\alpha_{k-1}(k-1) &amp;=&amp;\alpha_{k-1}(k)+\alpha_k(k)\alpha_{1}(k-1)
+\end{array}
+\right.
+\]</span></p>
+</div>
+</div>
+</div>
+<p>Du <a href="#lem-lemma2">Lemma&nbsp;<span>4.2</span></a>, on peut constater que l’on peut obtenir un algorithme récursif pour calculer les coefficients si l’on est capable d’exprimer le dernier terme <span class="math inline">\(\alpha_k(k)\)</span> en fonction des <span class="math inline">\(\alpha_i(k-1)\)</span>. C’est l’objectif du lemme suivant.</p>
+<div id="lem-lemma3" class="lemma theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 4.3 </strong></span>On a la relation <span class="math display">\[
+\alpha_k(k)=\displaystyle \frac{\rho_X(k)-\underset{i=1}{\stackrel{k-1}{\sum}} \alpha_i(k-1)\rho_X(k-i)}{1-\underset{i=1}{\stackrel{k-1}{\sum}}\alpha_i(k-1)\rho_X(i)}\ \forall k\geq 2
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On revient à l’équation matricielle : <span class="math display">\[\begin{eqnarray*}
+\left(
+\begin{array}{c}
+  \rho_X(1) \\
+  \vdots  \\
+  \rho_X(k)   
+\end{array}
+\right) &amp;= &amp; R_X(k)\left(
+\begin{array}{c}
+  \alpha_1(k)  \\
+  \vdots  \\
+  \alpha_k(k)  
+\end{array}
+\right)\\
+&amp;=&amp;\left(
+\begin{array}{cccc}
+1   &amp; \rho_X(1)  &amp; \cdots &amp; \rho_X(k-1)  \\
+\rho_X(1)  &amp;1  &amp; \ddots &amp;\rho_X(k-2)  \\
+\vdots  &amp;  \ddots &amp;   \ddots &amp;\vdots\\
+\rho_X(k-1) &amp;\cdots&amp;\rho_X(1)&amp; 1
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+  \alpha_1(k)  \\
+  \vdots  \\
+  \alpha_k(k)  
+\end{array}
+\right)
+\end{eqnarray*}\]</span></p>
+<p>La dernière ligne de ce produit matriciel nous donne l’équation suivante : <span class="math display">\[
+\rho_X(k)=\sum_{i=1}^{k-1}\rho_X(k- i)\alpha_i(k) + \alpha_k(k).
+\]</span> Donc, en utilisant le <a href="#lem-lemma2">Lemma&nbsp;<span>4.2</span></a>, <span class="math display">\[\begin{eqnarray*}
+\alpha_k(k)&amp;=&amp;\rho_X(k)-\sum_{i=1}^{k-1}\rho_X(k- i)\alpha_i(k)\\
+&amp;=&amp;\rho_X(k)-\sum_{i=1}^{k-1}\rho_X(k- i)\left( \alpha_i(k-1)-\alpha_k(k)\alpha_{k-i}(k-1)  \right)\\
+&amp;=&amp;\rho_X(k)-\sum_{i=1}^{k-1}\rho_X(k- i) \alpha_i(k-1)+\alpha_k(k)\sum_{i=1}^{k-1}\rho_X(k- i)\alpha_{k-i}(k-1)\\
+&amp;=&amp;\rho_X(k)-\sum_{i=1}^{k-1}\rho_X(k- i) \alpha_i(k-1)+\alpha_k(k)\sum_{u=1}^{k-1}\rho_X(u)\alpha_{u}(k-1)
+\end{eqnarray*}\]</span> ce qui, en isolant le terme <span class="math inline">\(\alpha_k(k)\)</span>, donne la formule voulue.</p>
+</div>
+</div>
+</div>
+<p>Avec le <a href="#lem-lemma2">Lemma&nbsp;<span>4.2</span></a> et le <a href="#lem-lemma3">Lemma&nbsp;<span>4.3</span></a>, on en déduit l’algorithme de Durbin-Levinson.</p>
+<div id="prp-AlgoDurbin" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.13 (Algorithme de Durbin-Levinson) </strong></span>Les coefficients de la régression linéaire <span class="math inline">\(\EL(X_t|\mathcal H_{t-k}^{t-1})\)</span> pour une mémoire de taille <span class="math inline">\(k\)</span> s’obtiennent en fonction de ceux de la régression linéaire <span class="math inline">\(\EL(X_t|\mathcal H_{t-(k-1)}^{t-1})\)</span> pour une mémoire de taille <span class="math inline">\(k-1\)</span> grâce aux formules récursives suivantes <span class="math display">\[
+\left\{
+\begin{array}{l l l}
+\alpha_i(k)&amp;=&amp;\alpha_i(k-1)-\alpha_k(k)\alpha_{k-i}(k-1),\\
+\\
+\alpha_k(k)&amp;=&amp;\displaystyle \frac{\rho_X(k)-\sum_{i=1}^{k-1}\alpha_i(k-1)\rho_X(k-i)}{1-\sum_{i=1}^{k-1}\alpha_i(k-1)\rho_X(i)},\ \forall k\geq 2\\
+\\
+\alpha_1(1)&amp;=&amp;\rho_X(1).
+\end{array}
+\right.
+\]</span></p>
+</div>
+</section>
+</section>
+<section id="autocorrélations-partielles" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="autocorrélations-partielles"><span class="header-section-number">4.3</span> Autocorrélations partielles</h2>
+<p>Comme nous avons pu le voir dans la section précédente, le coefficient <span class="math inline">\(\alpha_k(k)\)</span> devant <span class="math inline">\(X_{t-k}\)</span> dans la prévision linéaire optimale de <span class="math inline">\(X_t\)</span> en fonction du passé fini <span class="math inline">\(\mathcal H_{t-k}^{t-1}\)</span> de la série temporelle <span class="math inline">\((X_t)_{t\in \Z}\)</span> joue un rôle particulier. Ces coefficients <span class="math inline">\(\alpha_k(k)\)</span> sont appelés <strong>autocorrélations partielles</strong>. Ils vont être au coeur de cette section.</p>
+<div id="prp-p4" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.14 </strong></span>Le coefficient <span class="math inline">\(\alpha_k(k)\)</span> défini dans <span class="math display">\[
+\EL(X_t|\mathcal H_{t-k}^{t-1})=\alpha_1(k)X_{t-1}+\cdots+\alpha_k(k)X_{t-k}
+\]</span> correspond au <strong>coefficient de corrélation</strong> entre les variables <span class="math inline">\(X_t-\EL(X_t|\mathcal H_{t-(k-1)}^{t-1})\)</span> et <span class="math inline">\(X_{t-k}-\EL(X_{t-k}|\mathcal H_{t-(k-1)}^{t-1})\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Par définition de la prévision linéaire optimale, on a <span class="math display">\[
+\EL(X_t|\H_{t-k}^{t-1})=\sum_{i=1}^k \alpha_i(k) X_{t-i}.
+\]</span> On a vu précédemment au début de la preuve du <a href="#lem-lemma2">Lemma&nbsp;<span>4.2</span></a> l’égalité <span class="math display">\[
+\EL(X_t|\H_{t-k+1}^{t-1})=\sum_{i=1}^{k-1} \alpha_i(k)X_{t-i}+\alpha_k(k)\EL(X_{t-k}|\H_{t-(k-1)}^{t-1}).
+\]</span> De ces deux équations, on obtient <span class="math display">\[
+\EL(X_t|\H_{t-k}^{t-1})-\EL(X_t|\H_{t-(k-1)}^{t-1})=\alpha_k(k)\left[X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right].
+\]</span> On en déduit que <span class="math display">\[\begin{eqnarray*}
+&amp;&amp;\C\left(\EL(X_t|\H_{t-k}^{t-1})-\EL(X_t|\H_{t-(k-1)}^{t-1}), X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)\\
+&amp;&amp;=\alpha_k(k)\V \left(X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1}\right).
+\end{eqnarray*}\]</span></p>
+<p>Par ailleurs, <span class="math display">\[\begin{eqnarray*}
+&amp; &amp;\C\left(\EL(X_t|\H_{t-k}^{t-1})-\EL(X_t|\H_{t-(k-1)}^{t-1}), X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)\\
+&amp;=&amp;\C\left(X_t-\EL(X_t|\H_{t-(k-1)}^{t-1})-
+(X_t- \EL(X_t|\H_{t-k}^{t-1})),X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)\\
+&amp;=&amp;\C\left(X_t-\EL(X_t|\H_{t-(k-1)}^{t-1}),X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)\\
+&amp;&amp;-\C\left(X_t- \EL(X_t|\H_{t-k}^{t-1}),X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)\\
+&amp;=&amp;\C\left(X_t-\EL(X_t|\H_{t-(k-1)}^{t-1}),X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right) -0,
+\end{eqnarray*}\]</span> car la seconde covariance est nulle puisque l’on a <span class="math inline">\(X_t- \EL(X_t|\H_{t-k}^{t-1})\perp \H_{t-k}^{t-1}\)</span> et <span class="math inline">\(X_{t-k}-\EL(X_{t-k}|\H_{t-k+1}^{t-1}) \in \H_{t-k}^{t-1}\)</span>.</p>
+<p>Des deux dernières égalités on en déduit que <span class="math display">\[\begin{eqnarray*}
+\alpha_k(k)
+&amp;=&amp;\frac{\C\left(X_t-\EL(X_t|\H_{t-(k-1)}^{t-1}),
+                X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)}{\V \left(X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1}\right)}\\
+&amp;=&amp;\frac{\C\left(X_t-\EL(X_t|\H_{t-(k-1)}^{t-1}),
+X_{t-k}-\EL(X_{t-k}|\H_{t-k+1}^{t-1})\right)}
+{\sqrt{\V \left(X_{t}-\EL(X_{t}|\H_{t-(k-1)}^{t-1})\right)}
+\sqrt{\V \left(X_{t-k}-\EL(X_{t-k}|\H_{t-(k-1)}^{t-1})\right)}},
+\end{eqnarray*}\]</span> la dernière égalité étant justifiée par l’invariance par translation temporelle des covariances.</p>
+</div>
+</div>
+</div>
+<div id="def-rX" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.8 </strong></span>Ce coefficient de corrélation <span class="math inline">\(\alpha_k(k)\)</span> est appelé <span style="color:blue;"><strong>autocorrélation partielle d’ordre</strong> <span class="math inline">\(k\)</span></span> et est noté <span class="math inline">\(r_X(k)\)</span>.</p>
+</div>
+<p>L’autocorrrélation partielle s’interprète donc comme la corrélation entre <span class="math inline">\(X_t\)</span> et <span class="math inline">\(X_{t-k}\)</span> quand on leur a retiré leurs meilleures explications données par les variables intermédiaires. <br></p>
+<div id="prp-p5" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.15 </strong></span>Il est équivalent de connaître le vecteur <span class="math inline">\((\rho_X(1),\ldots\rho_X(k))\)</span> ou le vecteur <span class="math inline">\((r_X(1),\ldots,r_X(k))\)</span>.</p>
+</div>
+<div id="exm-rX" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 4.3 </strong></span>On donne ici l’exemple des autocorrélations et autocorrélations partielles empiriques de quelques séries temporelles simulées.</p>
+<div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>MA1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">500</span>,<span class="fu">list</span>(<span class="at">ma=</span><span class="fu">c</span>(<span class="fl">0.7</span>)))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">acf</span>(MA1,<span class="at">plot=</span><span class="cn">FALSE</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">pacf</span>(MA1,<span class="at">plot=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-exrXMA1" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exrXMA1-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exrXMA1-1.png" class="img-fluid figure-img" data-ref-parent="fig-exrXMA1" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exrXMA1-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exrXMA1-2.png" class="img-fluid figure-img" data-ref-parent="fig-exrXMA1" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrélations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.2: Résultats pour la série MA(1) <span class="math inline">\(X_t = \varepsilon_t -0.7 \varepsilon_{t-1},\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)\)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+<div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>AR1<span class="ot">&lt;-</span><span class="fu">arima.sim</span>(<span class="at">n=</span><span class="dv">500</span>,<span class="fu">list</span>(<span class="at">ar=</span><span class="fu">c</span>(<span class="fl">0.7</span>)))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">acf</span>(AR1,<span class="at">plot=</span><span class="cn">FALSE</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">pacf</span>(AR1,<span class="at">plot=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-exrXAR1" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exrXAR1-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exrXAR1-1.png" class="img-fluid figure-img" data-ref-parent="fig-exrXAR1" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exrXAR1-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exrXAR1-2.png" class="img-fluid figure-img" data-ref-parent="fig-exrXAR1" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrélations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.3: Résultats pour la série AR(1) <span class="math inline">\(X_t -0.7 X_{t-1}= \varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)\)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+<div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>B1<span class="ot">&lt;-</span><span class="fu">rnorm</span>(<span class="dv">1000</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">acf</span>(B1,<span class="at">plot=</span><span class="cn">FALSE</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">pacf</span>(B1,<span class="at">plot=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-exrXBB1" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exrXBB1-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exrXBB1-1.png" class="img-fluid figure-img" data-ref-parent="fig-exrXBB1" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exrXBB1-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exrXBB1-2.png" class="img-fluid figure-img" data-ref-parent="fig-exrXBB1" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrélations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.4: Résultats pour un bruit blanc gaussien <span class="math inline">\(\mathcal{N}(0,1)\)</span></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tests-de-blancheur-dun-processus" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="tests-de-blancheur-dun-processus"><span class="header-section-number">4.4</span> Tests de blancheur d’un processus</h2>
+<p>Quand on va aborder les modèles ARMA, on va chercher à décomposer la partie stationnaire de la série (après avoir estimé ou éliminé tendance et saisonnalité) en une partie exploitable pour la prévision et une partie de bruit blanc. Aussi on a besoin de pouvoir tester la blancheur des résidus.</p>
+<p>On souhaite donc ici à tester l’hypothèse</p>
+<p><span class="math display">\[
+    \mathcal H_0 : (X_t)_{t\in \Z} \text{ est un bruit blanc}
+\]</span></p>
+<p>contre</p>
+<p><span class="math display">\[
+\mathcal H_1 : (X_t)_{t\in \Z} \text{ n'est pas un bruit blanc}.
+\]</span></p>
+<p>Pour réaliser ce test, on suppose que l’on observe <span class="math inline">\(X_1,\ldots,X_n\)</span>. Le théorème suivant présente des statistiques de test pour répondre à ce test de blancheur.</p>
+<div id="thm-Portmanteau" class="theoreme theorem">
+<p><span class="theorem-title"><strong>Theorem 4.2 </strong></span><br></p>
+<ul>
+<li><p>Statistique de <strong>Portmanteau</strong> <span class="math display">\[
+Q_k=n\sum_{h=1}^k \hat \rho_{X,n}(h)^2 \underset{n\to +\infty}{\stackrel{\mathcal L}{\longrightarrow}} \chi^2(k)
+\]</span></p></li>
+<li><p>Statistique de <strong>Ljung-Box</strong> <span class="math display">\[
+Q^*_k=n(n+2)\sum_{h=1}^k \frac{\hat \rho_{X,n}(h)^2}{n-h}\underset{n\to +\infty}{\stackrel{\mathcal L}{\longrightarrow}} \chi^2(k)
+\]</span></p></li>
+</ul>
+</div>
+<p><br></p>
+<p>Sous l’hypothèse <span class="math inline">\(\mathcal H_0\)</span> (bruit blanc), on a vu que les autocorrélations sont données par <span class="math inline">\(\rho_X(h)=\mathbb{1}_{h=0},\ \forall h\in\Z\)</span>. Ainsi les statistiques <span class="math inline">\(Q_k\)</span> et <span class="math inline">\(Q^*_k\)</span> ont tendance à être faibles sous <span class="math inline">\(\mathcal H_0\)</span> et élevées sous <span class="math inline">\(\mathcal H_1\)</span>. On va donc rejeter <span class="math inline">\(\mathcal H_0\)</span> si ces statistiques sont élevées.</p>
+<div id="prp-test" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.16 (Procédures de test) </strong></span><br> On rejette <span class="math inline">\(\mathcal H_0\)</span> au risque <span class="math inline">\(\alpha\)</span> si <span class="math inline">\(Q_k\)</span> ou <span class="math inline">\(Q_k^*\)</span> est supérieure au <span class="math inline">\((1-\alpha)\)</span>-quantile de la loi du <span class="math inline">\(\chi^2(k)\)</span>.</p>
+<p>Zone de rejet : <span class="math display">\[
+\mathcal R_\alpha^{(k)}=\left\{Q_k^* &gt; q_{1-\alpha,k}\right\}
+\textrm{ où }
+\mathcal R_\alpha^{(k)}=\left\{Q_k &gt; q_{1-\alpha,k}\right\}
+\]</span> avec <span class="math inline">\(q_{1-\alpha,k}\)</span> est le <span class="math inline">\((1-\alpha)\)</span>-quantile de la loi <span class="math inline">\(\chi^2(k)\)</span> car <span class="math display">\[
+\mathbb{P}_{\mathcal H_0}(Q_k^* &gt; q_{1-\alpha,k}) \underset{n\to +\infty}{\longrightarrow} \mathbb{P}(\chi^2(k)&gt;q_{1-\alpha,k})=\alpha.
+\]</span></p>
+</div>
+<p>Remarquons que l’on a un test pour chaque valeur de <span class="math inline">\(k\)</span> !</p>
+<div id="exm-Boxtest" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 4.4 </strong></span>Pour illustrer ces tests, on considère un bruit blanc gaussien. On simule une série de taille 300 et on utilise la fonction <code>Box.test</code> pour tester la blancheur de cette série.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Xt<span class="ot">&lt;-</span><span class="fu">rnorm</span>(<span class="dv">300</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Box.test(Xt,lag=1,type="Box-Pierce")</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(Xt,<span class="at">lag=</span><span class="dv">10</span>,<span class="at">type=</span><span class="st">"Ljung-Box"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Box-Ljung test
+
+data:  Xt
+X-squared = 6.8479, df = 10, p-value = 0.7397</code></pre>
+</div>
+</div>
+<p>On ne rejette donc pas <span class="math inline">\(\mathcal H_0\)</span> pour <span class="math inline">\(k=10\)</span>. La <a href="#fig-exBoxTest-1">Figure&nbsp;<span>4.5</span></a> représente les pvaleurs du même test pour <span class="math inline">\(k\)</span> variant de 1 à 10. Sur la <a href="#fig-exBoxTest-2">Figure&nbsp;<span>4.6</span></a>, on observe que les autocorrélations empiriques sont proche de 0 pour tout <span class="math inline">\(|h|&gt;0\)</span> donc proche du comportement théorique des autocorrélations d’un bruit blanc.</p>
+<div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.Ljung.Test</span>(Xt)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggacf</span>(Xt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exBoxTest-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exBoxTest-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.5: pvaleurs du test de Ljung-Box pour plusieurs valeurs de <span class="math inline">\(k\)</span></figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exBoxTest-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap3_files/figure-html/fig-exBoxTest-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.6: Autocorrélations empiriques de la série de bruit blanc gaussien</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chap2.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modélisation aléatoire des séries temporelles</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chap4.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Les modèles ARMA</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

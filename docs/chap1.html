@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction aux séries temporelles - 2&nbsp; Tendances et saisonnalités</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chap2.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap1.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tendances et saisonnalités</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introduction aux séries temporelles</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Préface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tendances et saisonnalités</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modélisation aléatoire des séries temporelles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Statistique des processus stationnaires du second ordre</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Les modèles ARMA</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#décomposition-dune-série-temporelle" id="toc-décomposition-dune-série-temporelle" class="nav-link active" data-scroll-target="#décomposition-dune-série-temporelle"><span class="header-section-number">2.1</span> Décomposition d’une série temporelle</a></li>
+  <li><a href="#estimation-élimination-dune-tendance-en-labsence-de-saisonnalité" id="toc-estimation-élimination-dune-tendance-en-labsence-de-saisonnalité" class="nav-link" data-scroll-target="#estimation-élimination-dune-tendance-en-labsence-de-saisonnalité"><span class="header-section-number">2.2</span> Estimation / élimination d’une tendance en l’absence de saisonnalité</a>
+  <ul class="collapse">
+  <li><a href="#estimation-de-la-tendance-par-moindres-carrés" id="toc-estimation-de-la-tendance-par-moindres-carrés" class="nav-link" data-scroll-target="#estimation-de-la-tendance-par-moindres-carrés"><span class="header-section-number">2.2.1</span> Estimation de la tendance par moindres carrés</a></li>
+  <li><a href="#estimation-de-la-tendance-par-filtrage-de-moyenne-mobile" id="toc-estimation-de-la-tendance-par-filtrage-de-moyenne-mobile" class="nav-link" data-scroll-target="#estimation-de-la-tendance-par-filtrage-de-moyenne-mobile"><span class="header-section-number">2.2.2</span> Estimation de la tendance par filtrage de moyenne mobile</a></li>
+  <li><a href="#opérateurs-retard-et-avance" id="toc-opérateurs-retard-et-avance" class="nav-link" data-scroll-target="#opérateurs-retard-et-avance"><span class="header-section-number">2.2.3</span> Opérateurs retard et avance</a></li>
+  <li><a href="#estimation-de-la-tendance-par-lissage-exponentiel" id="toc-estimation-de-la-tendance-par-lissage-exponentiel" class="nav-link" data-scroll-target="#estimation-de-la-tendance-par-lissage-exponentiel"><span class="header-section-number">2.2.4</span> Estimation de la tendance par lissage exponentiel</a></li>
+  <li><a href="#elimination-de-la-tendance-par-différenciation" id="toc-elimination-de-la-tendance-par-différenciation" class="nav-link" data-scroll-target="#elimination-de-la-tendance-par-différenciation"><span class="header-section-number">2.2.5</span> Elimination de la tendance par différenciation</a></li>
+  </ul></li>
+  <li><a href="#estimation-élimination-de-la-tendance-et-de-la-saisonnalité" id="toc-estimation-élimination-de-la-tendance-et-de-la-saisonnalité" class="nav-link" data-scroll-target="#estimation-élimination-de-la-tendance-et-de-la-saisonnalité"><span class="header-section-number">2.3</span> Estimation / élimination de la tendance et de la saisonnalité</a>
+  <ul class="collapse">
+  <li><a href="#estimation-par-moindres-carrés" id="toc-estimation-par-moindres-carrés" class="nav-link" data-scroll-target="#estimation-par-moindres-carrés"><span class="header-section-number">2.3.1</span> Estimation par moindres carrés</a></li>
+  <li><a href="#estimation-par-moyenne-mobile" id="toc-estimation-par-moyenne-mobile" class="nav-link" data-scroll-target="#estimation-par-moyenne-mobile"><span class="header-section-number">2.3.2</span> Estimation par Moyenne Mobile</a></li>
+  <li><a href="#elimination-de-la-saisonnalité-par-différenciation" id="toc-elimination-de-la-saisonnalité-par-différenciation" class="nav-link" data-scroll-target="#elimination-de-la-saisonnalité-par-différenciation"><span class="header-section-number">2.3.3</span> Elimination de la saisonnalité par différenciation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-chap1" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tendances et saisonnalités</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="décomposition-dune-série-temporelle" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="décomposition-dune-série-temporelle"><span class="header-section-number">2.1</span> Décomposition d’une série temporelle</h2>
+<p>Comme on a pu le constater dans les exemples de l’ <a href="./intro.html">introduction</a>, quitte à faire une transformation des données au préalable, on peut décomposer une série temporelle en un modèle additif composé de trois termes de la façon suivante.</p>
+<div id="def-modadd" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.1 (Décomposition en modèle additif) </strong></span>La série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> se décompose en</p>
+<p><span id="eq-mod-add"><span class="math display">\[
+Y_t=m_t+s_t+X_t,\ \forall t\in T
+\tag{2.1}\]</span></span></p>
+<p>où</p>
+<ul>
+<li><span class="math inline">\(m_t\)</span> est la <span style="color:blue;"><strong>tendance</strong></span> : une <strong>fonction déterministe</strong> à variation lente qui capte les variations de niveau et que l’on espère assez lisse</li>
+<li><span class="math inline">\(s_t\)</span> est la <span style="color:blue;"><strong>saisonnalité</strong></span> : une <strong>fonction déterministe périodique</strong> de période <span class="math inline">\(r\)</span> (<span class="math inline">\(s_{t+r}=s_t,\ \forall t\)</span>) telle que <span class="math display">\[\sum_{h=1}^rs_{t+h}=0,\ \forall t \in T\]</span></li>
+<li><span class="math inline">\(X_t\)</span> est un <span style="color:blue;"><strong>bruit aléatoire stationnaire</strong></span> appelé parfois résidu. Ce terme sera à définir dans la suite.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hypothèse de somme nulle de la saisonnalité sur la période <span class="math inline">\(r\)</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Cette hypothèse n’est pas contraignante. En effet, on peut s’y ramener facilement en modifiant la tendance : si <span class="math inline">\(\sum_{h=1}^rs_{t+h}= a\)</span> alors on définit <span class="math inline">\(\tilde s_{t} = s_t - \frac a r\)</span> et <span class="math inline">\(\tilde m_t = m_t + \frac a r\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Si la saisonnalité et les variations semblent croître, on peut parfois atténuer ce phénomène en tentant une transformation des données. C’est en particulier ce que l’on peut constater sur les données <em>AirPassengers</em> quand on prend leur logarithme (voir <a href="intro.html#fig-AirP">Figure&nbsp;<span>1.4</span></a>). Donc quitte à faire une transformation des données, on peut supposer le modèle additif (<a href="#eq-mod-add">Equation&nbsp;<span>2.1</span></a>).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Objectif du cours
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Apprendre à modéliser et estimer les composantes tendance <span class="math inline">\((m_t)_{t\in T}\)</span> et saisonnalité <span class="math inline">\((s_t)_{t\in T}\)</span></li>
+<li>Apprendre à modéliser le bruit résiduel <span class="math inline">\((X_t)_{t\in T}\)</span></li>
+<li>Faire des prévisions sur les valeurs futures de la série temporelle initiale <span class="math inline">\((Y_t)_{t\in T}\)</span>.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>La méthode générale pour étudier une série temporelle est la suivante :</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Méthode générale d’étude
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p><strong>Etape 1</strong> : on trace la série des données observées <span class="math inline">\((Y_1,\ldots, Y_n)\)</span> et on essaie de déceler ses principales caractéristiques : une tendance, une composante saisonnière, une ou des ruptures dans le comportement de la série, une ou des observations aberrantes.</p></li>
+<li><p><strong>Etape 2</strong> : On estime / supprime la tendance <span class="math inline">\((m_t)_{t\in T}\)</span> et la composante saisonnière <span class="math inline">\((s_t)_{t\in T}\)</span> pour obtenir une série <span class="math inline">\((X_t)_{t\in T}\)</span> de résidus stationnaires. On peut utiliser pour cela plusieurs techniques : transformer les données, estimer les tendances et composantes saisonnières puis les supprimer des données, différencier la série.</p></li>
+<li><p><strong>Etape 3</strong> : Choisir un modèle de série stationnaire pour les résidus</p></li>
+<li><p><strong>Etape 4</strong> : Prévoir les valeurs futures de la série en prévoyant d’abord celles des résidus puis remonter jusqu’à la série initiale en utilisant les transformations inverses.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="estimation-élimination-dune-tendance-en-labsence-de-saisonnalité" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="estimation-élimination-dune-tendance-en-labsence-de-saisonnalité"><span class="header-section-number">2.2</span> Estimation / élimination d’une tendance en l’absence de saisonnalité</h2>
+<p>Dans cette partie, on suppose que la série <span class="math inline">\((Y_t)_{t\in T}\)</span> n’a pas de saisonnalité. Elle suit donc le modèle additif suivant</p>
+<p><span class="math display">\[
+Y_t=m_t+X_t,\ \forall  t\in T.
+\]</span></p>
+<p>Sans perte de généralité, on suppose que <span class="math inline">\((X_t)_{t\in T}\)</span> est un processus centré (<span class="math inline">\(\mathbb E[X_t] = 0,\ \forall t\in T\)</span>). En effet, si <span class="math inline">\(\mathbb E[X_t]\neq 0\)</span>, on remplace <span class="math inline">\(m_t\)</span> et <span class="math inline">\(X_t\)</span> par <span class="math inline">\(m_t+\mathbb E [X_t]\)</span> et <span class="math inline">\(X_t-\mathbb E[X_t]\)</span> respectivement.</p>
+<p>On suppose également que l’on observe le processus sur les instants de temps <span class="math inline">\(t=1,\ldots,n\)</span> : <span class="math inline">\((Y_1,\ldots,Y_n)\)</span>.</p>
+<p>Sans exhaustivité, la fonction tendance peut prendre l’une de ces formes</p>
+<ul>
+<li>Tendance linéaire : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t\)</span></li>
+<li>Tendance quadratique : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2\)</span></li>
+<li>Tendance polynomiale : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2+\cdots+\alpha_n t^n\)</span></li>
+<li>Tendance exponentielle : <span class="math inline">\(m_t=c_0+c_1\alpha^t\)</span></li>
+<li>Tendance de Gompertz : <span class="math inline">\(m_t=\exp(c_0+c_1\alpha^t)\)</span></li>
+<li>Tendance Logistique : <span class="math inline">\(m_t=1/(c_0+c_1\alpha^t)\)</span></li>
+<li>ou bien des mélanges de ces types de fonctions.</li>
+</ul>
+<section id="estimation-de-la-tendance-par-moindres-carrés" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="estimation-de-la-tendance-par-moindres-carrés"><span class="header-section-number">2.2.1</span> Estimation de la tendance par moindres carrés</h3>
+<p>Dans cette section, on suppose que la tendance est une combinaison linéaire de fonctions temporelles, <strong>connues et déterministes</strong> : <span class="math display">\[
+m_t=\sum_{j=1}^p\alpha_j m_t^{(j)}.
+\]</span></p>
+<p>Pour déterminer <span class="math inline">\(m_t\)</span>, on cherche donc à estimer les coefficients inconnus <span class="math inline">\(\alpha_j\)</span>, pour <span class="math inline">\(j=1,\ldots,p\)</span>. Pour cela, nous pouvons utiliser l’estimation par moindres carrés.</p>
+<span class="math display">\[\begin{eqnarray*}
+(\hat \alpha_1,\ldots,\hat \alpha_p)
+&amp;=&amp;\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n(Y_t-m_t)^2 \\
+&amp;=&amp;\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n \left(Y_t-\alpha_1 m_t^{(1)}-\ldots - \alpha_p m_t^{(p)}\right)^2
+\end{eqnarray*}\]</span>
+<p>On peut constater que l’on se ramène à un problème de régression linéaire de la forme</p>
+<p><span class="math display">\[
+\underbrace{
+\left(
+\begin{array}{c}
+  Y_1   \\
+  \vdots   \\
+  Y_n
+\end{array}
+\right)}_{\mathbb Y}
+=
+\underbrace{
+\left(
+\begin{array}{ccc}
+m^{(1)}_1 &amp; \cdots  &amp; m^{(p)}_1   \\
+\vdots  &amp; \ddots  &amp; \vdots   \\
+m^{(1)}_n &amp;  \cdots &amp;   m^{(p)}_n
+\end{array}
+\right)}_{\mathbb X}
+\
+\underbrace{
+\left(
+\begin{array}{c}
+  \alpha_1   \\
+  \vdots   \\
+  \alpha_p
+\end{array}
+\right)}_{\theta}
++
+\underbrace{
+\left(
+\begin{array}{c}
+  X_1   \\
+  \vdots   \\
+  X_n
+\end{array}
+\right)}_{\varepsilon}
+\]</span> D’après les résultats de la régression linéaire, si <span class="math inline">\(\mathbb X'\mathbb X\)</span> est inversible, <span class="math display">\[
+\hat \theta = (\mathbb X '\mathbb X )^{-1}\mathbb X' \mathbb Y.
+\]</span></p>
+<p>On obtient alors les <strong>données corrigées de la tendance</strong> via l’expression suivante</p>
+<p><span class="math display">\[
+\hat Y^{\text{CT}}_t=Y_t-\hat m_t = Y_t - \sum_{j=1}^p\hat \alpha_j m_t^{(j)}
+\]</span></p>
+<div id="exm-MSE" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.1 </strong></span>On considère la série temporelle <span class="math inline">\((Y_t)_{t\in \mathbb N}\)</span> définie par la relation</p>
+<p><span class="math display">\[Y_t = (1+0.01\ t^2) + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d}}{\sim} \mathcal{N}(0,4^2).\]</span> On observe les <span class="math inline">\(n=100\)</span> premières valeurs de cette série (voir <a href="#fig-ExMSE">Figure&nbsp;<span>2.1</span></a>, courbe noire).</p>
+<p>On considère les trois fonctions tendances suivantes</p>
+<ul>
+<li><span class="math inline">\(m_{1,t} = \alpha_0 + \alpha_1 t\)</span></li>
+<li><span class="math inline">\(m_{2,t} = \alpha_0 + \alpha_1 t + \alpha_2 t^2\)</span></li>
+<li><span class="math inline">\(m_{3,t} = \alpha_0 + \alpha_1 t + \alpha_2 t^2 + \alpha_3 t^3\)</span></li>
+</ul>
+<p>Les coefficients sont estimés par moindres carrés pour les trois tendances :</p>
+<ul>
+<li>pour une tendance linéaire :</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x1, data = dataaux)
+
+Coefficients:
+(Intercept)           x1  
+    -18.547        1.045  </code></pre>
+</div>
+</div>
+<ul>
+<li>pour une tendance quadratique :</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x1 + x2, data = dataaux)
+
+Coefficients:
+(Intercept)           x1           x2  
+   -0.07851     -0.04172      0.01076  </code></pre>
+</div>
+</div>
+<ul>
+<li>pour une tendance cubique :</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ ., data = dataaux)
+
+Coefficients:
+(Intercept)           x1           x2           x3  
+  3.993e-01   -9.711e-02    1.212e-02   -9.005e-06  </code></pre>
+</div>
+</div>
+<p>Les estimations associées à <span class="math inline">\(\hat m_{1,t}\)</span>, <span class="math inline">\(\hat m_{2,t}\)</span> et <span class="math inline">\(\hat m_{3,t}\)</span> sont représentées sur la <a href="#fig-ExMSE">Figure&nbsp;<span>2.1</span></a> en rouge, bleu et rose respectivement. Les courbes bleue et rose se superposent car la tendance recherchée <span class="math inline">\(m_t = 1+0.01 t^2\)</span> est quadratique.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ExMSE" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-ExMSE-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.1: Exemple pour l’estimation de la tendance par moindres carrés</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="estimation-de-la-tendance-par-filtrage-de-moyenne-mobile" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="estimation-de-la-tendance-par-filtrage-de-moyenne-mobile"><span class="header-section-number">2.2.2</span> Estimation de la tendance par filtrage de moyenne mobile</h3>
+</section>
+<section id="opérateurs-retard-et-avance" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="opérateurs-retard-et-avance"><span class="header-section-number">2.2.3</span> Opérateurs retard et avance</h3>
+<p>Pour pouvoir parler de moyenne mobile, nous devons commencer par définir deux opérateurs importants pour ce cours de séries temporelles: les opérateurs <strong>retard</strong> <span class="math inline">\(B\)</span> et <strong>avance</strong> <span class="math inline">\(F\)</span>.</p>
+<div id="def-BF" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.2 </strong></span><br> L’opérateur <span style="color:blue;"><strong>retard</strong></span> <span class="math inline">\(B\)</span> sur une série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> est défini par : <span class="math display">\[
+B\ Y_t=Y_{t-1},\ \forall t\in T.
+\]</span> On note de manière naturelle : <span class="math inline">\(B^{h}\ Y_t=Y_{t-h},\ \forall t\in T \textrm{ et } \forall h\in \mathbb N^*\)</span>. <br></p>
+<p>L’opérateur <span style="color:blue;"><strong>avance</strong></span> <span class="math inline">\(F\)</span> sur une série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> est défini par : <span class="math display">\[
+F\ Y_t=Y_{t+1},\ \forall t\in T.
+\]</span> On note aussi <span class="math inline">\(F^{h}\ Y_t=Y_{t+h},\ \forall t\in T \textrm{ et } \forall h\in \mathbb N^*\)</span> et <span class="math inline">\(B^{-h}\)</span>=<span class="math inline">\(F^{h}\)</span>, pour tout <span class="math inline">\(h\)</span>.</p>
+</div>
+<p><br> A partir de ces deux opérateurs, on peut définir la notion de moyenne mobile.</p>
+<div id="def-moymobile" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.3 </strong></span><br> Une <span style="color:blue;"><strong>moyenne mobile</strong></span> est un opérateur linéaire de la forme <span class="math display">\[
+M=\sum_{h=-m_1}^{m_2}\theta_h B^{-h},
+\]</span> où <span class="math inline">\((m_1,m_2)\in \mathbb N\times\mathbb N\)</span> et <span class="math inline">\(\theta_h\in \mathbb R\)</span> pour tout <span class="math inline">\(h\)</span>.</p>
+<p>L’<span style="color:blue;"><strong>ordre</strong></span> de la moyenne mobile est l’entier <span class="math inline">\(m_1+m_2+1\)</span>.</p>
+<p>La moyenne mobile est dite</p>
+<ul>
+<li><span style="color:blue;"><strong>normalisée</strong></span> si <span class="math display">\[
+\sum_{h=-m_1}^{m_2} \theta_h=1
+\]</span></li>
+<li><span style="color:blue;"><strong>centrée</strong></span> si <span class="math inline">\(m_1=m_2\)</span></li>
+<li><span style="color:blue;"><strong>symétrique</strong></span> si <span class="math inline">\(m_1=m_2=m\)</span> et <span class="math inline">\(\theta_h=\theta_{-h}\)</span>, pour <span class="math inline">\(h=1,\ldots,m\)</span>.</li>
+</ul>
+</div>
+<p><br></p>
+<p>Ainsi la moyenne mobile <span class="math inline">\(M\)</span> appliquée à la série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> donne</p>
+<span class="math display">\[\begin{eqnarray*}
+M\ Y_t&amp;=&amp; \sum_{h=-m_1}^{m_2}\theta_h B^{-h}\ Y_t\\
+&amp;=&amp;\theta_{-m_1}Y_{t-m_1}+\cdots+\theta_{-1}Y_{t-1}\\
+\\
+&amp;+&amp;\theta_0 Y_t\\
+\\
+&amp;+&amp;\theta_1 Y_{t+1}+\cdots+\theta_{m_2}Y_{t+m_2}
+\end{eqnarray*}\]</span>
+<p>Appliquer l’opérateur <span class="math inline">\(M\)</span> revient donc à faire une “moyenne locale pondérée” des termes <span class="math inline">\(Y_{t-m_1},\ldots,Y_0,\ldots,Y_{t+m_2}\)</span>. <!--
+ Ces moyennes mobiles sont parfois appelées **filtres passe bas** car elles enlèvent à une série $(Y_t)_{t\in T}$ ses fluctuations rapides (dites encores hautes fréquences). Il ne reste plus qu'un terme de tendance à variation relativement lente.
+-   Ces moyennes mobiles peuvent aussi être vues comme une estimation non paramétrique de la tendance par moyennes locales
+--></p>
+<div id="exm-M" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.2 (Exemple important de la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span>) </strong></span><br> Soit <span class="math inline">\(q\in \mathbb N^*\)</span>. On considère la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> définie par<br>
+<span class="math display">\[
+M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{j=-q}^qY_{t-j}
+\]</span> <span class="math inline">\(M_{2q+1}\)</span> est une moyenne mobile avec <span class="math inline">\(m_1=m_2=q\)</span> et <span class="math inline">\(\theta_h=\frac{1}{1+2q} \mathbb 1_{|h|\leq q}\)</span>. C’est donc une moyenne mobile finie, symétrique et normalisée d’ordre <span class="math inline">\(2q+1\)</span>. Au vu de la définition des coefficients, cette moyenne mobile peut être vue comme un filtre “passe-bas”.</p>
+<p>La moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> laisse invariante les tendances linéaires : si <span class="math inline">\(m_t=a+bt\)</span> alors <span class="math display">\[
+M_{2q+1}m_t = \frac{1}{2q+1}\sum_{j=-q}^qm_{t-j}=
+\frac{1}{2q+1}\sum_{j=-q}^q (a + bt -b j) = a+bt = m_t.
+\]</span></p>
+<p>Soit une série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> de la forme <span class="math inline">\(Y_t=m_t+X_t\)</span>, où <span class="math inline">\(m_t\)</span> est la tendance et <span class="math inline">\(X_t\)</span> un processus centré. Si la tendance est pratiquement linéaire et que la moyenne empirique des <span class="math inline">\(X_t\)</span> est proche de 0 (ce qui est en tout cas vrai pour <span class="math inline">\(q\)</span> grand), on a <span class="math display">\[
+M_{2q+1}Y_t=\frac{1}{2q+1}\sum_{j=-q}^qm_{t-j}+\frac{1}{2q+1}\sum_{j=-q}^qX_{t-j}\approx m_t.
+\]</span></p>
+<p><span class="math inline">\(\Longrightarrow\)</span> la moyenne mobile nous donne une estimation de la tendance quand elle est pratiquement linéaire.</p>
+<p>Pour illustrer ce point, on observe les <span class="math inline">\(50\)</span> premières réalisations d’une série temporelle <span class="math inline">\((Y_t)_{t\in \mathbb N}\)</span> définie par <span class="math inline">\(Y_t = (5+0.1 t) + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,1)\)</span>.<br>
+La <a href="#fig-ExMM">Figure&nbsp;<span>2.2</span></a> montre l’estimation de la tendance par la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> <span class="math display">\[
+  \hat m_t = \frac{1}{2q+1}\underset{j=-q}{\stackrel{q}{\sum}}\ Y_{t-j},\ \ \forall q+1\leq t \leq n-q
+\]</span> pour <span class="math inline">\(2q+1=3\)</span> et <span class="math inline">\(2q+1=7\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ExMM" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-ExMM-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.2: Exemples d’estimation de la tendance d’une série temporelle à l’aide d’une moyenne mobile <span class="math inline">\(M_{2q+1}\)</span>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="estimation-de-la-tendance-par-lissage-exponentiel" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="estimation-de-la-tendance-par-lissage-exponentiel"><span class="header-section-number">2.2.4</span> Estimation de la tendance par lissage exponentiel</h3>
+<div id="def-lissexpon" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.4 </strong></span>Le <span style="color:blue;"><strong>lissage exponentiel simple</strong></span> consiste à estimer la tendance via la formule récursive suivante : pour <span class="math inline">\(\alpha\in [0,1]\)</span>, <span class="math display">\[
+\left\{
+\begin{array}{ll}
+\hat m_t=\alpha Y_t + (1-\alpha)\hat m_{t-1}&amp; \textrm{ pour }t=2,\ldots,n\\
+\hat m_1=Y_1 &amp;
+\end{array}\right.
+\]</span></p>
+</div>
+<p><br></p>
+<div id="prp-lissexpo" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 2.1 </strong></span>Le lissage exponentiel simple est une moyenne mobile normalisée.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Preuve
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En résolvant l’équation de récurrence on a : <span class="math display">\[\begin{eqnarray*}
+\hat m_t&amp;=&amp;\alpha Y_t + (1-\alpha)\hat m_{t-1}=\alpha Y_t + \alpha(1-\alpha)Y_{t-1}+(1-\alpha)^2\hat m_{t-2}\\
+&amp;=&amp;\alpha Y_t + \alpha(1-\alpha)Y_{t-1}+\alpha(1-\alpha)^2Y_{t-2}+(1-\alpha)^3\hat m_{t-3}\\
+&amp;=&amp;\sum_{k=0}^{t-2}\alpha(1-\alpha)^kY_{t-k}+(1-\alpha)^{t-1}Y_1\\
+&amp;=&amp; \underset{h=0}{\stackrel{t-1}{\sum}}\theta_h Y_{t-h}
+\end{eqnarray*}\]</span> avec les coefficients <span class="math display">\[
+\theta_h = \left\{
+\begin{array}{l l}
+\alpha (1-\alpha)^h &amp; \textrm{si } 0\leq h \leq t-2\\
+(1-\alpha)^{t-1} &amp; \textrm{si } h=t-1\\
+0 &amp; \textrm{sinon}.
+\end{array}\right.
+\]</span></p>
+<p>Donc <span class="math inline">\(\underset{h=0}{\stackrel{t-1}{\sum}} \theta_h = \underset{h=0}{\stackrel{t-2}{\sum}} \alpha (1-\alpha)^h + (1-\alpha)^{t-1} = \alpha \frac{1-(1-\alpha)^{t-1}}{1-(1-\alpha)} + (1-\alpha)^{t-1}=1\)</span>.</p>
+</div>
+</div>
+</div>
+<p>On parle de <strong>lissage exponentiel</strong> car c’est une moyenne pondérée des valeurs précédentes avec une décroissance exponentielle des poids (voir <a href="#fig-poidslissexpo-2">Figure&nbsp;<span>2.3 (b)</span></a>). Ainsi les observations les plus récentes ont le plus de poids. Le choix de <span class="math inline">\(\alpha\)</span> est fondamental (voir <a href="#fig-poidslissexpo-1">Figure&nbsp;<span>2.3 (a)</span></a>): Plus <span class="math inline">\(\alpha\)</span> est proche de 1, plus on donne de poids à la dernière observation. L’estimation est alors moins lisse et on tend vers du sur-ajustement. Plus <span class="math inline">\(\alpha\)</span> est proche de 0, plus le lissage exponentiel s’appuie sur une mémoire longue de la série temporelle.</p>
+<div id="fig-poidslissexpo" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-poidslissexpo-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-poidslissexpo-1.png" class="img-fluid figure-img" data-ref-parent="fig-poidslissexpo" width="672"></p>
+<figcaption class="figure-caption">(a) Les poids <span class="math inline">\(\alpha(1-\alpha)^h\)</span> en fonction de <span class="math inline">\(\alpha\)</span> pour plusieurs valeurs de <span class="math inline">\(h\)</span></figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-poidslissexpo-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-poidslissexpo-2.png" class="img-fluid figure-img" data-ref-parent="fig-poidslissexpo" width="672"></p>
+<figcaption class="figure-caption">(b) Les poids <span class="math inline">\(\theta_h\)</span> en fonction de <span class="math inline">\(h\)</span> pour plusieurs valeurs de <span class="math inline">\(\alpha\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.3: Comportement des poids du lissage exponentiel</figcaption><p></p>
+</figure>
+</div>
+<p>Le lissage exponentiel simple est parfois utilisé pour la prévision. Si l’on observe la série temporelle sur les instants <span class="math inline">\(\{1,\ldots,n\}\)</span> alors une prévision à l’horizon <span class="math inline">\(h\)</span> de la série est donnée par :</p>
+<p><span class="math display">\[
+\hat Y_{n,h} = \hat Y_{n+h}=\hat Y_{n+1}=\sum_{k=0}^{n-2}\alpha(1-\alpha)^kY_{n-k}+(1-\alpha)^{n-1}Y_1 = \hat m_n.
+\]</span></p>
+<p>La formule de mise jour du lissage exponentiel permet de voir qu’une observation supplémentaire de la série ne nécessite pas de recalculer entièrement la prévision. En effet, si on observe en plus la valeur au temps <span class="math inline">\(n+1\)</span> alors <span class="math display">\[
+\hat Y_{n+1,1} = \hat m_{n+1} = \alpha Y_{n+1} + (1-\alpha) \hat m_n.
+\]</span></p>
+<p>Comme évoqué précédemment, le choix du paramètre <span class="math inline">\(\alpha\)</span> est important. On peut chercher à minimiser l’erreur de prévision :</p>
+<p><span class="math display">\[
+\hat \alpha = \underset{\alpha_1,\ldots,\alpha_p}{\mbox{argmin}}\ \underset{t=1}{\stackrel{n-h}{\sum}}\left(Y_{t+h}-\hat Y_{t+h}^{(\alpha_i)}\right)^2
+\]</span></p>
+<div id="exm-lissexpo" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.3 </strong></span>On applique le lissage exponentiel simple pour deux valeurs de <span class="math inline">\(\alpha\)</span> sur les trois séries temporelles suivantes, observées pour <span class="math inline">\(t\in\{1,\ldots,50\}\)</span> :</p>
+<ul>
+<li><span class="math inline">\(Y_t^{[1]} = 1 + X_t\)</span> avec <span class="math inline">\(X_t\underset{\textrm{i.i.d}}{\sim} \mathcal{N}(0,0.01)\)</span></li>
+<li><span class="math inline">\(Y_t^{[2]} = 1 + 0.05 t + X_t\)</span> avec <span class="math inline">\(X_t\underset{\textrm{i.i.d}}{\sim} \mathcal{N}(0,0.1)\)</span></li>
+<li><span class="math inline">\(Y_t^{[3]} = \mathbb{1}_{1\leq t \leq 25}+ 2 \mathbb{1}_{t&gt;25} + X_t\)</span> avec <span class="math inline">\(X_t\underset{\textrm{i.i.d}}{\sim} \mathcal{N}(0,0.1)\)</span></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exlissexpo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpo-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.4: Exemples de lissage exponentiel simple</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Dans le cadre du lissage exponentiel simple, on vient de voir que la prévision est constante. Une extension est le lissage exponentiel double où l’on souhaite une prédiction linéaire. Cette prédiction est donnée par</p>
+<p><span class="math display">\[
+\hat Y_{n+h} = \hat a_n h + \hat b_n
+\]</span> avec</p>
+<p><span class="math display">\[
+\left\{\begin{array}{l}
+\hat a_n = \hat a_{n-1} + (1-\alpha)^2 (Y_n - \hat Y_{n-1,1})\\
+\hat b_n = \hat b_{n-1} +\hat a_{n-1}+ (1-\alpha^2) (Y_n - \hat Y_{n-1,1})\\
+\hat a_2=Y_2-Y_1,\ \hat b_2=Y_1
+\end{array}\right.
+\]</span></p>
+<p>Dans la même famille de méthode, on peut citer la méthode de Holt-Winters qui est un lissage exponentiel double avec une formule de mise à jour différente (voir <a href="#fig-exlissexpoHW">Figure&nbsp;<span>2.5</span></a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exlissexpoHW" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpoHW-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.5: Reprise des exemples précédents avec ici la méthode de Holt-Winters.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="elimination-de-la-tendance-par-différenciation" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="elimination-de-la-tendance-par-différenciation"><span class="header-section-number">2.2.5</span> Elimination de la tendance par différenciation</h3>
+<div id="def-opdiff" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.5 </strong></span>Soit <span class="math inline">\((Y_t)_{t\in T}\)</span> une série temporelle.<br>
+</p>
+<p>L’opérateur <span style="color:blue;"><strong>différenciation à l’ordre 1</strong></span> <span class="math inline">\(\nabla\)</span> d’une série temporelle est défini par <span class="math display">\[
+\nabla Y_t=Y_t-Y_{t-1}=Y_t-BY_t=(I-B)Y_t,\ \forall t\in T.
+\]</span> La <span style="color:blue;"><strong>différenciation à l’ordre</strong> <span class="math inline">\(k\)</span></span> de la série <span class="math inline">\((Y_t)_{t\in T}\)</span> est définie par <span class="math display">\[
+\nabla^kY_t=(I-B)^kY_t,\ \forall t\in T.
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Attention à la manipulation de cet opérateur.</p>
+<ul>
+<li><span class="math inline">\(\nabla^2 Y_t = (I-B)(I-B) Y_t = Y_t - 2 Y_{t-1} + Y_{t-2}\)</span></li>
+<li><span class="math inline">\(\nabla^3 Y_t = (I-B)\nabla^2 Y_t = Y_t - 3 Y_{t-1} + 3 Y_{t-2} - Y_{t-3}\)</span></li>
+</ul>
+</div>
+</div>
+<div id="prp-diff" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 2.2 </strong></span>Une tendance polynomiale <span class="math inline">\(m_t\)</span> de degré <span class="math inline">\(k\)</span> est réduite à une constante par une différenciation à l’ordre <span class="math inline">\(k\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Preuve
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On raisonne par récurrence. - Pour <span class="math inline">\(k=1\)</span> : pour une tendance linéaire <span class="math inline">\(m_t=a+bt\)</span>, on a <span class="math inline">\(\nabla m_t=a+bt-a -b(t-1)=b.\)</span> - On suppose la proposition vraie au rang <span class="math inline">\(k\)</span> - Au rang <span class="math inline">\(k+1\)</span>: soit la tendance <span class="math inline">\(m_t = \underset{j=0}{\stackrel{k+1}{\sum}} a_j t^j = a_{k+1} t^{k+1} + P_k(t)\)</span>. Alors <span class="math display">\[\begin{eqnarray*}
+    \nabla^{k+1} m_t &amp;=&amp; \nabla^k (I-B)(a_{k+1} t^{k+1} + P_k(t))\\
+    &amp;=&amp; \nabla^k \left[a_{k+1} (t^{k+1} - (t-1)^{k+1}) + P_k(t) - P_k(t-1)\right]\\
+    &amp;=&amp; \nabla^k \left[a_{k+1} (t-t+1) Q_{k}(t) + P_k(t) - P_k(t-1)\right]\\
+    &amp;=&amp; \textrm{constante}
+    \end{eqnarray*}\]</span></p>
+</div>
+</div>
+</div>
+<p>La différenciation permet d’éliminer les tendances polynomiales et donc pratiquement toutes les tendances car elles peuvent très souvent être approchées par des polynômes. Attention, il faut bien noter que cette technique permet d’éliminer la tendance mais ne l’estime pas.</p>
+<div id="exm-diff1" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.4 </strong></span>En <a href="#fig-exdiff1">Figure&nbsp;<span>2.6</span></a>, on a simulé une série temporelle définie par <span class="math inline">\(Y_t = 1 + \frac{1}{20} t + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,0.25)\)</span>. On voit que la différenciation de la série <span class="math inline">\(\nabla Y_t\)</span> élimine la tendance linéaire.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exdiff1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.6: Illustration de l’élimination d’une tendance liéanire par la différenciation à l’ordre 1.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
+<div id="exm-diff2" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.5 </strong></span>Dans cet exemple, on a simulé une série temporelle définie par <span class="math inline">\(Y_t = 1 - 5\ t + 0.25\ t^2 + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,100)\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="chap1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exdiff2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.7: Illustration de l’élimination d’une tendance quadratique par une différenciation d’ordre 2 mais pas d’ordre 1</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="estimation-élimination-de-la-tendance-et-de-la-saisonnalité" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="estimation-élimination-de-la-tendance-et-de-la-saisonnalité"><span class="header-section-number">2.3</span> Estimation / élimination de la tendance et de la saisonnalité</h2>
+<p>On considère maintenant le cas général d’une série temporelle avec une tendance et une saisonnalité présentes dans la décomposition :</p>
+<p><span class="math display">\[
+Y_t=m_t+s_t+X_t,\ \forall t\in T
+\]</span></p>
+<p>avec <span class="math inline">\(\mathbb E[X_t]=0\)</span>, <span class="math inline">\(s_{t+r}=s_t\)</span> et <span class="math inline">\(\underset{k=1}{\stackrel{r}{\sum}} s_{t+k}=0,\ \forall t\in T\)</span>.</p>
+<section id="estimation-par-moindres-carrés" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="estimation-par-moindres-carrés"><span class="header-section-number">2.3.1</span> Estimation par moindres carrés</h3>
+<p>On peut reprendre la méthode des moindres carrés en supposant cette fois-ci que la tendance mais aussi la composante saisonnière sont des combinaisons linéaires de fonctions connues. On suppose donc qu’il existe des fonctions <span class="math inline">\(m_t^{(j)}\)</span> pour <span class="math inline">\(j=1,\ldots,p\)</span>, et <span class="math inline">\(s_t^{(\ell)}\)</span> pour <span class="math inline">\(\ell=1,\ldots,q\)</span> telles que : <span class="math display">\[
+Y_t=\sum_{j=1}^p\alpha_j m_t^{(j)}+\sum_{\ell=1}^q\beta_\ell s_t^{(\ell)}+X_t,\ \forall t\in T.
+\]</span></p>
+<p>Pour les fonctions de saisonnalité <span class="math inline">\(s_t^{(\ell)}\)</span>, on peut par exemple considérer</p>
+<ul>
+<li>des indicatrices : par exemple dans le cas d’une saisonnalité trimestrielle <span class="math display">\[
+\forall \ell\in \{1,\ldots,4\}, s_t^{(\ell)}=
+      \left\{
+      \begin{array}{cl}
+      1  &amp; \text{si le trimestre à l'instant } t \text{ est }  \ell    \\
+      0  &amp; \text{sinon}  
+      \end{array}.
+      \right.
+\]</span></li>
+<li>une combinaison de fonctions sinusoïdales.</li>
+</ul>
+<p>On peut noter que les saisonnalités <span class="math inline">\(s_t^{(\ell)}\)</span> peuvent avoir des périodes différentes.</p>
+<p>On cherche donc à estimer le vecteur des coefficients inconnus <span class="math inline">\(\theta = (\alpha_1,\ldots,\alpha_p,\beta_1,\ldots,\beta_q)\)</span> par la méthode des moindres carrés. On obtient alors les estimateurs <span class="math inline">\(\hat \theta = (\hat\alpha_1,\ldots,\hat\alpha_p,\hat\beta_1,\ldots,\hat\beta_q)\)</span> et on récupère les données ajustées</p>
+<p><span class="math display">\[
+\hat Y_t=\hat m_t+\hat s_t=\sum_{j=1}^p\hat \alpha_j m_t^{(j)}+\sum_{\ell=1}^q \hat\beta_\ell s_t^{(\ell)},\ \forall t \in T.
+\]</span></p>
+<p>La <strong>série corrigée des variations saisonnières</strong> (CVS) est alors définie par</p>
+<p><span class="math display">\[\hat Y^{\text{CVS}}_t=Y_t-\hat s_t.\]</span></p>
+<div id="exm-MSEms" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.6 </strong></span>Dans cet exemple, on s’intéresse à la série temporelle <span class="math inline">\(Y_t = 0.5 t + 3 \mbox{cos}\left(\frac{\pi\ t}{6}\right)+X_t,\ X_t \textrm{ i.i.d }\mathcal{N}(0,1)\)</span>. On considère les fonctions de tendance polynomiales <span class="math inline">\(m_t^{(j)}=t^j\)</span> pour <span class="math inline">\(j\in\{1,2,3\}\)</span> et les fonctions de saisonnalité définies par <span class="math inline">\(s_t^{(\ell)}=\mbox{cos}(\theta_{\ell} t)\)</span> avec <span class="math inline">\((\theta_1,\theta_2,\theta_3)=(\frac{\pi}{6},\frac{\pi}{4},\frac{\pi}{3})\)</span>. A l’aide de la fonction <code>lm()</code>, on ajuste un modèle de régression linéaire</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Yt ~ ., data = dfaux)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.47779 -0.63375 -0.02225  0.67613  2.20892 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  4.541e-02  7.165e-01   0.063 0.949761    
+m1           4.701e-01  1.207e-01   3.895 0.000338 ***
+m2           2.578e-03  5.484e-03   0.470 0.640591    
+m3          -4.399e-05  7.094e-05  -0.620 0.538477    
+s1           3.117e+00  2.385e-01  13.068  &lt; 2e-16 ***
+s2          -4.606e-01  2.379e-01  -1.936 0.059497 .  
+s3          -3.389e-01  2.364e-01  -1.434 0.158912    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.168 on 43 degrees of freedom
+Multiple R-squared:  0.9808,    Adjusted R-squared:  0.9781 
+F-statistic: 365.5 on 6 and 43 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>On retrouve des estimations des coefficients en cohérence avec les données simulées. La <a href="#fig-exMSEms">Figure&nbsp;<span>2.8</span></a> représente les <span class="math inline">\(n=50\)</span> premiers temps simulés de la série <span class="math inline">\(Y_t\)</span>, les données ajustées <span class="math inline">\(\hat Y_t\)</span> et les données corrigées des variations saisonnières <span class="math inline">\(\hat Y^{\text{CVS}}_t\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exMSEms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exMSEms-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.8: Illustration de l’estimation de la tendance et saisonnalité par moindres carrés.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="estimation-par-moyenne-mobile" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="estimation-par-moyenne-mobile"><span class="header-section-number">2.3.2</span> Estimation par Moyenne Mobile</h3>
+<p>On suppose toujours que l’on a la décomposition</p>
+<p><span class="math display">\[
+Y_t=m_t+s_t+X_t,\ \ \forall t\in T
+\]</span></p>
+<p>L’idée générale est de trouver une moyenne mobile <span class="math inline">\(M\)</span> qui vérifie les propriétés suivantes :</p>
+<ul>
+<li>la moyenne mobile laisse invariante la tendance : <span class="math inline">\(M\ m_t=m_t\)</span></li>
+<li>la moyenne mobile absorbe la saisonnalité : <span class="math inline">\(M\ s_t=0\)</span><br>
+</li>
+<li>la moyenne mobile réduit la variance du processus observé : <span class="math inline">\(M\ Y_t\)</span> a une variance plus faible que <span class="math inline">\(Y_t\)</span>.</li>
+</ul>
+<p>Si on trouve une telle moyenne mobile <span class="math inline">\(M\)</span>, <span class="math inline">\(MY_t\)</span> estime la tendance <span class="math inline">\(m_t\)</span> et on travaille ensuite sur <span class="math inline">\(\hat Y^{\text{CT}}_t=Y_t-MY_t\)</span> pour estimer la saisonnalité.</p>
+<section id="cas-dune-périodicité-impaire" class="level4" data-number="2.3.2.1">
+<h4 data-number="2.3.2.1" class="anchored" data-anchor-id="cas-dune-périodicité-impaire"><span class="header-section-number">2.3.2.1</span> Cas d’une périodicité impaire</h4>
+<p>On suppose que la série temporelle admet une saisonnalité de période impaire <span class="math inline">\(r=2q+1\)</span> et on observe cette série temporelle aux instants <span class="math inline">\(t=1,\ldots,n\)</span>.</p>
+<p>On reprend la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> (voir <a href="#exm-M">Example&nbsp;<span>2.2</span></a>) symétrique, normalisée et d’ordre <span class="math inline">\(2q+1\)</span> : <span class="math display">\[
+M_{2q+1}=\frac{1}{2q+1} \sum_{h=-q}^q B^{h}.
+\]</span></p>
+<p>Cette moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> appliquée sur la série <span class="math inline">\((Y_t)_{t\in T}\)</span> donne directement une estimation de la tendance et annule la saisonnalité. En effet, <span class="math display">\[
+M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{h=-q}^qm_{t-h}+\frac{1}{2q+1} \sum_{h=-q}^q s_{t-h}+\frac{1}{2q+1} \sum_{h=-q}^qX_{t-h}
+\]</span></p>
+<p>où</p>
+<ul>
+<li>le premier terme donne une estimation de la tendance si celle-ci est assez lisse</li>
+<li>le second terme est nul par l’hypothèse <span class="math inline">\(\sum_{j=1}^r s_{t+j}=0,\ \forall t\in T\)</span></li>
+<li>le dernier terme est quasiment nul si <span class="math inline">\(q\)</span> est assez grand (convergence vers <span class="math inline">\(\mathbb E[X_t]=0\)</span>)</li>
+</ul>
+<p>Une fois que l’on a estimé la tendance <span class="math inline">\(\hat m_t=M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{h=-q}^qY_{t-h}\)</span>, on considère la série corrigée de la tendance <span class="math inline">\(\hat Y^{\text{CT}}_t=Y_t-\hat m_t\)</span>, sur laquelle on va estimer la saisonnalité.</p>
+<p>Pour <span class="math inline">\(k=1,\ldots,r\)</span>, on calcule la moyenne <span class="math inline">\(\omega_k\)</span> des valeurs de la série corrigée de la tendance sur tous les points à une même distance <span class="math inline">\(r\)</span> : <span class="math display">\[
+\omega_k=\frac{1}{\text{Card}\{j:q&lt;k+jr\le n-q\}}\sum_{\{j:q&lt;k+jr\le n-q\}}\hat Y^{\text{CT}}_{k+jr}
+\]</span></p>
+<p>Mais comme les termes <span class="math inline">\(\omega_k\)</span> ne sont pas nécessairement de somme nulle, on définit comme estimateur de la composante saisonnière <span class="math display">\[\begin{eqnarray*}
+\hat s_k=\left\{
+\begin{array}{ll}
+\omega_k-\frac{1}{r}\underset{i=1}{\stackrel{r}{\sum}}\ \omega_i &amp;\textrm{pour }k=1,\ldots,r\\
+\hat s_{k-r}&amp;\textrm{pour }k&gt;r.
+\end{array}
+\right.
+\end{eqnarray*}\]</span> Ainsi on assure que <span class="math inline">\((\hat s_t)_{t\in T}\)</span> est bien <span class="math inline">\(r\)</span>-périodique.</p>
+</section>
+<section id="cas-dune-périodicité-paire" class="level4" data-number="2.3.2.2">
+<h4 data-number="2.3.2.2" class="anchored" data-anchor-id="cas-dune-périodicité-paire"><span class="header-section-number">2.3.2.2</span> Cas d’une périodicité paire</h4>
+<p>Si la périodicité est paire <span class="math inline">\(r=2q\)</span>, on peut utiliser une approche similaire en considérant la moyenne mobile symétrique normalisée : <span class="math display">\[
+M_{2q}Y_t=\frac{1}{2q}\left(Y_{t-q+\frac{1}{2}}+\ldots+Y_{t-\frac{1}{2}}+Y_{t+\frac{1}{2}}+\ldots+Y_{t+q-\frac{1}{2}}\right),
+\textrm{ où }
+Y_{t-\frac{1}{2}}=\frac{1}{2}\left(Y_{t-1}+Y_t\right)
+\]</span> pour estimer la tendance et éliminer la saisonnalité.</p>
+<p>Pour se convaincre que la saisonnalité est éliminée, on peut réécrire <span class="math inline">\(M_{2q}Y_t\)</span> : <span class="math display">\[\begin{eqnarray*}
+M_{2q}Y_t &amp;=&amp; \frac{1}{2q} \underset{h=-(q-1)}{\stackrel{q}{\sum}} Y_{(t+h)-\frac 1 2} \\
+&amp;=&amp; \frac{1}{2q} \underset{h=-(q-1)}{\stackrel{q}{\sum}} \frac 1 2 (Y_{t+h-1}+Y_{t+h}) \\
+&amp;=&amp; \frac{1}{4q} \left\{\underset{h=-q}{\stackrel{q-1}{\sum}}  Y_{t+h} +  \underset{h=-q+1}{\stackrel{q}{\sum}}  Y_{t+h}\right\} \\
+&amp;=&amp; \frac{1}{2r} \left\{Y_{t-q} + 2 \underset{h=-q+1}{\stackrel{q-1}{\sum}}  Y_{t+h} +Y_{t+q}\right\}
+\end{eqnarray*}\]</span></p>
+<p>Ainsi <span class="math inline">\(M_{2q} s_t = \frac{1}{2r} \left\{\underset{h=-q}{\stackrel{q-1}{\sum}} s_{t+h} + \underset{h=-q+1}{\stackrel{q}{\sum}} s_{t+h}\right\}=0\)</span> car sommes de <span class="math inline">\(r\)</span> termes consécutifs de <span class="math inline">\(s_t\)</span>.</p>
+<p>On poursuit ensuite le même raisonnement que dans le cas d’une période impaire.</p>
+<p>En général, on ré-estime la tendance en considérant les données corrigées des variations saisonnières et en appliquant une des techniques vues précédemment. On obtient alors <span class="math inline">\(\tilde m_t\)</span>. La série des bruits est alors <span class="math display">\[
+X_t=Y_t-\tilde m_t -\hat s_t,\forall t\in T
+\]</span></p>
+<div id="exm-elec" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.7 </strong></span>On s’intéresse à la consommation trimestrielle en électricité d’une entreprise de 1997 à 1999. Les valeurs observées sont données dans la <a href="#tbl-elec">Table&nbsp;<span>2.1</span></a> et représentées en <a href="#fig-elec">Figure&nbsp;<span>2.9</span></a>. On observe une périodicité par trimestre <span class="math inline">\(r=2q=4\)</span>.</p>
+<div id="tbl-elec" class="anchored">
+<table class="table">
+<caption>Table&nbsp;2.1: Consommation électrique par trimestre de 1997 à 1999</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th>1997</th>
+<th>1998</th>
+<th>1999</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T1</td>
+<td>4.5</td>
+<td>5.5</td>
+<td>7.2</td>
+</tr>
+<tr class="even">
+<td>T2</td>
+<td>4.1</td>
+<td>4.9</td>
+<td>6.4</td>
+</tr>
+<tr class="odd">
+<td>T3</td>
+<td>3.7</td>
+<td>4.4</td>
+<td>4.8</td>
+</tr>
+<tr class="even">
+<td>T4</td>
+<td>5.1</td>
+<td>6.5</td>
+<td>6.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-elec" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-elec-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.9: Représentation de la consommation électrique par trimestre</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>On commence donc par appliquer la moyenne mobile <span class="math inline">\(M_4\)</span> sur la série <span class="math inline">\(Y_t\)</span> pour estimer la tendance : <span class="math inline">\(\hat m_t = M_4 Y_t\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       Qtr1   Qtr2   Qtr3   Qtr4
+1997     NA     NA 4.4750 4.7000
+1998 4.8875 5.1500 5.5375 5.9375
+1999 6.1750 6.2625     NA     NA</code></pre>
+</div>
+</div>
+<p>On forme alors la série corrigée de la tendance <span class="math inline">\(\hat Y^{\text{CT}} = Y_t - \hat m_t\)</span> :</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        Qtr1    Qtr2    Qtr3    Qtr4
+1997      NA      NA -0.7750  0.4000
+1998  0.6125 -0.2500 -1.1375  0.5625
+1999  1.0250  0.1375      NA      NA</code></pre>
+</div>
+</div>
+<p>On calcule alors les termes <span class="math inline">\(\omega_k\)</span></p>
+<p><span class="math display">\[
+\begin{array}{l}
+\omega_1 = \frac 1 2 (\hat Y^{\text{CT}}_5 + \hat Y^{\text{CT}}_9) \approx 0.8188\\
+\omega_2 = \frac 1 2 (\hat Y^{\text{CT}}_6 + \hat Y^{\text{CT}}_{10}) \approx - 0.0562\\
+\omega_3 = \frac 1 2 (\hat Y^{\text{CT}}_3 + \hat Y^{\text{CT}}_7) \approx -0.9562\\
+\omega_4 = \frac 1 2 (\hat Y^{\text{CT}}_4 + \hat Y^{\text{CT}}_8) \approx 0.4812\\
+\end{array}
+\]</span></p>
+<p>et <span class="math inline">\(\sum_{k=1}^4 \omega_k = 0.0719\)</span>. On en déduit alors la saisonnalité estimée <span class="math inline">\(\hat s_t\)</span> :</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          Qtr1      Qtr2      Qtr3      Qtr4
+1997  0.746875 -0.128125 -1.028125  0.409375
+1998  0.746875 -0.128125 -1.028125  0.409375
+1999  0.746875 -0.128125 -1.028125  0.409375</code></pre>
+</div>
+</div>
+<p>Cette procédure est faite par la fonction <code>decompose()</code> :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>elec<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">4.5</span>,<span class="fl">4.1</span>,<span class="fl">3.7</span>,<span class="fl">5.1</span>,<span class="fl">5.5</span>,<span class="fl">4.9</span>,<span class="fl">4.4</span>,<span class="fl">6.5</span>,<span class="fl">7.2</span>,<span class="fl">6.4</span>,<span class="fl">4.8</span>,<span class="fl">6.8</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">decompose</span>(<span class="fu">ts</span>(<span class="at">data=</span>elec,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1997</span>,<span class="dv">1</span>),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">1999</span>,<span class="dv">4</span>),<span class="at">frequency=</span><span class="dv">4</span>),<span class="at">type=</span><span class="st">"additive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chap1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<div id="exm-AirPdecompo" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.8 </strong></span>On reprend la série <em>AirPassengers</em> (voir <a href="intro.html#exm-AirP">Example&nbsp;<span>1.4</span></a>). La <a href="#fig-AirPdecompo">Figure&nbsp;<span>2.10</span></a> donne la sortie de la fonction <code>decompose()</code> appliquée sur la série logtransformée. On retrouve la saisonnalité (de période une année) et une tendance croissante pratiquement linéaire.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">decompose</span>(<span class="fu">log</span>(AirPassengers),<span class="at">type=</span><span class="st">"additive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-AirPdecompo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-AirPdecompo-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.10: Sortie de la fonction decompose sur la série AirPassengers logtransformée.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="elimination-de-la-saisonnalité-par-différenciation" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="elimination-de-la-saisonnalité-par-différenciation"><span class="header-section-number">2.3.3</span> Elimination de la saisonnalité par différenciation</h3>
+<p>Pour supprimer une saisonnalité de périodicité <span class="math inline">\(r\)</span>, on peut utiliser une méthode de différenciation en utilisant l’opérateur <span class="math inline">\(\nabla_r=I-B^r\)</span> à la série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> afin d’obtenir la série <span class="math display">\[
+\nabla_r Y_t=Y_t-Y_{t-r},\ \forall t\geq r
+\]</span></p>
+<p>Cette série ne contient plus de saisonnalité car <span class="math inline">\(\nabla_r Y_t=m_t-m_{t-r}+X_t-X_{t-r}\)</span>.</p>
+<p>On peut alors utiliser une des techniques vues précédemment pour estimer / éliminer la tendance en l’absence de saisonnalité sur la série désaisonnalisée <span class="math inline">\((\nabla_r Y_t)_{t\geq r}\)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Attention à ne pas confondre l’opérateur <span class="math inline">\(\nabla_r\)</span> et l’opérateur <span class="math inline">\(\nabla^k\)</span> (voir <a href="#def-opdiff">Definition&nbsp;<span>2.5</span></a>).</p>
+</div>
+</div>
+<div id="exm-AirPdiffperiode" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.9 </strong></span>On applique l’opérateur de différenciation <span class="math inline">\(\nabla_{12}\)</span> à la série <em>AirPassengers</em> logtransformée. <a href="#fig-AirPdiffperiodique">Figure&nbsp;<span>2.11</span></a> montre la série initiale à gauche et la série différenciée <span class="math inline">\(\nabla_{12} Y_t\)</span> à droite. Cette dernière ne présente plus de saisonnalité.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-AirPdiffperiodique" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-AirPdiffperiodique-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.11: Illustration de la différenciation de période 12 sur la série AirPassengers logtransformée.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<!--
+::: {.theoreme #thm-line}
+L'opérateur \textbf{retard} $B$ sur une série temporelle est défini par :
+$$
+B\ Y_t=Y_{t-1},\ \forall t\in T.
+$$
+On  note de manière naturelle :
+$$
+B^{h}\ Y_t=Y_{t-h},\ \forall t\in T \textrm{ et } \forall h\in \mathbb N^*
+$$
+:::
+
+::: {.proof}
+proof of Theorem @thm-line
+:::
+
+This is text with [special]{style="color:red;"} formatting.
+-->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chap2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Modélisation aléatoire des séries temporelles</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
