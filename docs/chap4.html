@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -198,22 +217,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#définition" id="toc-définition" class="nav-link" data-scroll-target="#définition"><span class="header-section-number">5.2.1</span> Définition</a></li>
   <li><a href="#un-exemple-instructif-le-processus-ar1" id="toc-un-exemple-instructif-le-processus-ar1" class="nav-link" data-scroll-target="#un-exemple-instructif-le-processus-ar1"><span class="header-section-number">5.2.2</span> Un exemple instructif : le processus AR(1)</a></li>
-  <li><a href="#liaisons-temporelles" id="toc-liaisons-temporelles" class="nav-link" data-scroll-target="#liaisons-temporelles"><span class="header-section-number">5.2.3</span> Liaisons temporelles</a></li>
+  <li><a href="#propriétés" id="toc-propriétés" class="nav-link" data-scroll-target="#propriétés"><span class="header-section-number">5.2.3</span> Propriétés</a></li>
+  <li><a href="#liaisons-temporelles" id="toc-liaisons-temporelles" class="nav-link" data-scroll-target="#liaisons-temporelles"><span class="header-section-number">5.2.4</span> Liaisons temporelles</a></li>
   </ul></li>
   <li><a href="#sec-chap4MA" id="toc-sec-chap4MA" class="nav-link" data-scroll-target="#sec-chap4MA"><span class="header-section-number">5.3</span> Processus MA</a>
   <ul class="collapse">
   <li><a href="#définition-1" id="toc-définition-1" class="nav-link" data-scroll-target="#définition-1"><span class="header-section-number">5.3.1</span> Définition</a></li>
-  <li><a href="#propriétés-2" id="toc-propriétés-2" class="nav-link" data-scroll-target="#propriétés-2"><span class="header-section-number">5.3.2</span> Propriétés</a></li>
-  <li><a href="#ecriture-arinfty" id="toc-ecriture-arinfty" class="nav-link" data-scroll-target="#ecriture-arinfty"><span class="header-section-number">5.3.3</span> Ecriture AR(<span class="math inline">\(\infty\)</span>)</a></li>
-  <li><a href="#liaisons-temporelles-1" id="toc-liaisons-temporelles-1" class="nav-link" data-scroll-target="#liaisons-temporelles-1"><span class="header-section-number">5.3.4</span> Liaisons temporelles</a></li>
+  <li><a href="#propriétés-1" id="toc-propriétés-1" class="nav-link" data-scroll-target="#propriétés-1"><span class="header-section-number">5.3.2</span> Propriétés</a></li>
+  <li><a href="#liaisons-temporelles-1" id="toc-liaisons-temporelles-1" class="nav-link" data-scroll-target="#liaisons-temporelles-1"><span class="header-section-number">5.3.3</span> Liaisons temporelles</a></li>
   </ul></li>
   <li><a href="#processus-arma" id="toc-processus-arma" class="nav-link" data-scroll-target="#processus-arma"><span class="header-section-number">5.4</span> Processus ARMA</a>
   <ul class="collapse">
   <li><a href="#définition-2" id="toc-définition-2" class="nav-link" data-scroll-target="#définition-2"><span class="header-section-number">5.4.1</span> Définition</a></li>
   <li><a href="#ecritures-mainfty-et-arinfty" id="toc-ecritures-mainfty-et-arinfty" class="nav-link" data-scroll-target="#ecritures-mainfty-et-arinfty"><span class="header-section-number">5.4.2</span> Ecritures MA(<span class="math inline">\(\infty\)</span>) et AR(<span class="math inline">\(\infty\)</span>)</a></li>
   <li><a href="#liaisons-temporelles-2" id="toc-liaisons-temporelles-2" class="nav-link" data-scroll-target="#liaisons-temporelles-2"><span class="header-section-number">5.4.3</span> Liaisons temporelles</a></li>
-  <li><a href="#propriétés-3" id="toc-propriétés-3" class="nav-link" data-scroll-target="#propriétés-3"><span class="header-section-number">5.4.4</span> Propriétés</a></li>
-  <li><a href="#méthode-du-coin" id="toc-méthode-du-coin" class="nav-link" data-scroll-target="#méthode-du-coin"><span class="header-section-number">5.4.5</span> Méthode du coin</a></li>
   </ul></li>
   <li><a href="#vers-les-processus-arima-sarima" id="toc-vers-les-processus-arima-sarima" class="nav-link" data-scroll-target="#vers-les-processus-arima-sarima"><span class="header-section-number">5.5</span> Vers les processus ARIMA/ SARIMA</a>
   <ul class="collapse">
@@ -262,15 +279,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus stationnaire du second ordre. Rappelons que l’opérateur retard <span class="math inline">\(B\)</span> est défini par <span class="math inline">\(BX_t=X_{t-1}\)</span> et l’opérateur avance <span class="math inline">\(F\)</span> par <span class="math inline">\(FX_t=X_{t+1}\)</span>. Par composition, on a alors que <span class="math inline">\(B^kX_t=X_{t-k}\)</span> et <span class="math inline">\(F^kX_t=X_{t+k}\)</span>. Puis par extension, un <strong>polynôme en</strong> <span class="math inline">\(B\)</span> (ou <span class="math inline">\(F\)</span>) est défini par <span class="math display">\[
 \left(\sum_{i=1}^p a_iB^i\right)X_t=\sum_{i=1}^p a_iX_{t-i}.
 \]</span></p>
-<p>On a déjà utilisé ce type d’opérateur pour définir les moyennes mobiles (voir chapitre <a href="chap1.html"><span>Chapter&nbsp;2</span></a>). Nous avons également considéré la notion de série en <span class="math inline">\(B\)</span> quand nous avons introduit la notion de filtrage linéaire (voir <a href="chap3.html"><span>Chapter&nbsp;4</span></a>). Rappelons que nous avons vu que si <span class="math inline">\((X_t)_{t\in \Z}\)</span> est un processus stationnaire, alors le processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span> défini par <span class="math display">\[Y_t=\sum_{i\in \Z}a_iX_{t-i}\]</span> est également stationnaire, sous la condition de la convergence normale de la série des coefficients réels, i.e.&nbsp;sous l’hypothèse <span class="math inline">\(\sum_{i\in \Z}|a_i|&lt;+\infty\)</span>.</p>
+<p>On a déjà utilisé ce type d’opérateur pour définir les moyennes mobiles (voir <a href="chap1.html"><span>Chapter&nbsp;2</span></a>). Nous avons également considéré la notion de série en <span class="math inline">\(B\)</span> quand nous avons introduit la notion de filtrage linéaire (voir <a href="chap3.html"><span>Chapter&nbsp;4</span></a>). Rappelons que nous avons vu que si <span class="math inline">\((X_t)_{t\in \Z}\)</span> est un processus stationnaire, alors le processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span> défini par <span class="math display">\[Y_t=\sum_{i\in \Z}a_iX_{t-i}\]</span> est également stationnaire si <span class="math inline">\(\sum_{i\in \Z}|a_i|&lt;+\infty\)</span>.</p>
 <div id="def-serieB" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.1 </strong></span>Soit <span class="math inline">\((a_i)_{i\in \Z}\)</span> une famille absolument sommable de réels (<span class="math inline">\(\sum_{i\in \Z}|a_i|&lt;+\infty\)</span>). <br> On appelle <span style="color:blue;"><strong>série en</strong> <span class="math inline">\(B\)</span></span> de coefficients <span class="math inline">\((a_i)_{i\in \Z}\)</span> l’opérateur <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 5.1 </strong></span>Soit <span class="math inline">\((a_i)_{i\in \Z}\)</span> une famille absolument sommable de réels <span class="math inline">\(\left(\sum_{i\in \Z}|a_i|&lt;+\infty\right)\)</span>. <br> On appelle <span style="color:blue;"><strong>série en</strong> <span class="math inline">\(B\)</span></span> de coefficients <span class="math inline">\((a_i)_{i\in \Z}\)</span> l’opérateur <span class="math display">\[
 P(B)=\sum_{i\in \Z}a_iB^i
 \]</span> sur les processus stationnaires qui transforme le processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> en un processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span> défini par , pour tout <span class="math inline">\(t\in \Z\)</span>, par <span class="math display">\[
 Y_t=P(B)X_t=\left(\sum_{i\in \Z}a_iB^i\right)X_t=\sum_{i\in \Z}a_iX_{t-i},\ \forall t\in\Z
 \]</span></p>
 </div>
-<p><br></p>
 <p>La manipulation des séries en <span class="math inline">\(B\)</span> se fait comme celle des séries réelles, en particulier pour les combinaisons linéaires et composées de séries.</p>
 <div id="prp-serieB" class="propositon theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 5.1 </strong></span>On a les résultats suivants :</p>
@@ -285,25 +301,28 @@ Y_t=P(B)X_t=\left(\sum_{i\in \Z}a_iB^i\right)X_t=\sum_{i\in \Z}a_iX_{t-i},\ \for
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Soient <span class="math inline">\(P(B)=\sum_{i\in \Z}a_iB^i\)</span> et <span class="math inline">\(Q(B)=\sum_{i\in \Z}b_iB^i\)</span> deux séries en <span class="math inline">\(B\)</span>, donc telles que <span class="math inline">\(\sum_{i\in \Z}|a_i|&lt;+\infty\)</span> et <span class="math inline">\(\sum_{i\in \Z}|b_i|&lt;+\infty\)</span>. Considérons l’opérateur <span class="math inline">\(\lambda P(B)+Q(B)\)</span> et appliquons le à un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span>. On obtient, pour tout <span class="math inline">\(t\in \Z\)</span> : <span class="math display">\[\begin{eqnarray*}
-\left(\lambda P(B)+Q(B)\right)X_t&amp;=&amp;\lambda
+\left(\lambda P(B)+Q(B)\right)X_t
+&amp;=&amp;\lambda
 P(B)X_t+Q(B)X_t=\sum_{i\in \Z}\lambda a_iX_{t-i}+\sum_{i\in \Z}b_iX_{t-i}\\
 &amp;=&amp;\lim_{n\to +\infty}\sum_{i=-n}^{i=+n}\lambda a_iX_{t-i}+\lim_{n\to
-+\infty}\sum_{i=-n}^{i=+n}b_iX_{t-i}\\ &amp;=&amp;\lim_{n\to
++\infty}\sum_{i=-n}^{i=+n}b_iX_{t-i}\\
+&amp;=&amp;\lim_{n\to
 +\infty}\sum_{i=-n}^{i=+n}\left(\lambda a_iX_{t-i}+b_iX_{t-i}\right)=\sum_{i\in
 \Z}(\lambda a_i+b_i)X_{t-i},
-\end{eqnarray*}\]</span> où la dernière égalité est justifiée par l’absolue convergence de la série <span class="math inline">\(\sum(\lambda a_i+b_i)\)</span> ga rantie par l’inégalité <span class="math display">\[
+\end{eqnarray*}\]</span> où la dernière égalité est justifiée par l’absolue convergence de la série <span class="math inline">\(\sum(\lambda a_i+b_i)\)</span> garantie par l’inégalité <span class="math display">\[
 \sum_{i\in \Z} |\lambda a_i+b_i|\leq \lambda\sum_{i\in \Z}|
 a_i|+\sum_{i\in \Z}|b_i|&lt;+\infty.
 \]</span> On a bien alors <span class="math display">\[
 \lambda\sum_{i\in \Z}
-a_iB^i+\sum_{i\in \Z} b_iB^i=\sum_{i\in \Z}(\lambda a_i+b_i)B^i. \]</span> Considérons maintenant la composition des deux séries <span class="math inline">\(P(B)\)</span> et <span class="math inline">\(Q(B)\)</span>. On a <span class="math display">\[
+a_iB^i+\sum_{i\in \Z} b_iB^i=\sum_{i\in \Z}(\lambda a_i+b_i)B^i.
+\]</span> Considérons maintenant la composition des deux séries <span class="math inline">\(P(B)\)</span> et <span class="math inline">\(Q(B)\)</span>. On a <span class="math display">\[
 P(B)\circ Q(B)X_t=P(B)Y_t,
 \]</span> où <span class="math display">\[
 Y_t=\sum_{j\in \Z} b_jX_{t-j}.
@@ -326,102 +345,109 @@ P(B)\circ Q(B)X_t=\sum_{k\in \Z}c_kB^k,
 </section>
 <section id="inversion-de-i-lambda-b" class="level3" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="inversion-de-i-lambda-b"><span class="header-section-number">5.1.2</span> Inversion de <span class="math inline">\(I-\lambda B\)</span></h3>
-<ul>
-<li>Dans l’étude des modèles ARMA, on va avoir besoin de savoir quand et comment on peut inverser des polynômes en <span class="math inline">\(B\)</span></li>
-<li>Commençons par un polynôme de degré 1 en <span class="math inline">\(B\)</span> : <span class="math inline">\(I-\lambda B\)</span>.</li>
-<li>Cet opérateur associe à tout processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> un nouveau processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span> tel que <span class="math display">\[
-Y_t=(I-\lambda
-B)X_t=X_t-\lambda X_{t-1}.
-\]</span></li>
-<li>Le problème de l’inversion du polynôme <span class="math inline">\(I-\lambda B\)</span> revient, une fois donné un processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, à déterminer s’il existe un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> vérifiant : <span class="math display">\[
+<p>Dans l’étude des modèles ARMA, on va avoir besoin de savoir quand et comment on peut inverser des polynômes en <span class="math inline">\(B\)</span>. On va donc ici commencer par le polynôme de degré 1 en <span class="math inline">\(B\)</span> : <span class="math inline">\(I-\lambda B\)</span>.</p>
+<p>L’opérateur <span class="math inline">\(P(B)=I-\lambda B\)</span> associe à tout processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> un nouveau processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span> tel que <span class="math display">\[
+Y_t=(I-\lambda B)X_t=X_t-\lambda X_{t-1}.
+\]</span> Se donnant un processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, le problème de l’inversion du polynôme <span class="math inline">\(I-\lambda B\)</span> revient à déterminer s’il existe un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> vérifiant : <span class="math display">\[
 Y_t=(I-\lambda B)X_t=X_t-\lambda X_{t-1}
-\]</span> et de donner son expression en fonction du processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>.</li>
-</ul>
-<p>On va constater que ce polynôme <span class="math inline">\(I-\lambda B\)</span> est inversible seulement si <span class="math inline">\(|\lambda|\neq 1\)</span> et on obtiendra dans ce cas l’expression de son inverse.</p>
+\]</span> et de donner son expression en fonction du processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>.</p>
+<p>On va montrer dans la suite que ce polynôme <span class="math inline">\(P(B)=I-\lambda B\)</span> est inversible seulement si <span class="math inline">\(|\lambda|\neq 1\)</span> et on obtiendra dans ce cas l’expression de son inverse.</p>
 <section id="er-cas-lambda1" class="level4" data-number="5.1.2.1">
 <h4 data-number="5.1.2.1" class="anchored" data-anchor-id="er-cas-lambda1"><span class="header-section-number">5.1.2.1</span> 1er Cas : <span class="math inline">\(|\lambda|&lt;1\)</span></h4>
 <ul>
-<li><p>Soit la suite <span class="math inline">\((a_i)_{i\in \Z}\)</span> définie par <span class="math inline">\(a_i=0\)</span> pour <span class="math inline">\(i\in\mathbb Z \setminus \mathbb N\)</span> et <span class="math inline">\(a_i=\lambda^i\)</span> pour <span class="math inline">\(i\in \N\)</span>. On a alors <span class="math display">\[
-\sum_{i\in\Z}|a_i|=\sum_{i\in \N}|\lambda|^i&lt;+\infty.
-\]</span></p></li>
-<li><p>La série en <span class="math inline">\(B\)</span> de coefficients <span class="math inline">\((a_i)_{i\in \Z}\)</span> est donc bien définie et on peut écrire <span class="math display">\[
-(I-\lambda B)\sum_{i\in \Z}a_iB^i=(I-\lambda B)\sum_{i\in
-\N}\lambda^iB^i=\sum_{i\in \N}\lambda^iB^i-\sum_{i\in \N}\lambda^{i+1}B^{i+1}=I.
-\]</span></p></li>
-<li><p>Ainsi, pour un processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span> donné, le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> défini par <span class="math inline">\(X_t=\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iY_{t-i}\)</span> est solution de l’équation <span class="math display">\[
-Y_t=(I-\lambda B)X_t.
-\]</span></p></li>
-<li><p>Mais <span class="math inline">\((X_t)_{t\in\Z}\)</span> avec <span class="math inline">\(X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}\)</span> n’est pas l’unique solution : soit <span class="math inline">\((X^*_t)_{t\in \Z}\)</span> tel que <span class="math inline">\((I-\lambda B)X_t^*=0\)</span>. Le processus <span class="math inline">\((\tilde X_t)_{t\in \Z}\)</span> défini par <span class="math inline">\(\tilde X_t=X_t+X_t^*\)</span> est tel que <span class="math display">\[
-Y_t=(I-\lambda B)\tilde X_t.
-\]</span></p></li>
-<li><p>Un processus <span class="math inline">\((X^*_t)_{t\in \Z}\)</span> vérifiant <span class="math inline">\(X_t^*-\lambda X_{t-1}^*=0\)</span> est de la forme <span class="math inline">\(X^*_t=\lambda^t A\)</span>, pour tout <span class="math inline">\(t\in\Z\)</span>, où <span class="math inline">\(A\)</span> est une v.a.r. de <span class="math inline">\(L^2\)</span>.</p></li>
-<li><p>Ainsi, étant donné un processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, les solutions de l’équation <span class="math display">\[
-Y_t=(I-\lambda B)X_t,\ \forall t\in\Z
-\]</span> sont de la forme <span class="math display">\[
-\tilde X_t=X_t+X_t^*=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}+\lambda^t A,\ t\in\Z
-\]</span></p></li>
-<li><p>Mais le processus <span class="math inline">\((X^*_t)_{t\in \Z}\)</span> n’est pas stationnaire !</p></li>
-<li><p>Etant donné le processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, <strong>la solution stationnaire</strong> de l’équation <span class="math display">\[
-Y_t=(I-\lambda B)X_t,
-\]</span> est le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> défini par <span class="math display">\[
-X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}.
-\]</span></p></li>
+<li><strong>Une solution :</strong></li>
 </ul>
-<div class="proposiiton">
-<p>L’opérateur <span class="math inline">\((I-\lambda B)\)</span> est donc inversible dans la classe des processus stationnaires d’inverse <span class="math inline">\(\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iB^i\)</span> quand <span class="math inline">\(|\lambda|&lt;1\)</span>.</p>
+<p>Soit la suite <span class="math inline">\((a_i)_{i\in \Z}\)</span> définie par <span class="math inline">\(a_i=0\)</span> pour <span class="math inline">\(i\in\mathbb Z \setminus \mathbb N\)</span> et <span class="math inline">\(a_i=\lambda^i\)</span> pour <span class="math inline">\(i\in \N\)</span>. On a alors <span class="math display">\[
+\sum_{i\in\Z}|a_i|=\sum_{i\in \N}|\lambda|^i&lt;+\infty.
+\]</span></p>
+<p>La série en <span class="math inline">\(B\)</span> de coefficients <span class="math inline">\((a_i)_{i\in \Z}\)</span> est donc bien définie et on peut écrire <span class="math display">\[\begin{eqnarray*}
+(I-\lambda B)\left(\sum_{i\in \Z}a_iB^i\right)
+&amp;=&amp;(I-\lambda B)\left(\sum_{i\in\N}\lambda^iB^i\right)\\
+&amp;=&amp;\sum_{i\in \N}\lambda^iB^i-\sum_{i\in \N}\lambda^{i+1}B^{i+1}=I.
+\end{eqnarray*}\]</span></p>
+<p>Ainsi, pour un processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span> donné, le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> défini par <span class="math inline">\(X_t=\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iY_{t-i}\)</span> est solution de l’équation <span class="math display">\[
+Y_t=(I-\lambda B)X_t.
+\]</span></p>
+<ul>
+<li><strong>Non unicité :</strong></li>
+</ul>
+<p><span class="math inline">\((X_t)_{t\in\Z}\)</span> avec <span class="math inline">\(X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}\)</span> n’est pas l’unique solution. En effet, soit <span class="math inline">\((X^*_t)_{t\in \Z}\)</span> tel que <span class="math inline">\((I-\lambda B)X_t^*=0\)</span> et définissons le processus <span class="math inline">\((\tilde X_t)_{t\in \Z}\)</span> par <span class="math inline">\(\tilde X_t=X_t+X_t^*\)</span>. Alors on a que <span class="math inline">\(Y_t=(I-\lambda B)\tilde X_t\)</span>.</p>
+<p>Un processus <span class="math inline">\((X^*_t)_{t\in \Z}\)</span> vérifiant <span class="math inline">\((I-\lambda B)X_t^* = X_t^*-\lambda X_{t-1}^*=0\)</span> est de la forme <span class="math inline">\(X^*_t=\lambda^t A\)</span>, pour tout <span class="math inline">\(t\in\Z\)</span>, où <span class="math inline">\(A\)</span> est une v.a.r. de <span class="math inline">\(L^2\)</span>. Ainsi, étant donné un processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, les solutions de l’équation <span class="math inline">\(Y_t=(I-\lambda B)X_t,\ \forall t\in\Z\)</span> sont de la forme <span class="math display">\[
+\tilde X_t=X_t+X_t^*=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}+\lambda^t A,\ t\in\Z
+\]</span></p>
+<p>Mais le processus <span class="math inline">\((X^*_t)_{t\in \Z}\)</span> n’est pas stationnaire !</p>
+<ul>
+<li><strong>Unique solution stationnaire :</strong></li>
+</ul>
+<p>Etant donné le processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, <strong>la solution stationnaire</strong> de l’équation <span class="math inline">\(Y_t=(I-\lambda B)X_t\)</span> est le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> défini par <span class="math display">\[
+X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}.
+\]</span></p>
+<div id="prp-lambdainf1" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.2 </strong></span>L’opérateur <span class="math inline">\((I-\lambda B)\)</span> est inversible dans la classe des processus stationnaires d’inverse <span class="math inline">\(\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iB^i\)</span> quand <span class="math inline">\(|\lambda|&lt;1\)</span>.</p>
 </div>
 </section>
 <section id="ème-cas-lambda1" class="level4" data-number="5.1.2.2">
 <h4 data-number="5.1.2.2" class="anchored" data-anchor-id="ème-cas-lambda1"><span class="header-section-number">5.1.2.2</span> 2ème Cas : <span class="math inline">\(|\lambda|&gt;1\)</span></h4>
-<ul>
-<li>On peut écrire <span class="math display">\[
+<p>On peut écrire <span class="math display">\[
 I-\lambda B=-\lambda B\left(I-\frac{1}{\lambda}F\right)
-\]</span></li>
-<li>Comme <span class="math inline">\(|\frac 1 \lambda|&lt;1\)</span>, par le même raisonnement que précédent, le polynôme <span class="math inline">\(\left(I-\frac{1}{\lambda}F\right)\)</span> est inversible dans la classe des processus stationnaires d’inverse <span class="math inline">\(\sum_{i=0}^{+\infty}\lambda^{-i}F^i\)</span>.</li>
-<li>Le processus <span class="math inline">\(-\lambda B\)</span> est inversible d’inverse <span class="math inline">\((-1/\lambda)F\)</span>.</li>
-</ul>
-<div class="proposition">
-<p>Quand <span class="math inline">\(|\lambda|&gt;1\)</span>, le processus <span class="math inline">\(I-\lambda B\)</span> est inversible dans la classe des processus stationnaires d’inverse <span class="math display">\[
-\left(\frac{-1}{\lambda}F\right)\sum_{i=0}^{+\infty}\frac{1}{\lambda^i}F^i=-\sum_{i=0}^{+\infty}\frac{1}{\lambda^{i+1}}F^{i+1}=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}F^j
+\]</span> Comme <span class="math inline">\(|\frac 1 \lambda|&lt;1\)</span>, par le même raisonnement que précédent, le polynôme <span class="math inline">\(\left(I-\frac{1}{\lambda}F\right)\)</span> est inversible dans la classe des processus stationnaires d’inverse <span class="math inline">\(\sum_{i=0}^{+\infty}\lambda^{-i}F^i\)</span>. Le processus <span class="math inline">\(-\lambda B\)</span> est inversible d’inverse <span class="math inline">\((-1/\lambda)F\)</span>.</p>
+<div id="prp-lambdasup1" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.3 </strong></span>Quand <span class="math inline">\(|\lambda|&gt;1\)</span>, l’e processus’opérateur <span class="math inline">\(I-\lambda B\)</span> est inversible dans la classe des processus stationnaires d’inverse <span class="math display">\[
+\left(\frac{-1}{\lambda}F\right)\left(\sum_{i=0}^{+\infty}\frac{1}{\lambda^i}F^i\right)
+=-\sum_{i=0}^{+\infty}\frac{1}{\lambda^{i+1}}F^{i+1}=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}F^j
+\]</span></p>
+<p>Etant donné un processus stationnaire <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, l’unique solution stationnaire de l’équation <span class="math inline">\(Y_t=(I-\lambda B)X_t\)</span> est donc <span class="math inline">\((X_t)_{t\in \Z}\)</span> défini par <span class="math display">\[
+X_t=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}Y_{t+j}.
 \]</span></p>
 </div>
-<ul>
-<li>Le processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span> étant donné, l’unique solution stationnaire de l’équation <span class="math display">\[
-Y_t=(I-\lambda B)X_t,
-\]</span> est donc <span class="math inline">\((X_t)_{t\in \Z}\)</span> définie par <span class="math display">\[
-X_t=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}Y_{t+j}.
-\]</span></li>
-<li>Remarque : cette fois-ci, l’expression de la solution <span class="math inline">\((X_t)_{t\in \Z}\)</span> est fonction du futur du processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span> et non en fonction de son passé comme dans le cas <span class="math inline">\(|\lambda|&lt;1\)</span>.</li>
-</ul>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans le cas <span class="math inline">\(|\lambda|&gt;1\)</span>, l’expression de la solution <span class="math inline">\((X_t)_{t\in \Z}\)</span> est fonction du futur du processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span> et non en fonction de son passé comme dans le cas <span class="math inline">\(|\lambda|&lt;1\)</span>.</p>
+</div>
+</div>
 </section>
 <section id="ème-cas-lambda1-1" class="level4" data-number="5.1.2.3">
 <h4 data-number="5.1.2.3" class="anchored" data-anchor-id="ème-cas-lambda1-1"><span class="header-section-number">5.1.2.3</span> 3ème Cas : <span class="math inline">\(|\lambda|=1\)</span></h4>
-<div class="proposition">
-<p>Si <span class="math inline">\(|\lambda|=1\)</span>, l’opérateur <span class="math inline">\(I-\lambda B\)</span> n’est pas inversible dans la classe des processus stationnaires.</p>
+<div id="prp-lambda1" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.4 </strong></span>Si <span class="math inline">\(|\lambda|=1\)</span>, l’opérateur <span class="math inline">\(I-\lambda B\)</span> n’est pas inversible dans la classe des processus stationnaires.</p>
 </div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Preuve
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <ul>
-<li><p>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> le processus constant <span class="math inline">\(X_t=m,\ \forall t\in\Z\)</span>. On a alors <span class="math display">\[
-(I- B)X_t= m-m=0,
-\]</span> ce qui prouve que l’opérateur n’est pas injectif et donc pas bijectif.</p></li>
+<li><p>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> le processus constant <span class="math inline">\(X_t=m,\ \forall t\in\Z\)</span>. On a alors <span class="math inline">\((I- B)X_t= m-m=0\)</span> ce qui prouve que l’opérateur n’est pas injectif et donc pas bijectif.</p></li>
 <li><p>On peut aussi montrer que <span class="math inline">\((I-B)\)</span> n’est pas surjectif :</p></li>
 </ul>
-<p>si le processus constant <span class="math inline">\((Y_t)_{t\in\Z}\)</span> égal à <span class="math inline">\(m\neq 0\)</span> avait un antécédent <span class="math inline">\((X_t)_{t\in \Z}\)</span> stationnaire, ce dernier serait tel que : <span class="math display">\[
-X_t-X_{t-1}=m,\ \forall t\in\Z
-\]</span> On arrive alors à une contradiction car <span class="math inline">\(\E [X_t-X_{t-1}]=0\neq m\)</span>.</p>
+<p>si le processus constant <span class="math inline">\((Y_t)_{t\in\Z}\)</span> égal à <span class="math inline">\(m\neq 0\)</span> avait un antécédent <span class="math inline">\((X_t)_{t\in \Z}\)</span> stationnaire, ce dernier serait tel que <span class="math inline">\(X_t-X_{t-1}=m,\ \forall t\in\Z\)</span>. On arrive alors à une contradiction car <span class="math inline">\(\E [X_t-X_{t-1}]=0\neq m\)</span>.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="inverse-dun-polynôme-en-b" class="level3" data-number="5.1.3">
 <h3 data-number="5.1.3" class="anchored" data-anchor-id="inverse-dun-polynôme-en-b"><span class="header-section-number">5.1.3</span> Inverse d’un polynôme en <span class="math inline">\(B\)</span></h3>
-<ul>
-<li>Considérons comme opérateur un polynôme en <span class="math inline">\(B\)</span> de la forme <span class="math display">\[
-\Phi(B)=I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p.
-\]</span></li>
-<li>Question : <span class="math inline">\(\Phi(B)\)</span> est-il inversible ? Se donnant un processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, existe-t-il un unique processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> tel que <span class="math display">\[
+<p>On considère maintenant un polynôme en <span class="math inline">\(B\)</span> de la forme <span class="math display">\[
+    \Phi(B)=I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p.
+\]</span> et on répondre à la question suivante : <span class="math inline">\(\Phi(B)\)</span> est-il inversible ? Se donnant un processus <span class="math inline">\((Y_t)_{t\in \Z}\)</span>, existe-t-il un unique processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> tel que <span class="math display">\[
 \Phi(B)X_t=Y_t,\ \forall t\in\Z.
-\]</span></li>
-<li>Dans les complexes, ce polynôme a <span class="math inline">\(p\)</span> racines non nécessairement distinctes. Comme il est non constant, ce polynome est scindé. On peut donc alors utiliser les résultats du polynôme <span class="math inline">\(I-\lambda B\)</span>.</li>
-</ul>
-<p>Discussion des cas</p>
+\]</span> Dans les complexes, le polynôme <span class="math inline">\(\Phi(z)\)</span> a <span class="math inline">\(p\)</span> racines non nécessairement distinctes. Comme il est non constant, ce polynome est scindé. On peut donc alors utiliser les résultats du polynôme <span class="math inline">\(I-\lambda B\)</span>. On a alors la discussion de cas suivante :</p>
 <ul>
 <li>Si au moins une des racines est de module 1, alors il n’existe pas de processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> solution de l’équation <span class="math inline">\(\Phi(B)X_t=Y_t\)</span>.</li>
 <li>Si toutes les racines sont de module différent de 1, alors il existe une série en <span class="math inline">\(B\)</span>, notée <span class="math inline">\(\Psi(B)=\sum \psi_iB^i\)</span>, telle que :
@@ -443,7 +469,7 @@ X_t-X_{t-1}=m,\ \forall t\in\Z
 <li><em>Identification</em> :</li>
 </ul>
 <p>Par exemple quand toutes les racines sont à l’extérieur du disque unité, on écrit <span class="math display">\[
-\left(1-\varphi_1z-\varphi_2z^2-\cdots-\varphi_pz^p\right)  \sum_{i\in\N}\psi_iz^i=1
+\left(1-\varphi_1z-\varphi_2z^2-\cdots-\varphi_pz^p\right)  \left(\sum_{i\in\N}\psi_iz^i\right)=1
 \]</span> dont on tire des équations donnant les expressions des coefficients <span class="math inline">\(\psi_i\)</span> en fonction des <span class="math inline">\(\varphi_i\)</span>.</p>
 <ul>
 <li><em>Décomposition en éléments simples de</em> <span class="math inline">\(\Phi(z)\)</span> : On écrit <span class="math display">\[\begin{eqnarray*} \frac{1}{\Phi(z)}&amp;=&amp;\frac{1}{\prod_{i=1}^p (1-\lambda_iz)}\\
@@ -459,99 +485,92 @@ X_t-X_{t-1}=m,\ \forall t\in\Z
 <h2 data-number="5.2" class="anchored" data-anchor-id="sec-chap4AR"><span class="header-section-number">5.2</span> Processus AR</h2>
 <section id="définition" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="définition"><span class="header-section-number">5.2.1</span> Définition</h3>
-<ul>
-<li><p>Dans cette partie, on se restreint à des <strong>processus centrés</strong> sans perte de généralités</p></li>
-<li><p>Dans de nombreuses situations pratiques la valeur en un instant <span class="math inline">\(t\)</span> d’une série temporelle peut s’écrire comme la somme d’une combinaison linéaire des valeurs précédentes de la série et d’un terme de bruit. Un tel modèle est connu sous le nom d’un <strong>processus AR (AutoRegressive)</strong>.</p></li>
-</ul>
+<p>Dans cette partie, on se restreint à des <strong>processus centrés</strong> sans perte de généralités</p>
+<p>Dans de nombreuses situations pratiques la valeur en un instant <span class="math inline">\(t\)</span> d’une série temporelle peut s’écrire comme la somme d’une combinaison linéaire des valeurs précédentes de la série et d’un terme de bruit. Un tel modèle est connu sous le nom d’un <strong>processus AR (AutoRegressive)</strong>.</p>
 <div id="def-ARp" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.2 (AR(p)) </strong></span>On dit qu’un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <strong>auto-régressive d’ordre</strong> <span class="math inline">\(p\)</span> (noté AR(p)) s’il vérifie l’équation récurrente : <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 5.2 (AR(p)) </strong></span><br> On dit qu’un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <span style="color:blue;"><strong>auto-régressive d’ordre</strong></span> <span class="math inline">\(p\)</span> (noté AR(p)) s’il vérifie l’équation récurrente : <span class="math display">\[
 X_t-\varphi_1X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p}=\varepsilon_t,
 \]</span> où <span class="math inline">\((\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)\)</span> et <span class="math inline">\((\varphi_1,\ldots,\varphi_p)\in\mathbb R^p\)</span> avec <span class="math inline">\(\varphi_p\neq0\)</span>.</p>
-<p>Réécriture : un processus AR(p) vérifie l’équation : <span class="math inline">\(\Phi(B)X_t=\varepsilon_t,\ \forall t\in\Z\)</span> avec le polynome en <span class="math inline">\(B\)</span> <span class="math display">\[
-\Phi(B)=I-\varphi_1 B-\varphi_2 B^2-\cdots-\varphi_p B^p. \]</span></p>
-<p>Cette représentation est dite <strong>canonique</strong> si le bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> est tel que <span class="math inline">\(\varepsilon_t\perp\mathcal H_{-\infty}^{t-1}(X)\)</span> pour tout <span class="math inline">\(t\in\Z\)</span>.</p>
+<p><strong>Réécriture :</strong> <br> Un processus AR(p) vérifie l’équation : <span class="math inline">\(\Phi(B)X_t=\varepsilon_t,\ \forall t\in\Z\)</span> avec le polynome en <span class="math inline">\(B\)</span> <span class="math display">\[
+\Phi(B)=I-\varphi_1 B-\varphi_2 B^2-\cdots-\varphi_p B^p.
+\]</span></p>
+<p>Cette représentation est dite <span style="color:blue;"><strong>canonique</strong></span> si le bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> est tel que <span class="math inline">\(\varepsilon_t\perp\mathcal H_{-\infty}^{t-1}(X)\)</span> pour tout <span class="math inline">\(t\in\Z\)</span>.</p>
 </div>
-<ul>
-<li><p>Comme un processus AR doit être stationnaire par déf., les racines du polynôme <span class="math inline">\(\Phi(z)\)</span> doivent toutes être de module différent de 1 !</p></li>
-<li><p>Illustration dans le cas AR(1) : Soit un processus AR(1) vérifiant <span class="math display">\[
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comme un processus AR doit être stationnaire par déf., les racines du polynôme <span class="math inline">\(\Phi(z)\)</span> doivent toutes être de module différent de 1 !</p>
+<p>Soit un processus AR(1) vérifiant <span class="math display">\[
 X_t-\varphi X_{t-1}=\varepsilon_t \textrm{ avec }\varphi=\pm 1.
 \]</span> Par itération, on a <span class="math inline">\(X_t=\varphi^tX_0+\sum_{j=0}^{t-1}\varphi^j\varepsilon_{t-j}\)</span>. <span class="math display">\[
 \V(X_t)+\V(\varphi^tX_0)-2\varphi^t\C(X_t,X_0)=\sum_{j=0}^{t-1}\varphi^{2j}\V(\varepsilon_{t-j}).
 \]</span> S’il existe un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> vérifiant cette équation, on doit donc avoir <!--$2\gamma_X(0)-2\varphi^t\gamma_X(t)=t\sigma^2$
                             et donc --> <span class="math inline">\(2- 2 \varphi^t\rho_X(t)=\frac{t\sigma^2}{\gamma_X(0)}.\)</span> On aboutit à une contradiction en faisant tendre <span class="math inline">\(t\)</span> vers <span class="math inline">\(+\infty\)</span>. <!--puisque le terme
                             de gauche reste borné et le terme de droite tend vers $+\infty$. Il n'existe
-                            donc pas de processus stationnaire vérifiant cette équation.--></p></li>
-</ul>
+                            donc pas de processus stationnaire vérifiant cette équation.--></p>
+</div>
+</div>
 </section>
 <section id="un-exemple-instructif-le-processus-ar1" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="un-exemple-instructif-le-processus-ar1"><span class="header-section-number">5.2.2</span> Un exemple instructif : le processus AR(1)</h3>
-<ul>
-<li><p>On considère <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus AR(1), vérifiant donc l’équation de récurrence <span class="math display">\[
+<p>On considère <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus AR(1), vérifiant donc l’équation de récurrence <span class="math display">\[
 X_t-\varphi X_{t-1}=\varepsilon_t,\ \forall t\in\Z
-\]</span> où <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> est un bruit blanc <span class="math inline">\(\text{WN}(0,\sigma^2)\)</span> et <span class="math inline">\(\varphi\neq 0\)</span>.</p></li>
-<li><p>D’après l’étude précédente sur l’inversibilité de <span class="math inline">\(I-\varphi B\)</span>, trois cas se présentent suivant les valeurs du paramètre <span class="math inline">\(\varphi\)</span>.</p></li>
-</ul>
+\]</span> où <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> est un bruit blanc <span class="math inline">\(\text{WN}(0,\sigma^2)\)</span> et <span class="math inline">\(\varphi\neq 0\)</span>.</p>
+<p>D’après l’étude précédente sur l’inversibilité de <span class="math inline">\(I-\varphi B\)</span>, trois cas se présentent suivant les valeurs du paramètre <span class="math inline">\(\varphi\)</span>.</p>
 <section id="cas-varphi1" class="level4" data-number="5.2.2.1">
 <h4 data-number="5.2.2.1" class="anchored" data-anchor-id="cas-varphi1"><span class="header-section-number">5.2.2.1</span> Cas <span class="math inline">\(|\varphi|=1\)</span></h4>
-<ul>
-<li>On a vu précédemment que dans ce cas, il n’existe pas de processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> vérifiant l’équation <span class="math display">\[
-(I-\varphi B)X_t=\varepsilon_t.
-\]</span></li>
-<li>Il n’existe donc pas de processus AR(1) de paramètre 1 ou -1.</li>
-</ul>
+<p>On a vu précédemment que dans ce cas, il n’existe pas de processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> vérifiant l’équation <span class="math inline">\((I-\varphi B)X_t=\varepsilon_t\)</span>. Il n’existe donc pas de processus AR(1) de paramètre 1 ou -1.</p>
 </section>
 <section id="cas-varphi1-1" class="level4" data-number="5.2.2.2">
 <h4 data-number="5.2.2.2" class="anchored" data-anchor-id="cas-varphi1-1"><span class="header-section-number">5.2.2.2</span> Cas <span class="math inline">\(|\varphi|&lt;1\)</span></h4>
 <ul>
-<li><p>Pour <span class="math inline">\(|\varphi|&lt;1\)</span>, l’inversibilité de <span class="math inline">\(I-\varphi B\)</span> est assurée dans la classe des processus stationnaires et <span class="math display">\[
-(I-\varphi B)^{-1}=\sum_{i=0}^{+\infty}\varphi^iB^i.
-\]</span></p></li>
-<li><p>Ainsi le processus AR(1) pour <span class="math inline">\(|\varphi|&lt;1\)</span> s’écrit, en fonction du bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span>, sous la forme : <span class="math display">\[
-X_t=\sum_{i=0}^{+\infty}\varphi^i\varepsilon_{t-i},\ \forall t\in\Z.
-\]</span></p></li>
-<li><p>Cette représentation est canonique :</p>
-<ul>
-<li>on déduit que <span class="math inline">\(X_t\in\mathcal H_{-\infty}^t(\varepsilon)\)</span> et donc <span class="math inline">\(\mathcal H_{-\infty}^t(X)\subset \mathcal H_{-\infty}^t(\varepsilon)\)</span> pour tout <span class="math inline">\(t\)</span> dans <span class="math inline">\(\Z\)</span></li>
-<li>par propriété des bruits blancs <span class="math inline">\(\varepsilon_t\perp \mathcal H_{-\infty}^{t-1}(\varepsilon)\)</span></li>
-</ul></li>
+<li><strong>Ecriture de <span class="math inline">\(X_t\)</span> en fonction du bruit blanc :</strong></li>
 </ul>
-<p><span class="math inline">\(\hspace{2cm}\Longrightarrow \varepsilon_t\perp\mathcal H_{-\infty}^{t-1}(X)\)</span></p>
-</section>
-<section id="cas-varphi1-2" class="level4" data-number="5.2.2.3">
-<h4 data-number="5.2.2.3" class="anchored" data-anchor-id="cas-varphi1-2"><span class="header-section-number">5.2.2.3</span> Cas <span class="math inline">\(|\varphi|&lt;1\)</span></h4>
+<p>Pour <span class="math inline">\(|\varphi|&lt;1\)</span>, l’inversibilité de <span class="math inline">\(I-\varphi B\)</span> est assurée dans la classe des processus stationnaires et <span class="math display">\[
+(I-\varphi B)^{-1}=\sum_{i=0}^{+\infty}\varphi^iB^i.
+\]</span></p>
+<p>Ainsi le processus AR(1) pour <span class="math inline">\(|\varphi|&lt;1\)</span> s’écrit, en fonction du bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span>, sous la forme : <span class="math display">\[
+X_t=\sum_{i=0}^{+\infty}\varphi^i\varepsilon_{t-i},\ \forall t\in\Z.
+\]</span></p>
+<p>De cette écriture, on en déduit que <span class="math inline">\(X_t\in\mathcal H_{-\infty}^t(\varepsilon)\)</span> et donc <span class="math inline">\(\mathcal H_{-\infty}^t(X)\subset \mathcal H_{-\infty}^t(\varepsilon)\)</span> pour tout <span class="math inline">\(t\)</span> dans <span class="math inline">\(\Z\)</span>. De plus, par propriété des bruits blancs <span class="math inline">\(\varepsilon_t\perp \mathcal H_{-\infty}^{t-1}(\varepsilon)\)</span>. Ainsi <span class="math inline">\(\varepsilon_t \perp \mathcal H_{-\infty}^{t-1}(X)\)</span>, donc cette représentation est <strong>canonique</strong>.</p>
 <ul>
-<li>Prévision linéaire optimale :</li>
+<li><strong>Prévision linéaire optimale :</strong></li>
 </ul>
 <p>Ayant observé <span class="math inline">\(X_1,\ldots,X_n\)</span>, on prédit la valeur suivante de la série <span class="math inline">\(X_{n+1}\)</span> par <span class="math display">\[
 \hat X_n(1)=\EL(X_{n+1}|\mathcal
 H_{-\infty}^n(X))=\EL(\varphi X_n +\varepsilon_{n+1}|\mathcal
-H_{-\infty}^n(X))=\varphi X_n,
+H_{-\infty}^n(X))=\varphi X_n
 \]</span> car <span class="math inline">\(\varepsilon_{n+1}\perp\mathcal H_{-\infty}^n(X)\)</span>.</p>
 <ul>
-<li>Le processus des innovations : <span class="math display">\[
+<li><strong>Processus des innovations :</strong></li>
+</ul>
+<p>Dans ce cas, <span class="math display">\[
 X_{t}-\hat X_{t-1}(1)=X_{t}-\varphi X_{t-1} = \varepsilon_{t},\ \forall t\in\Z
-\]</span> C’est donc le bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> dans la représentation AR(1).</li>
-</ul>
-<p>On verra que ce résultat reste valable pour tout modèle AR de représentation canonique.</p>
+\]</span> C’est donc le bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> dans la représentation AR(1). On verra que ce résultat reste valable pour tout modèle AR de représentation canonique.</p>
 </section>
-<section id="cas-varphi1-3" class="level4" data-number="5.2.2.4">
-<h4 data-number="5.2.2.4" class="anchored" data-anchor-id="cas-varphi1-3"><span class="header-section-number">5.2.2.4</span> Cas <span class="math inline">\(|\varphi|&gt;1\)</span></h4>
+<section id="cas-varphi1-2" class="level4" data-number="5.2.2.3">
+<h4 data-number="5.2.2.3" class="anchored" data-anchor-id="cas-varphi1-2"><span class="header-section-number">5.2.2.3</span> Cas <span class="math inline">\(|\varphi|&gt;1\)</span></h4>
 <ul>
-<li><p>Le polynôme <span class="math inline">\(I-\varphi B\)</span> est inversible d’inverse <span class="math display">\[
-(I-\varphi B)^{-1}=-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}F^i \textrm{  d'où  }
-X_t=-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}\varepsilon_{t+i}.
-\]</span></p></li>
-<li><p>Cette représentation du processus AR(1) <strong>n’est pas canonique</strong> :</p></li>
+<li><strong>Ecriture (non canonique) de <span class="math inline">\(X_t\)</span> selon le bruit blanc :</strong></li>
 </ul>
+<p>D’après l’étude précédente, le polynôme <span class="math inline">\(I-\varphi B\)</span> est inversible d’inverse <span class="math display">\[
+    (I-\varphi B)^{-1}=-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}F^i \textrm{  d'où  }
+    X_t=-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}\varepsilon_{t+i}.
+\]</span></p>
+<p>Cette représentation du processus AR(1) <strong>n’est pas canonique</strong> car</p>
 <span class="math display">\[\begin{eqnarray*}
 \C(\varepsilon_t,X_{t-1})&amp;=&amp;\C\left(\varepsilon_t,-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}\varepsilon_{t-1+i}\right)\\
 &amp;=&amp; -\frac{1}{\varphi}\V(\varepsilon_t)= -\frac{\sigma^2}{\varphi}\neq 0.
 \end{eqnarray*}\]</span>
-</section>
-<section id="cas-varphi1---prévision" class="level4" data-number="5.2.2.5">
-<h4 data-number="5.2.2.5" class="anchored" data-anchor-id="cas-varphi1---prévision"><span class="header-section-number">5.2.2.5</span> Cas <span class="math inline">\(|\varphi|&gt;1\)</span> - Prévision</h4>
 <ul>
-<li>Prévision linéaire optimale :</li>
+<li><strong>Prévision linéaire optimale :</strong></li>
 </ul>
 <p>Ayant observé <span class="math inline">\(X_1,\ldots,X_n\)</span>, on prédit la valeur suivante de la série <span class="math inline">\(X_{n+1}\)</span> par <span class="math display">\[\begin{eqnarray*}
 \hat X_n(1)&amp;=&amp;\EL(X_{n+1}|\mathcal
@@ -560,57 +579,44 @@ H_{-\infty}^n(X))\\ &amp;=&amp;\varphi X_n+\EL(\varepsilon_{n+1}|\mathcal
 H_{-\infty}^n(X))
 \end{eqnarray*}\]</span> le dernier terme n’ayant aucune raison d’être nul, puisque la représentation n’est pas canonique.</p>
 <ul>
-<li>Processus des innovations : <span class="math display">\[\begin{eqnarray*}
-X_{t+1}-\hat X_t(1)&amp;=&amp;\varphi
-X_t+\varepsilon_{t+1}-\varphi X_t-\EL(\varepsilon_{t+1}|\mathcal
-H_{-\infty}^t(X))\\ &amp;=&amp;\varepsilon_{t+1}-\EL(\varepsilon_{t+1}|\mathcal
-H_{-\infty}^t(X))
-\end{eqnarray*}\]</span> donc non confondus avec le bruit blanc utilisé dans la représentation (non canonique) du processus AR(1).</li>
+<li><p><strong>Processus des innovations :</strong> <span class="math display">\[\begin{eqnarray*}
+X_{t+1}-\hat X_t(1)
+&amp;=&amp;\varphi X_t+\varepsilon_{t+1}-\varphi X_t-\EL(\varepsilon_{t+1}|\mathcal H_{-\infty}^t(X))\\ &amp;=&amp;\varepsilon_{t+1}-\EL(\varepsilon_{t+1}|\mathcal H_{-\infty}^t(X))
+\end{eqnarray*}\]</span> donc non confondus avec le bruit blanc utilisé dans la représentation (non canonique) du processus AR(1).</p></li>
+<li><p><strong>Vers une représentation canonique :</strong></p></li>
 </ul>
-</section>
-<section id="cas-varphi1-vers-une-représentation-canonique" class="level4" data-number="5.2.2.6">
-<h4 data-number="5.2.2.6" class="anchored" data-anchor-id="cas-varphi1-vers-une-représentation-canonique"><span class="header-section-number">5.2.2.6</span> Cas <span class="math inline">\(|\varphi|&gt;1\)</span> : vers une représentation canonique</h4>
-<ul>
-<li><p>On va ici montrer que le processus AR(1) pour <span class="math inline">\(|\varphi|&gt;1\)</span> possède un autre représentation, qui est canonique.</p></li>
-<li><p>On utilise la formule reliant les densités spectrales de deux processus stationnaires dont l’un est le filtrage linéaire d’un autre :</p></li>
-</ul>
-<p>Partant de <span class="math inline">\((I-\varphi B)X_t=\varepsilon_t\)</span>, on a <span class="math display">\[
+<p>On va ici montrer que le processus AR(1) pour <span class="math inline">\(|\varphi|&gt;1\)</span> possède un autre représentation, qui est canonique. Pour cela, on utilise la formule reliant les densités spectrales de deux processus stationnaires dont l’un est le filtrage linéaire d’un autre : partant de <span class="math inline">\((I-\varphi B)X_t=\varepsilon_t\)</span>, on a <span class="math display">\[
 f_X(\omega)|1-\varphi e^{-i\omega}|^2=f_\varepsilon(\omega)=\frac{\sigma^2}{2\pi} \Longleftrightarrow
 f_X(\omega)=\frac{\sigma^2}{2\pi}\frac{1}{|1-\varphi e^{-i\omega}|^2}.
 \]</span></p>
-</section>
-<section id="cas-varphi1-vers-une-représentation-canonique-1" class="level4" data-number="5.2.2.7">
-<h4 data-number="5.2.2.7" class="anchored" data-anchor-id="cas-varphi1-vers-une-représentation-canonique-1"><span class="header-section-number">5.2.2.7</span> Cas <span class="math inline">\(|\varphi|&gt;1\)</span> : vers une représentation canonique</h4>
-<ul>
-<li><p>Soit le processus <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> défini par <span class="math inline">\(\eta_t=X_t-\frac{1}{\varphi}X_{t-1},\ \forall t \in \Z\)</span>. <span class="math display">\[\begin{eqnarray*}
-f_\eta(\omega)&amp;=&amp;\textcolor{magenta}{f_X(\omega)} \left|1-\frac{1}{\varphi}
-e^{-i\omega}\right|^2
-=\textcolor{magenta}{\frac{\sigma^2}{2\pi}}\frac{|1-\frac{1}{\varphi}
-e^{-i\omega}|^2}{\textcolor{magenta}{|1-\varphi e^{-i\omega}|^2}}\\
-&amp;=&amp;\frac{\sigma^2}{2\pi\varphi^2}\frac{|1-\frac{1}{\varphi}
-e^{-i\omega}|^2}{|\frac{1}{\varphi}- e^{-i\omega}|^2} =
-\frac{\sigma^2}{2\pi\varphi^2} \frac{|1-\frac{1}{\varphi}
-e^{-i\omega}|^2}{|\frac{1}{\varphi}e^{i\omega}-1|^2}
-=\frac{\sigma^2}{2\pi\varphi^2}.
-\end{eqnarray*}\]</span></p></li>
-<li><p>Nouvelle représentation AR(1) pour le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> : <span class="math display">\[
+<p>Soit le processus <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> défini par <span class="math inline">\(\eta_t=X_t-\frac{1}{\varphi}X_{t-1},\ \forall t \in \Z\)</span>. Alors <span class="math display">\[\begin{eqnarray*}
+    f_\eta(\omega)&amp;=&amp;\textcolor{magenta}{f_X(\omega)} \left|1-\frac{1}{\varphi}
+    e^{-i\omega}\right|^2
+    =\textcolor{magenta}{\frac{\sigma^2}{2\pi}}\frac{|1-\frac{1}{\varphi}
+    e^{-i\omega}|^2}{\textcolor{magenta}{|1-\varphi e^{-i\omega}|^2}}\\
+    &amp;=&amp;\frac{\sigma^2}{2\pi\varphi^2}\frac{|1-\frac{1}{\varphi}
+    e^{-i\omega}|^2}{|\frac{1}{\varphi}- e^{-i\omega}|^2} =
+    \frac{\sigma^2}{2\pi\varphi^2} \frac{|1-\frac{1}{\varphi}
+    e^{-i\omega}|^2}{|\frac{1}{\varphi}e^{i\omega}-1|^2}
+    =\frac{\sigma^2}{2\pi\varphi^2}.
+    \end{eqnarray*}\]</span></p>
+<p>On a donc une nouvelle représentation AR(1) pour le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> : <span class="math display">\[
 (I-\frac{1}{\varphi} B)X_t=\eta_t \textrm{ où } (\eta_t)_{t\in \Z}\sim
 \text{WN}(0,\sigma^2/\varphi^2)
-\]</span> et la représentation est canonique car <span class="math inline">\(|1/\varphi|&lt;1\)</span>.</p></li>
-</ul>
-<p>On se retrouve aussi que le processus <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> correspond au processus des innovations.</p>
-<p>Cette petite étude du cas particulier du processus AR(1) nous a donc permis de voir que la représentation AR(1) n’est pas unique et qu’il suffit de prendre celle avec le coefficient <span class="math inline">\(\varphi\)</span> ou <span class="math inline">\(1/\varphi\)</span> inférieur à 1 pour “tomber” sur la représentation canonique. Ce résultat se généralise aux processus AR d’ordre quelconque.</p>
+\]</span> et la représentation est canonique car <span class="math inline">\(|1/\varphi|&lt;1\)</span>. On a aussi que le processus <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> correspond au processus des innovations.</p>
+<p>Cette étude du cas particulier du processus AR(1) nous a donc permis de voir que la représentation AR(1) n’est pas unique. En choisissant celle avec le coefficient <span class="math inline">\(\varphi\)</span> ou <span class="math inline">\(1/\varphi\)</span> de module inférieur à 1, on a la représentation canonique. Ce résultat se généralise aux processus AR d’ordre quelconque.</p>
 </section>
-<section id="propriétés" class="level4" data-number="5.2.2.8">
-<h4 data-number="5.2.2.8" class="anchored" data-anchor-id="propriétés"><span class="header-section-number">5.2.2.8</span> Propriétés</h4>
-<p>Avant d’étudier plus en détail les propriétés des processus AR, notons, et c’est la moindre des choses, que de tels processus existent ! La proposition suivante généralise les résultats vus sur la surjectivité et l’inversibilité du polynôme en <span class="math inline">\(I-\lambda B\)</span> et décrit le processus AR en fonction du bruit blanc.</p>
+</section>
+<section id="propriétés" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="propriétés"><span class="header-section-number">5.2.3</span> Propriétés</h3>
+<p>La proposition suivante généralise les résultats vus sur la surjectivité et l’inversibilité du polynôme en <span class="math inline">\(I-\lambda B\)</span> et décrit le processus AR en fonction du bruit blanc.</p>
 <div id="prp-existAR" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.2 </strong></span>Soit <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> un bruit blanc et <span class="math inline">\(\Phi(B)\)</span> un polynôme en <span class="math inline">\(B\)</span>.</p>
+<p><span class="theorem-title"><strong>Proposition 5.5 </strong></span>Soit <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> un bruit blanc et <span class="math inline">\(\Phi(B)\)</span> un polynôme en <span class="math inline">\(B\)</span>.</p>
 <ul>
 <li>Il existe une infinité de processus du second ordre <span class="math inline">\((X_t)_{t\in \Z}\)</span> vérifiant : <span class="math display">\[
 \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z.
 \]</span></li>
-<li>Si les racines du polynôme <span class="math inline">\(\Phi(B)\)</span> sont , il existe une <strong>unique solution stationnaire</strong> <span class="math inline">\((X_t)_{t\in \Z}\)</span>. Elle s’écrit alors sous la forme d’un filtrage linéaire du bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> : <span class="math display">\[
+<li>Si les racines du polynôme <span class="math inline">\(\Phi(B)\)</span> sont <strong>toutes de module différent de 1</strong>, il existe une <strong>unique solution stationnaire</strong> <span class="math inline">\((X_t)_{t\in \Z}\)</span>. Elle s’écrit alors sous la forme d’un filtrage linéaire du bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> : <span class="math display">\[
 X_t=\Psi(B)\varepsilon_t=\sum_{i\in\Z}\psi_i\varepsilon_{t-i},\ \forall t\in \Z.
 \]</span></li>
 <li>Si les racines du polynômes sont <strong>toutes à l’extérieur du disque unité</strong>, alors l’écriture moyenne mobile du processus AR(p) ne considère que les valeurs passées du bruit blanc : <span class="math display">\[
@@ -619,24 +625,24 @@ X_t=\Psi(B)\varepsilon_t=\sum_{i\in\textcolor{red}{\N}}\psi_i\varepsilon_{t-i},\
 </ul>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Pour s’en convaincre, il suffit de factoriser le polynôme <span class="math inline">\(\Phi(B)\)</span> de degré <span class="math inline">\(p\)</span> en fonction de ses <span class="math inline">\(p\)</span> racines et d’appliquer <span class="math inline">\(p\)</span> fois le résultat d’inversibilité vu pour le polynôme <span class="math inline">\(I-\lambda B\)</span>. C’est ce que nous avons décrit dans le paragraphe “Inverse_poly_B” de ce même chapitre.</p>
+<p>Pour s’en convaincre, il suffit de factoriser le polynôme <span class="math inline">\(\Phi(B)\)</span> de degré <span class="math inline">\(p\)</span> en fonction de ses <span class="math inline">\(p\)</span> racines et d’appliquer <span class="math inline">\(p\)</span> fois le résultat d’inversibilité vu pour le polynôme <span class="math inline">\(I-\lambda B\)</span>.</p>
 </div>
 </div>
 </div>
 <p>Comme vu dans le cas du processus AR(1), il n’existe pas qu’une seule représentation d’un processus AR(<span class="math inline">\(p\)</span>). En revanche une seule de ces représentations est canonique.</p>
 <div id="prp-ARcano" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.3 </strong></span>Soit <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> un bruit blanc et <span class="math inline">\(\Phi(B)\)</span> un polynôme en <span class="math inline">\(B\)</span> de degré <span class="math inline">\(p\)</span> exactement dont toutes les racines <span class="math inline">\((z_i = 1/ \lambda_i)_{i=1,\ldots,p}\)</span> (non néc. distinctes) sont de module différent de 1.</p>
+<p><span class="theorem-title"><strong>Proposition 5.6 </strong></span>Soit <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> un bruit blanc et <span class="math inline">\(\Phi(B)\)</span> un polynôme en <span class="math inline">\(B\)</span> de degré <span class="math inline">\(p\)</span> exactement dont toutes les racines <span class="math inline">\((z_i = 1/ \lambda_i)_{i=1,\ldots,p}\)</span> (non néc. distinctes) sont de module différent de 1.</p>
 <p>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> l’unique processus stationnaire AR(p) vérifiant <span class="math display">\[
 \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z.
 \]</span></p>
@@ -653,18 +659,19 @@ Proof
 </ul>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>On montre seulement le dernier point. Le second est en effet évident et le premier point s’obtiendrait de manière tout à fait identique à ce qui suit en faisant un changement de racines qui ne retient pas uniquement celles à l’extérieur du disque unité. La démonstration est assez proche de ce que l’on a fait pour le processus AR(1) et utilise donc les densités spectrales. De l’équation <span class="math display">\[
+<p>On montre seulement le dernier point. <!--
+Le second est en effet évident et le premier point s'obtiendrait de manière tout à fait identique à ce qui suit en faisant un changement de racines qui ne retient pas uniquement celles à l'extérieur du disque unité. --> La démonstration est assez proche de ce que l’on a fait pour le processus AR(1) et utilise donc les densités spectrales. De l’équation <span class="math display">\[
 \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z,
 \]</span> on tire <span class="math display">\[
 f_X(\omega)\left| \Phi(e^{-i\omega}) \right|^2=f_\varepsilon(\omega).
@@ -673,7 +680,7 @@ f_X(\omega)\left| \Phi(e^{-i\omega}) \right|^2=f_\varepsilon(\omega).
 \]</span> donne quant à elle <span class="math display">\[
 f_\eta(\omega)=f_X(\omega)\left| \tilde\Phi(e^{-i\omega})
 \right|^2.
-\]</span> En supposant toutes les racines de <span class="math inline">\(\Phi(z)\)</span> réelles, on peut refaire le même genre de raisonnement que celui fait pour le AR(1) et obtenir <span class="math display">\[\begin{eqnarray*} f_\eta(\omega)&amp;=&amp;\frac{\left| \tilde\Phi(e^{-i\omega})
+\]</span> En supposant toutes les racines de <span class="math inline">\(\Phi(z)\)</span> réelles, on peut refaire le même type de raisonnement que celui fait pour le AR(1) et obtenir <span class="math display">\[\begin{eqnarray*} f_\eta(\omega)&amp;=&amp;\frac{\left| \tilde\Phi(e^{-i\omega})
 \right|^2}{\left| \Phi(e^{-i\omega})
 \right|^2}f_\varepsilon(\omega)=\frac{\sigma^2}{2\pi}\frac{\left|
 \prod_{j:|z_j|&gt;1}\left(1-\lambda_je^{-i\omega}\right)\prod_{j:|z_j|&lt;1}\left(1-\frac{1}{\lambda_j}e^{-i\omega}\right)
@@ -694,29 +701,26 @@ e^{i\omega}\right) \left(1-\bar \lambda e^{i\omega}\right)  \right|^2}{\left|
 e^{i\omega}}=1-\bar \lambda e^{-i\omega}) \end{eqnarray*}\]</span> et on obtient le même résultat que dans le cas de racines réelles. On a donc prouvé que l’on avait, avec ce nouveau polynôme <span class="math inline">\(\tilde \Phi(B)\)</span> obtenu en remplaçant racines à l’intérieur du disque unité par leur inverse, une nouvelle représentation AR(<span class="math inline">\(p\)</span>) du processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> puisque <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> est un bruit blanc. Il reste à prouver que la représentation obtenue est canonique. Le raisonnement suit de près ce que l’on a fait pour le cas particulier du processus <span class="math inline">\(AR(1)\)</span>. D’une part on montre l’égalité des histoires des processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> et <span class="math inline">\((\eta_t)_{t\in \Z}\)</span>, i.e.&nbsp;<span class="math display">\[ \H_{-\infty}^t(X)=
 \H_{-\infty}^t(\eta). \]</span> On dit dans ce cas que le processus est . C’est bien le cas ici puisque l’équation <span class="math display">\[ \tilde \Phi(B)X_t=\eta_t, \text{
 pour tout }t\in \Z., \]</span> où <span class="math inline">\(\tilde \Phi(B)\)</span> est un polynôme avec puissance positives de <span class="math inline">\(B\)</span>, assure la première inclusion~: <span class="math inline">\(\H_{-\infty}^t(\eta)\subset \H_{-\infty}^t(X)\)</span>. Mais comme <span class="math inline">\(\tilde \Phi(B)\)</span> possède par construction toutes ses racines hors du disque unité, il est inversible d’inverse ne faisant intervenir que les puissances positives de <span class="math inline">\(B\)</span> : <span class="math display">\[ X_t=\sum_{i\in \N} \tilde
-\psi_i\eta_{t-i}. \]</span> On en déduit l’inclusion inverse : <span class="math inline">\(\H_{-\infty}^t(X)\subset \H_{-\infty}^t(\eta)\)</span> et donc l’égalité. La représentation canonique est alors bien acquise puisque, en tant que bruit blanc, le processus <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> est évidemment orthongonal à son passé, donc ici également orthogonal au passé de <span class="math inline">\((X_t)_{t\in \Z}\)</span>. <span class="math inline">\(\Box\)</span></p>
+\psi_i\eta_{t-i}. \]</span> On en déduit l’inclusion inverse : <span class="math inline">\(\H_{-\infty}^t(X)\subset \H_{-\infty}^t(\eta)\)</span> et donc l’égalité. La représentation canonique est alors bien acquise puisque, en tant que bruit blanc, le processus <span class="math inline">\((\eta_t)_{t\in \Z}\)</span> est évidemment orthongonal à son passé, donc ici également orthogonal au passé de <span class="math inline">\((X_t)_{t\in \Z}\)</span>.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="propriétés-1" class="level4" data-number="5.2.2.9">
-<h4 data-number="5.2.2.9" class="anchored" data-anchor-id="propriétés-1"><span class="header-section-number">5.2.2.9</span> Propriétés</h4>
 <div id="prp-ARinnov" class="propositon theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.4 </strong></span>Si la représentation du processus AR(p) <span class="math display">\[
+<p><span class="theorem-title"><strong>Proposition 5.7 </strong></span>Si la représentation du processus AR(p) <span class="math display">\[
 \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z,
 \]</span> est canonique, le bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> utilisé dans sa représentation est aussi le processus des innovations.</p>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Par définition le processus des innovations est donné par <span class="math display">\[\begin{eqnarray*}
 X_{t+1}-\hat X_t(1)&amp;=&amp;X_{t+1}-\EL\left(
@@ -727,37 +731,36 @@ X_{t+1}-\hat X_t(1)&amp;=&amp;X_{t+1}-\EL\left(
 </div>
 </div>
 </div>
-<div class="proposition">
-<p>Tout processus AR(p) de représentation canonique <span class="math display">\[ \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z, \]</span> admet la représentation MA(<span class="math inline">\(\infty\)</span>) : <span class="math display">\[
+<div id="prp-ARpMAinfini" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.8 </strong></span>Tout processus AR(p) de représentation canonique <span class="math display">\[ \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z, \]</span> admet la représentation MA(<span class="math inline">\(\infty\)</span>) : <span class="math display">\[
 X_t=\varepsilon_t +\sum_{i=1}^{+\infty}
 \psi_i\varepsilon_{t-i}.
 \]</span></p>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Nous avons déjà obtenu les éléments de cette proposition. La seule nouveauté, que l’on aurait pu noter plus tôt, est l’égalité à 1 du premier coefficient <span class="math inline">\(\psi_0\)</span> dans l’inverse du polynôme <span class="math inline">\(\Phi (z)\)</span>. Ceci se voit facilement par identification du terme constant.</p>
 </div>
 </div>
 </div>
 </section>
-</section>
-<section id="liaisons-temporelles" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="liaisons-temporelles"><span class="header-section-number">5.2.3</span> Liaisons temporelles</h3>
-<ul>
-<li>Soit un processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> de représentation AR(<span class="math inline">\(p\)</span>) canonique : <span class="math display">\[
+<section id="liaisons-temporelles" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="liaisons-temporelles"><span class="header-section-number">5.2.4</span> Liaisons temporelles</h3>
+<p>Soit un processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> de représentation AR(<span class="math inline">\(p\)</span>) canonique : <span class="math display">\[
 \Phi(B)X_t=\varepsilon_t,\ \forall t\in \Z.
-\]</span></li>
-<li>Variance du processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> :<br>
+\]</span></p>
+<ul>
+<li><p>Variance du processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> :<br>
 <span class="math display">\[\begin{eqnarray*}
 \gamma_X(0)&amp;=&amp;\V(X_t)=\C\left(\sum_{i=1}^p\varphi_iX_{t-i}+\varepsilon_t,X_t\right)\\
 &amp;=&amp;\sum_{i=1}^p\varphi_i \C(X_{t-i},X_t)+\C(\varepsilon_t,X_t)\\
@@ -766,21 +769,20 @@ Proof
 &amp;=&amp;\sum_{i=1}^p \varphi_i
 \underbrace{\gamma_X(i)}_{\gamma_X(0)\rho_X(i)}+\V(\varepsilon_t) \textrm{ (car
 canonique)}.
-\end{eqnarray*}\]</span> où la dernière égalité est obtenue par orthogonalité du bruit blanc par rapport à l’histoire du processus AR(<span class="math inline">\(p\)</span>) dans sa représentation canonique. On a alors Donc <span class="math display">\[
+\end{eqnarray*}\]</span> où la dernière égalité est obtenue par orthogonalité du bruit blanc par rapport à l’histoire du processus AR(<span class="math inline">\(p\)</span>) dans sa représentation canonique. On a alors <span class="math display">\[
 \gamma_X(0)=\frac{\sigma^2}{1-\sum_{i=1}^p\varphi_i\rho_X(i)}.
-\]</span></li>
-</ul>
-<p>On peut faire de même pour les autocovariances : pour <span class="math inline">\(h&gt;0\)</span>, <span class="math display">\[\begin{eqnarray*}
+\]</span></p></li>
+<li><p>Autocovariances : pour <span class="math inline">\(h&gt;0\)</span>, <span class="math display">\[\begin{eqnarray*}
 \gamma_X(h)=\C(X_t,X_{t+h})&amp;=&amp;\C\left(X_t,\sum_{i=1}^p\varphi_iX_{t+h-i}+\varepsilon_{t+h}\right)\\
 &amp;=&amp;\sum_{i=1}^p\varphi_i \C(X_tX_{t+h-i})+\C(X_t,\varepsilon_{t+h})\\
 &amp;=&amp;\sum_{i=1}^p\varphi_i \gamma_X(h-i) \text{ car  }\varepsilon_{t+h}\perp
 \mathcal H_{-\infty}^{t+h-1}(X).
-\end{eqnarray*}\]</span> D’où les autocorrélations satisfont l’équation linéaire récurrente d’ordre <span class="math inline">\(p\)</span> <span class="math display">\[
+\end{eqnarray*}\]</span></p></li>
+<li><p>Autocorrélations : elles satisfont l’équation linéaire récurrente d’ordre <span class="math inline">\(p\)</span> <span id="eq-RecurrencerhoAR"><span class="math display">\[
 \rho_X(h)=\sum_{i=1}^p\varphi_i \rho_X(h-i),\ \forall h\in \N^*
-\]</span></p>
-<ul>
-<li>Les autocorrélations vérifient donc l’équation matricielle dite de :</li>
+\tag{5.1}\]</span></span></p></li>
 </ul>
+<p>Les autocorrélations vérifient donc l’équation matricielle dite de :</p>
 <span class="math display">\[\begin{eqnarray*}
 \left( \begin{array}{c} \rho_X(1) \\ \vdots  \\
 \rho_X(p) \end{array} \right)&amp;=&amp; \underbrace{\left( \begin{array}{cccc} 1   &amp;
@@ -793,53 +795,62 @@ canonique)}.
 \gamma_X(0)&amp;=&amp;\frac{\sigma^2}{1-\underset{i=1}{\stackrel{p}{\sum}}\varphi_i\rho_X(i)}.
 \end{eqnarray*}\]</span>
 <div id="prp-ACFAR" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.5 </strong></span><strong>Autocorrélations simples d’un AR(p)</strong> Les autocorrélations simples d’un processus AR(p) décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.</p>
+<p><span class="theorem-title"><strong>Proposition 5.9 (Autocorrélations simples d’un AR(p)) </strong></span><br> Les autocorrélations simples d’un processus AR(p) décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.</p>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>L’équation (<span class="math inline">\(\ref{Recurrence_rho_AR}\)</span>) vérifiée par les autocorrélations d’un AR(<span class="math inline">\(p\)</span>) est une équation de récurrence linéaire de polynôme caractéristique <span class="math display">\[ r^p-\varphi_1r^{p-1}-\ldots
--\varphi_{p-1}r-\varphi_p=r^p\Phi\left(\frac{1}{r}\right). \]</span> Les racines (évidemment non nulles, puisque par définition <span class="math inline">\(\varphi_p\)</span> est non nul) de ce polynôme sont les inverses de celles du polynôme <span class="math inline">\(\Phi(z)\)</span> définissant l’AR(<span class="math inline">\(p\)</span>). D’après ce que l’on sait sur les solutions d’un équation linéaire récurrente, la solution de l’équation (<span class="math inline">\(\ref{Recurrence_rho_AR}\)</span>) dans <span class="math inline">\(\mathbb C\)</span> est donc une combinaison linéaire de solutions de la forme <span class="math display">\[
-(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\lambda_i^h, \]</span> où <span class="math inline">\(k\)</span> est l’ordre de multiplicité de la racine <span class="math inline">\(z_i=1/\lambda_i\)</span> de <span class="math inline">\(\Phi(z)\)</span>. Or, puisqu’on considère la représentation canonique, les racines <span class="math inline">\(z_i\)</span> de <span class="math inline">\(\Phi(z)\)</span> sont de module à l’extérieur du disque unité. Ainsi, si toutes les solutions sont réelles alors les autocorrélations décroissent effectivement de manière exponentielle vers 0. Si une des racines <span class="math inline">\(z_i=1/\lambda_i\)</span> de <span class="math inline">\(\Phi(z)\)</span> n’est pas réelle, on sait alors que son conjugué l’est aussi et que les solutions réelles correspondant à ces deux racines conjuguées s’écrivent de la forme <span class="math display">\[
-|\lambda_i|^h\left[(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\cos(\omega_i
-h)+(b_{i,0}+b_{i,1}h+\cdots+b_{i,k-1}h^{k-1})\sin(\omega_i h)\right], \]</span> où <span class="math inline">\(\omega_i\)</span> est le module de <span class="math inline">\(\lambda_i\)</span>. Cette partie de Elles sont donc bien simusoïdales amorties.</p>
+<p>L’équation <a href="#eq-RecurrencerhoAR">Equation&nbsp;<span>5.1</span></a> vérifiée par les autocorrélations d’un AR(<span class="math inline">\(p\)</span>) est une équation de récurrence linéaire de polynôme caractéristique <span class="math display">\[ r^p-\varphi_1r^{p-1}-\ldots
+-\varphi_{p-1}r-\varphi_p=r^p\Phi\left(\frac{1}{r}\right). \]</span> Les racines (non nulles car <span class="math inline">\(\varphi_p\)</span> est non nul) de ce polynôme sont les inverses de celles du polynôme <span class="math inline">\(\Phi(z)\)</span> définissant l’AR(<span class="math inline">\(p\)</span>). La solution de l’équation <a href="#eq-RecurrencerhoAR">Equation&nbsp;<span>5.1</span></a> dans <span class="math inline">\(\mathbb C\)</span> est donc une combinaison linéaire de solutions de la forme <span class="math display">\[
+(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\lambda_i^h,
+\]</span> où <span class="math inline">\(k\)</span> est l’ordre de multiplicité de la racine <span class="math inline">\(z_i=1/\lambda_i\)</span> de <span class="math inline">\(\Phi(z)\)</span>. Or, puisqu’on considère la représentation canonique, les racines <span class="math inline">\(z_i\)</span> de <span class="math inline">\(\Phi(z)\)</span> sont de module à l’extérieur du disque unité. Ainsi, si toutes les solutions sont réelles alors les autocorrélations décroissent effectivement de manière exponentielle vers 0. Si une des racines <span class="math inline">\(z_i=1/\lambda_i\)</span> de <span class="math inline">\(\Phi(z)\)</span> n’est pas réelle, on sait alors que son conjugué l’est aussi et que les solutions réelles correspondant à ces deux racines conjuguées s’écrivent sous la forme <span class="math display">\[
+\begin{array}{l l}
+|\lambda_i|^h &amp; \left[(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\cos(\omega_i h) \right.\\
+&amp; \left. +(b_{i,0}+b_{i,1}h+\cdots+b_{i,k-1}h^{k-1})\sin(\omega_i h)\right],
+\end{array}
+\]</span> où <span class="math inline">\(\omega_i\)</span> est le module de <span class="math inline">\(\lambda_i\)</span>. Elles sont donc bien simusoïdales amorties.</p>
 </div>
 </div>
 </div>
 <div id="exm-ex1" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 5.1 </strong></span>Pour un AR(1) d’équation canonique <span class="math display">\[
-X_t=\varphi X_{t-1}+\varepsilon_t,
-\]</span> on a <span class="math display">\[
-\rho_X(h)=\varphi^{|h|}.
-\]</span> On a bien la décroissance exponentielle des autocorrelations et on constate que le coefficient <span class="math inline">\(\varphi\)</span> d’un AR(1) est en fait la première autocovariance.</p>
+<p><span class="theorem-title"><strong>Example 5.1 </strong></span>Pour un AR(1) d’équation canonique <span class="math inline">\(X_t=\varphi X_{t-1}+\varepsilon_t,\)</span> on a <span class="math inline">\(\rho_X(h)=\varphi^{|h|}.\)</span> On a bien la décroissance exponentielle des autocorrelations et on constate que le coefficient <span class="math inline">\(\varphi\)</span> d’un AR(1) est en fait la première autocovariance.</p>
 </div>
 <div id="exm-ex2" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 5.2 </strong></span>AR(2) - racines 2 et 5</p>
-<p><span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t\)</span></p>
+<p><span class="theorem-title"><strong>Example 5.2 </strong></span>Soit le processus AR(2) défini par <span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t\)</span>. Les racines du polynome <span class="math inline">\(\Phi(z)=0.1 z^2 -0.7 z +1\)</span> sont <span class="math inline">\(2\)</span> et <span class="math inline">\(5\)</span>. La <a href="#fig-exAR2ACF">Figure&nbsp;<span>5.1</span></a> montre la décroissante exponentielle des autocorrélations empiriques de ce processus.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exAR2ACF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exAR2ACF-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.1: ACF empirique du processus AR(2) <span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t\)</span></figcaption>
+</figure>
 </div>
 </div>
-<p>AR(2) - racines <span class="math inline">\(2\pm i 2\sqrt{3}/3\)</span></p>
-<p><span class="math inline">\(X_t = \frac{3}{4} X_{t-1} - \frac{3}{16} X_{t-2}+\varepsilon_t\)</span></p>
+</div>
+<p>Soit le processus AR(2) défini par <span class="math inline">\(X_t = \frac{3}{4} X_{t-1} - \frac{3}{16} X_{t-2}+\varepsilon_t\)</span>. Les racines du polynome <span class="math inline">\(\Phi(z)=\frac{3}{16} z^2 - \frac 3 4 z +1\)</span> sont <span class="math inline">\(2\pm i 2\sqrt{3}/3\)</span>. La <a href="#fig-exAR2ACF2">Figure&nbsp;<span>5.2</span></a> montre les autocorrélations empiriques de ce processus.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exAR2ACF2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exAR2ACF2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.2: ACF empirique du processus AR(2) <span class="math inline">\(X_t = \frac{3}{4} X_{t-1} - \frac{3}{16} X_{t-2}+\varepsilon_t\)</span></figcaption>
+</figure>
 </div>
 </div>
 </div>
+</div>
+<p><br></p>
 <div id="prp-pACFAR" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.6 </strong></span><strong>Autocorrélations partielles d’un AR(p)</strong></p>
+<p><span class="theorem-title"><strong>Proposition 5.10 </strong></span><strong>Autocorrélations partielles d’un AR(p)</strong></p>
 <p>Les autocorrélations partielles d’un processus AR(p) sont nulles à partir du rang <span class="math inline">\(p+1\)</span> :</p>
 <ul>
 <li><span class="math inline">\(r_X(p)=\varphi_p\neq 0\)</span></li>
@@ -847,16 +858,16 @@ X_t=\varphi X_{t-1}+\varepsilon_t,
 </ul>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Il suffit d’écrire la définition de l’autocorrélation partielle. On sait que le coefficient <span class="math inline">\(r_X(k)\)</span> est donné par le coefficient <span class="math inline">\(\alpha_k(k)\)</span> dans la projection de <span class="math inline">\(X_t\)</span> sur <span class="math inline">\(\H_{t-k}^{t-1}\)</span>, i.e.&nbsp;: <span class="math display">\[
 \EL(X_t|\H_{t-k}^{t-1})=\alpha_1(k)X_{t-1}+\cdots+\alpha_k(k)X_{t-k}.
@@ -865,27 +876,52 @@ Proof
 &amp;=&amp;\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}, \end{eqnarray*}\]</span> dont on tire <span class="math inline">\(r_X(p)=\varphi_p\neq0\)</span>. Pour <span class="math inline">\(k&gt;p\)</span>, on a : <span class="math display">\[\begin{eqnarray*}
 \EL(X_t|\H_{t-k}^{t-1})&amp;=&amp;\EL(\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}+\varepsilon_t,|\H_{t-k}^{t-1})\\
 &amp;=&amp;\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}\\
-&amp;=&amp;\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}+0\times
-X_{t-p-1}+\cdots+ 0\times X_{t-k}
+&amp;=&amp;\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}\\
+&amp; &amp;+0\times X_{t-p-1}+\cdots+ 0\times X_{t-k}
 \end{eqnarray*}\]</span> et donc <span class="math inline">\(r_X(k)=0\)</span>.</p>
 </div>
 </div>
 </div>
-<p>Remarques :</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarques
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>La propriété <span class="math inline">\(r_X(p)=\varphi_p\)</span> n’est vraie que dans le cas d’une représentation canonique.</li>
 <li>On peut montrer que la propriété d’autocorrélations partielles nulles à partir d’un certain rang <span class="math inline">\(p+1\)</span> est caractéristique d’un AR(<span class="math inline">\(p\)</span>).</li>
 </ul>
-<div class="example">
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div id="exm-ex3" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 5.3 </strong></span><br> Pour illustrer la propriété que les autocorrélations partielles d’un processus <span class="math inline">\(AR(p)\)</span> sont nulles à partir du rang p+1, les autocorrélations partielles empiriques sont tracées en <a href="#fig-exARpACF">Figure&nbsp;<span>5.3</span></a> pour le processus <span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t\)</span> (à gauche - AR(2)) et le processus <span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+0.2 X_{t-3}+\varepsilon_t\)</span> (à droite - AR(3)).</p>
+<div id="fig-exARpACF" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exARpACF-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exARpACF-1.png" class="img-fluid figure-img" data-ref-parent="fig-exARpACF" width="672"></p>
+<figcaption class="figure-caption">(a) le processus <span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t\)</span></figcaption>
+</figure>
 </div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exARpACF-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exARpACF-2.png" class="img-fluid figure-img" data-ref-parent="fig-exARpACF" width="672"></p>
+<figcaption class="figure-caption">(b) le processus <span class="math inline">\(X_t = 0.7 X_{t-1}-0.1 X_{t-2}+0.2 X_{t-3}+\varepsilon_t\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.3: Autocorrélations partielles empiriques pour …</figcaption><p></p>
+</figure>
 </div>
 </div>
 </section>
@@ -895,20 +931,32 @@ X_{t-p-1}+\cdots+ 0\times X_{t-k}
 <section id="définition-1" class="level3" data-number="5.3.1">
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="définition-1"><span class="header-section-number">5.3.1</span> Définition</h3>
 <div id="def-MAq" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.3 </strong></span>On dit qu’un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation en <strong>Moyenne Mobile d’ordre</strong> <span class="math inline">\(q\)</span> (noté MA(q)) s’il vérifie l’équation <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 5.3 </strong></span>On dit qu’un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation en <span style="color:blue;"><strong>moyenne mobile d’ordre <span class="math inline">\(q\)</span></strong></span> (noté MA(q)) s’il vérifie l’équation <span class="math display">\[
 X_t=\varepsilon_t+\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}
 \]</span> où <span class="math inline">\((\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)\)</span> et <span class="math inline">\((\theta_1,\ldots,\theta_q)\in\R^q\)</span>, <span class="math inline">\(\theta_q\neq0\)</span>.</p>
-<p>Réécriture : <span class="math inline">\(X_t=\Theta(B)\varepsilon\_t,\ \forall t\in\Z\)</span> avec le polynôme en <span class="math inline">\(B\)</span> <span class="math inline">\(\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q.\)</span></p>
-<p>Cette représentation est dite <strong>canonique</strong> si les racines du polynôme <span class="math inline">\(\Theta(z)\)</span> sont toutes à l’extérieur du disque unité.</p>
+<p><strong>Réécriture :</strong> <br> <span class="math inline">\(X_t=\Theta(B)\varepsilon\_t,\ \forall t\in\Z\)</span> avec le polynôme en <span class="math inline">\(B\)</span> <span class="math inline">\(\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q.\)</span></p>
+<p>Cette représentation est dite <span style="color:blue;"><strong>canonique</strong></span> si les racines du polynôme <span class="math inline">\(\Theta(z)\)</span> sont toutes à l’extérieur du disque unité.</p>
 </div>
-<p>Rem : Contrairement à un AR, un MA est entièrement spécifié. A bruit blanc et paramètres <span class="math inline">\(\theta_1,\ldots,\theta_q\)</span> fixés, il ne correspond qu’un seul processus MA(<span class="math inline">\(q\)</span>) qui est le filtrage linéaire de <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> par le filtre <span class="math display">\[
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarque
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Contrairement à un AR, un MA est entièrement spécifié. A bruit blanc et paramètres <span class="math inline">\(\theta_1,\ldots,\theta_q\)</span> fixés, il ne correspond qu’un seul processus MA(<span class="math inline">\(q\)</span>) qui est le filtrage linéaire de <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> par le filtre <span class="math display">\[
 \Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q.
 \]</span></p>
+</div>
+</div>
 </section>
-<section id="propriétés-2" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="propriétés-2"><span class="header-section-number">5.3.2</span> Propriétés</h3>
-<div class="proposition">
-<p>Soit <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> un bruit blanc et <span class="math inline">\(\Theta(B)\)</span> un polynôme en <span class="math inline">\(B\)</span> de degré <span class="math inline">\(q\)</span> exactement dont toutes les racines (non néc. distinctes) sont de module différent de 1.</p>
+<section id="propriétés-1" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="propriétés-1"><span class="header-section-number">5.3.2</span> Propriétés</h3>
+<div id="prp-MAprop" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.11 </strong></span>Soit <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> un bruit blanc et <span class="math inline">\(\Theta(B)\)</span> un polynôme en <span class="math inline">\(B\)</span> de degré <span class="math inline">\(q\)</span> exactement dont toutes les racines (non néc. distinctes) sont de module différent de 1.</p>
 <p>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus <span class="math inline">\(\text{MA}(q)\)</span> vérifiant <span class="math inline">\(X_t=\Theta(B)\varepsilon_t, \forall t\in \Z.\)</span></p>
 <ul>
 <li>Le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> satisfait plusieurs représentations MA(q) différentes : soit <span class="math inline">\(\tilde \Theta(B)\)</span> un nouveau polynôme en <span class="math inline">\(B\)</span> ayant pour racines celles de <span class="math inline">\(\Theta(B)\)</span> ou leurs inverses, le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet aussi la représentation : <span class="math display">\[
@@ -919,37 +967,59 @@ X_t=\tilde \Theta(B)\eta_t,\ \forall t\in \Z, \textrm{ où }(\eta_t)_{t\in \Z} \
 <li>Un processus <span class="math inline">\(\text{MA}\)</span> est toujours centré.</li>
 </ul>
 </div>
-</section>
-<section id="ecriture-arinfty" class="level3" data-number="5.3.3">
-<h3 data-number="5.3.3" class="anchored" data-anchor-id="ecriture-arinfty"><span class="header-section-number">5.3.3</span> Ecriture AR(<span class="math inline">\(\infty\)</span>)</h3>
-<div class="proposition">
-<p>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus MA(q) de représentation canonique <span class="math display">\[
+<div id="prp-MAARinfini" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.12 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus MA(q) de représentation canonique <span class="math display">\[
 X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
 \textrm{ avec } (\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)
-\]</span> - Le processus des innovations correspond alors au bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> de sa représentation canonique. - Le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> possède une représentation AR(<span class="math inline">\(\infty\)</span>) : <span class="math display">\[
+\]</span></p>
+<p>Alors le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> possède une représentation AR(<span class="math inline">\(\infty\)</span>) : <span class="math display">\[
 \varepsilon_t=\sum_{i=0}^{+\infty}\pi_iX_{t-i} \textrm{ avec }\pi_0=1
 \]</span></p>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>On va d’abord établir la représentation AR(<span class="math inline">\(\infty\)</span>). Comme mes racines du polynôme <span class="math inline">\(\Theta(z)\)</span> sont, par hypothèse que la représentation est canonique, toutes situées à l’extérieur du disque unité, l’opérateur <span class="math inline">\(\Theta(B)\)</span> est inversible d’inverse <span class="math display">\[
+<p>Par hypothèse la représentation est canonique donc les racines du polynôme <span class="math inline">\(\Theta(z)\)</span> sont toutes situées à l’extérieur du disque unité. Ainsi l’opérateur <span class="math inline">\(\Theta(B)\)</span> est inversible d’inverse <span class="math display">\[
 \Theta^{-1}(B)=\sum_{i=0}^{+\infty}\pi_iB^i=I+\sum_{i=1}^{+\infty}\pi_iB^i,
 \]</span> la dernière égalité étant obtenue par identification des termes constants. On a donc bien <span class="math display">\[
 \varepsilon_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i}.
-\]</span> Ces écritures MA(<span class="math inline">\(q\)</span>) et AR(<span class="math inline">\(\infty\)</span>) du processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> montrent qu’il est régulier, i.e.&nbsp;<span class="math display">\[
-\H_{-\infty}^t(X)= \H_{-\infty}^t(\varepsilon).
-\]</span> On peut ainsi écrire <span class="math display">\[\begin{eqnarray*}
-\EL(X_t|\H_{-\infty}^{t-1}(X))&amp;=&amp;\EL(X_t|\H_{-\infty}^{t-1}(\varepsilon))=\EL(
+\]</span></p>
+</div>
+</div>
+</div>
+<div id="prp-MAinnovation" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.13 </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus MA(q) de représentation canonique <span class="math display">\[
+X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
+\textrm{ avec } (\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)
+\]</span> Alors le processus des innovations correspond au bruit blanc <span class="math inline">\((\varepsilon_t)_{t\in \Z}\)</span> de sa représentation canonique.</p>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Preuve
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A partir de la <a href="#prp-MAARinfini">Proposition&nbsp;<span>5.12</span></a>, on a que <span class="math display">\[
+\varepsilon_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i}.
+\]</span></p>
+<p>Les écritures MA(<span class="math inline">\(q\)</span>) et AR(<span class="math inline">\(\infty\)</span>) du processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> montrent que <span class="math inline">\(\H_{-\infty}^t(X)= \H_{-\infty}^t(\varepsilon)\)</span>. On peut ainsi écrire <span class="math display">\[\begin{eqnarray*}
+\EL(X_t|\H_{-\infty}^{t-1}(X))&amp;=&amp;\EL(X_t|\H_{-\infty}^{t-1}(\varepsilon))\\
+&amp;=&amp;\EL(
 \varepsilon_t+\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}|\H_{-\infty}^{t-1}(\varepsilon))\\
 &amp;=&amp;\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q},
 \end{eqnarray*}\]</span> par orthoganilité du bruit blanc par rapport à son passé. On en déduit pour l’innovation <span class="math display">\[
@@ -959,13 +1029,12 @@ X_t-\EL(X_t|\H_{-\infty}^{t-1}(X))=X_t-\left(\theta_1\varepsilon_{t-1}+\theta_2\
 </div>
 </div>
 </section>
-<section id="liaisons-temporelles-1" class="level3" data-number="5.3.4">
-<h3 data-number="5.3.4" class="anchored" data-anchor-id="liaisons-temporelles-1"><span class="header-section-number">5.3.4</span> Liaisons temporelles</h3>
+<section id="liaisons-temporelles-1" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="liaisons-temporelles-1"><span class="header-section-number">5.3.3</span> Liaisons temporelles</h3>
+<p>On considère un processus <span class="math inline">\(MA(q)\)</span> <span class="math display">\[X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z\]</span> avec <span class="math inline">\(\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q\)</span> et <span class="math inline">\((\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,\sigma^2)\)</span>.</p>
 <ul>
-<li><p>Soit <span class="math display">\[
-X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
-\]</span> avec <span class="math inline">\(\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q\)</span> et <span class="math inline">\((\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,\sigma^2)\)</span>.</p></li>
-<li><p>Par la propriété d’orthogonalité d’un bruit blanc, on a</p></li>
+<li>Variance du processus <span class="math inline">\((X_t)_{t\in\Z}\)</span> : <br><br>
+Par la propriété d’orthogonalité d’un bruit blanc, on a</li>
 </ul>
 <span class="math display">\[\begin{eqnarray*}
 \V(X_t) &amp;=&amp;\V\left( \varepsilon_t +
@@ -973,60 +1042,80 @@ X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
 &amp;=&amp;\sigma^2\left(1+\sum_{j=1}^q\theta_j^2\right).
 \end{eqnarray*}\]</span>
 <ul>
-<li><p>Pour la fonction d’autocovariance, on a <span class="math display">\[
-  \gamma_X(h)=\C(X_t,X_{t+h})=\C\left(\varepsilon_t +
-  \sum_{j=1}^q\theta_j\varepsilon_{t-j},\varepsilon_{t+h} +
-  \sum_{i=1}^q\theta_i\varepsilon_{t+h-i}\right).
-\]</span></p></li>
-<li><p>On a immédiatement que <span class="math inline">\(\gamma_X(h)=0\)</span> quand <span class="math inline">\(h&gt;q\)</span>.</p></li>
-<li><p>Pour <span class="math inline">\(h=1\)</span> <span class="math display">\[\begin{eqnarray*}
-\C(X_t,X_{t+1})&amp;=&amp;\E\left[(\varepsilon_t +
-\sum_{j=1}^q\theta_j\varepsilon_{t-j})(\varepsilon_{t+1} +
-\sum_{i=1}^q\theta_i\varepsilon_{t+1-i})\right]\\
-&amp;=&amp;\sigma^2(\theta_1+\theta_1\theta_2+\cdots+\theta_{q-1}\theta_q).
-\end{eqnarray*}\]</span></p></li>
-<li><p>Pour <span class="math inline">\(h=2\)</span> : <span class="math display">\[\begin{eqnarray*}
-\C(X_t,X_{t+2})&amp;=&amp;\E\left[(\varepsilon_t +
-\sum_{j=1}^q\theta_j\varepsilon_{t-j})(\varepsilon_{t+2} +
-\sum_{j=1}^q\theta_j\varepsilon_{t+2-j})\right]\\
-&amp;=&amp;\sigma^2(\theta_2+\theta_1\theta_3+\cdots+\theta_{q-2}\theta_q).
-\end{eqnarray*}\]</span></p></li>
-<li><p>Autocovariances : On en déduit pour tout <span class="math inline">\(h\)</span> dans <span class="math inline">\(\N^*\)</span> : <span class="math display">\[\begin{eqnarray*}
+<li>Fonction d’autocovariance de <span class="math inline">\((X_t)_{t\in\Z}\)</span> :</li>
+</ul>
+<p><span class="math display">\[\begin{eqnarray*}
+\gamma_X(h)&amp;=&amp;\C(X_t,X_{t+h})\\
+&amp;=&amp;\C\left(\varepsilon_t +
+\sum_{j=1}^q\theta_j\varepsilon_{t-j},\varepsilon_{t+h} +
+\sum_{i=1}^q\theta_i\varepsilon_{t+h-i}\right).
+\end{eqnarray*}\]</span></p>
+<p>A partir de cette expression, on peut immédiatement remarquer que <span class="math inline">\(\gamma_X(h)=0\)</span> pour <span class="math inline">\(h&gt;q\)</span>.</p>
+<p>Pour <span class="math inline">\(h=1\)</span>, <span class="math inline">\(\C(X_t,X_{t+1}) = \E\left[(\varepsilon_t +  \sum_{j=1}^q\theta_j\varepsilon_{t-j})(\varepsilon_{t+1} +  \sum_{i=1}^q\theta_i\varepsilon_{t+1-i})\right]  =\sigma^2(\theta_1+\theta_1\theta_2+\cdots+\theta_{q-1}\theta_q)\)</span>.</p>
+<p>Pour <span class="math inline">\(h=2\)</span>, <span class="math inline">\(\C(X_t,X_{t+2}) =\E\left[(\varepsilon_t +  \sum_{j=1}^q\theta_j\varepsilon_{t-j})(\varepsilon_{t+2} +  \sum_{j=1}^q\theta_j\varepsilon_{t+2-j})\right] =\sigma^2(\theta_2+\theta_1\theta_3+\cdots+\theta_{q-2}\theta_q)\)</span>.</p>
+<p>On en déduit pour tout <span class="math inline">\(h\)</span> dans <span class="math inline">\(\N^*\)</span> : <span class="math display">\[\begin{eqnarray*}
 \gamma_X(h)&amp;=&amp;\sigma^2(\theta_h+\theta_1\theta_{1+h}+\cdots+\theta_{q-h}\theta_q)
 =\sigma^2\left(\theta_h+\sum_{i=1}^{q-h}\theta_i\theta_{i+h}\right).
-\end{eqnarray*}\]</span></p></li>
+\end{eqnarray*}\]</span></p>
+<ul>
+<li>Fonction d’autocorrélation de <span class="math inline">\((X_t)_{t\in\Z}\)</span> :</li>
 </ul>
-<div class="proposition">
-<p><strong>Autocorrélations simples d’un MA(q)</strong> - Les autocorrélations simples d’un processus MA(q) sont nulles à partir du rang <span class="math inline">\(q+1\)</span> : <span class="math inline">\(\rho_X(q)\neq 0\)</span> et <span class="math inline">\(\rho_X(h)=0\)</span>, pour <span class="math inline">\(h&gt;q\)</span>. - La propriété d’autocorrélations simples nulles à partir d’un certain rang <span class="math inline">\(q+1\)</span> est caractéristique d’un MA(<span class="math inline">\(q\)</span>)</p>
+<div id="prp-MAautocorr" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.14 (Autocorrélations simples d’un MA(q)) </strong></span>&nbsp;</p>
+<ul>
+<li>Les autocorrélations simples d’un processus MA(q) sont nulles à partir du rang <span class="math inline">\(q+1\)</span> : <span class="math display">\[\rho_X(q)\neq 0 \textrm{ et }\rho_X(h)=0,\ \forall h&gt;q.\]</span></li>
+<li>La propriété d’autocorrélations simples nulles à partir d’un certain rang <span class="math inline">\(q+1\)</span> est caractéristique d’un MA(<span class="math inline">\(q\)</span>)</li>
+</ul>
 </div>
 <div class="example">
+<p>On considère le processus MA(2) défini par <span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}\)</span>. La <a href="#fig-exMA2ACF">Figure&nbsp;<span>5.4</span></a> représente les autocorrélations empiriques de ce processus. On a bien des autocorrélations proche de 0 à partir de <span class="math inline">\(h&gt;2\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exMA2ACF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exMA2ACF-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.4: ACF empirique du processus MA(2) <span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}\)</span></figcaption>
+</figure>
 </div>
 </div>
+</div>
+<p>La <a href="#fig-exMA3ACF">Figure&nbsp;<span>5.5</span></a> représente les autocorrélations empiriques du processus défini par <span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2} -0.2 \varepsilon_{t-3}\)</span>. Les autocorrélations empiriques sont bien proche de 0 à partir de <span class="math inline">\(h&gt;3\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exMA3ACF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exMA3ACF-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.5: ACF empirique du processus MA(3) <span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2} -0.2 \varepsilon_{t-3}\)</span></figcaption>
+</figure>
 </div>
 </div>
 </div>
-<div class="proposition">
-<p><strong>Autocorrélations partielles d’un MA(q)</strong> Les autocorrélations partielles d’un processus MA(q) sont solutions d’une équation linéaire récurrente d’ordre <span class="math inline">\(q\)</span>. Elles décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.</p>
 </div>
-<div class="example">
-<p>MA(2) - racines 2 et 5</p>
-<p><span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}\)</span></p>
+<p><br></p>
+<div id="prp-MAautocorpart" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.15 (Autocorrélations partielles d’un MA(q)) </strong></span><br> Les autocorrélations partielles d’un processus MA(q) sont solutions d’une équation linéaire récurrente d’ordre <span class="math inline">\(q\)</span>. Elles décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.</p>
+</div>
+<div id="exm-MAbis" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 5.4 </strong></span><br> On reprend le processus MA(2) défini par <span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}\)</span>. Les racines du polynome <span class="math inline">\(\Theta(z)\)</span> associé sont 2 et 5. La <a href="#fig-exMA2pACF">Figure&nbsp;<span>5.6</span></a> représente les autocorrélations partielles empiriques.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exMA2pACF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exMA2pACF-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.6: pACF empirique du processus MA(2) <span class="math inline">\(X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}\)</span></figcaption>
+</figure>
 </div>
 </div>
-<p>MA(2) - racines <span class="math inline">\(2\pm i 2\sqrt{3}/3\)</span></p>
-<p><span class="math inline">\(X_t = \varepsilon_t + 0.4 \varepsilon_{t-1} - 0.45 \varepsilon_{t-2}\)</span></p>
+</div>
+<p>La <a href="#fig-exMA2pACF2">Figure&nbsp;<span>5.7</span></a> représente les autocorrélations partielles empirique du processus MA(2) défini par MA(2) <span class="math inline">\(X_t = \varepsilon_t + 0.4 \varepsilon_{t-1} - 0.45 \varepsilon_{t-2}\)</span>, où les racines du polynome <span class="math inline">\(\Theta(z)\)</span> associé sont <span class="math inline">\(2\pm i 2\sqrt{3}/3\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exMA2pACF2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exMA2pACF2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.7: pACF empirique du processus MA(2) <span class="math inline">\(X_t = \varepsilon_t + 0.4 \varepsilon_{t-1} - 0.45 \varepsilon_{t-2}\)</span></figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -1034,13 +1123,11 @@ X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
 </section>
 <section id="processus-arma" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="processus-arma"><span class="header-section-number">5.4</span> Processus ARMA</h2>
+<p>Nous allons maintenant étudier des processus stationnaires avec une partie AR et une partie MA. On les appelle processus ARMA pour <span style="color:blue;"><strong>AutoRegressive Moving Average</strong></span>. Ils sont très importants en pratique car on peut montrer que tout processus stationnaire peut être approché par un processus ARMA.</p>
 <section id="définition-2" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="définition-2"><span class="header-section-number">5.4.1</span> Définition</h3>
-<ul>
-<li>ARMA = AutoRegressive Moving Average</li>
-</ul>
 <div id="def-ARMA" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.4 </strong></span>On dit qu’un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <strong>ARMA</strong><span class="math inline">\((p,q)\)</span> s’il vérifie l’équation <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 5.4 </strong></span>On dit qu’un processus stationnaire <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <span style="color:blue;"><strong>ARMA</strong><span class="math inline">\((p,q)\)</span></span> s’il vérifie l’équation <span class="math display">\[
 X_t=\textcolor{red}{\underset{j=1}{\stackrel{p}{\sum}} \varphi_j
 X_{t-j}} + \textcolor{blue}{\varepsilon_t +\underset{i=1}{\stackrel{q}{\sum}}
 \theta_i\varepsilon_{t-i}}
@@ -1050,22 +1137,14 @@ X_{t-j}} + \textcolor{blue}{\varepsilon_t +\underset{i=1}{\stackrel{q}{\sum}}
 <li><span class="math inline">\((\varphi_1,\ldots, \varphi_p)\in\R^p,\ \varphi_p\neq0\)</span></li>
 <li><span class="math inline">\((\theta_1,\ldots,\theta_q)\in\R^{q},\ \theta_q\neq 0\)</span></li>
 </ul>
-</div>
-<p>Autre écriture</p>
-<div class="definition">
-<p>En utilisant les polynômes en <span class="math inline">\(B\)</span> <span class="math display">\[\begin{eqnarray*} \Phi(B)&amp;=&amp;I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p\\
+<p><strong>Réécriture :</strong> <br> En utilisant les polynômes en <span class="math inline">\(B\)</span> <span class="math display">\[\begin{eqnarray*} \Phi(B)&amp;=&amp;I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p\\
 \text{ et }\Theta(B)&amp;=&amp;I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q,
-\end{eqnarray*}\]</span> un processus ARMA(p,q) vérifie l’équation : <span class="math display">\[
-\Phi(B)X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z.
+\end{eqnarray*}\]</span> un processus <strong>ARMA(p,q)</strong> vérifie l’équation : <span class="math display">\[
+\textcolor{red}{\Phi(B)X_t}=\textcolor{blue}{\Theta(B)\varepsilon_t},\ \forall t\in\Z.
 \]</span></p>
 </div>
-<p>Remarques :</p>
-<ul>
-<li>AR(<span class="math inline">\(p\)</span>)= ARMA(<span class="math inline">\(p,0\)</span>), MA(<span class="math inline">\(q\)</span>) = ARMA(<span class="math inline">\(0,q\)</span>).</li>
-<li>Les processus ARMA sont très importants en pratique car on peut montrer que tout processus stationnaire peut être approché par un processus ARMA.</li>
-</ul>
 <div id="def-typeARMA" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.5 </strong></span>La représentation d’un processus ARMA<span class="math inline">\((p,q)\)</span> <span class="math display">\[ \Phi(B)X_t=\Theta(B)\varepsilon_t, \]</span> est dite</p>
+<p><span class="theorem-title"><strong>Definition 5.5 </strong></span>La représentation d’un processus ARMA<span class="math inline">\((p,q)\)</span> <span class="math inline">\(\Phi(B)X_t=\Theta(B)\varepsilon_t\)</span> est dite</p>
 <ul>
 <li><strong>minimale</strong> si les polynômes <span class="math inline">\(\Phi(z)\)</span> et <span class="math inline">\(\Theta(z)\)</span> n’ont pas de racine commune</li>
 <li><strong>causale</strong> si le polynôme <span class="math inline">\(\Phi(z)\)</span> a toutes ses racines à l’extérieur du disque unité</li>
@@ -1073,36 +1152,48 @@ X_{t-j}} + \textcolor{blue}{\varepsilon_t +\underset{i=1}{\stackrel{q}{\sum}}
 <li><strong>canonique</strong> si elle est causale et inversible.</li>
 </ul>
 </div>
-<p>Si la représentation n’est pas minimale (<span class="math inline">\(\Phi(z)\)</span> et <span class="math inline">\(\Theta(z)\)</span> ont une ou des racine(s) commune(s)), alors deux cas peuvent se présenter :</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarques
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la représentation n’est pas minimale (<span class="math inline">\(\Phi(z)\)</span> et <span class="math inline">\(\Theta(z)\)</span> ont une ou des racine(s) commune(s)), alors</p>
 <ul>
 <li><p>Soit aucune de ces racines communes n’est sur le cercle unité. Dans ce cas, le processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet aussi la représentation <span class="math display">\[
 \tilde\Phi(B)X_t=\tilde \Theta(B)\varepsilon_t,\ \forall t\in\Z
 \]</span> où les nouveaux polynômes sont obtenus à partir des précédents en enlevant les racines communes.</p></li>
-<li><p>Si au moins une des racines communes est sur le cercle unité, alors il peut y avoir plus d’un unique processus stationnaire vérifiant l’équation. Dans la suite, on ne considèrera que des représentations minimales.</p></li>
+<li><p>Si au moins une des racines communes est sur le cercle unité, alors il peut y avoir plus d’un unique processus stationnaire vérifiant l’équation.<br> <strong>Dans la suite, on ne considèrera que des représentations minimales.</strong></p></li>
 </ul>
+</div>
+</div>
 </section>
 <section id="ecritures-mainfty-et-arinfty" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="ecritures-mainfty-et-arinfty"><span class="header-section-number">5.4.2</span> Ecritures MA(<span class="math inline">\(\infty\)</span>) et AR(<span class="math inline">\(\infty\)</span>)</h3>
 <div id="prp-ARMAMAinf" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.7 (Ecriture MA(<span class="math inline">\(\infty\)</span>)) </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus ARMA(p,q) de <strong>représentation minimale et causale</strong>. Il admet alors la représentation MA(<span class="math inline">\(\infty\)</span>) <span class="math display">\[
+<p><span class="theorem-title"><strong>Proposition 5.16 (Ecriture MA(<span class="math inline">\(\infty\)</span>)) </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus ARMA(p,q) de <strong>représentation minimale et causale</strong>. Il admet alors la représentation MA(<span class="math inline">\(\infty\)</span>) <span class="math display">\[
 X_t=\Phi^{-1}(B)\Theta(B)\varepsilon_t=\varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i},
 \]</span> où les coefficients <span class="math inline">\((\psi_i)_{i\in N}\)</span> forment une famille absolument sommable et vérifient l’équation de récurrence linéaire : <span class="math display">\[
 \psi_i-\sum_{j=1}^p\varphi_j\psi_{i-j}=\theta_i,\ \forall i\in \N,
 \]</span> avec <span class="math inline">\(\psi_i=0\)</span> pour <span class="math inline">\(i&lt;0\)</span>, <span class="math inline">\(\psi_0=1\)</span>, <span class="math inline">\(\theta_0=1\)</span> et <span class="math inline">\(\theta_i=0\)</span> pour <span class="math inline">\(i&gt;q\)</span>.</p>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Preuve
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>La représentation étant causale, les racines du polynôme <span class="math inline">\(\Phi(z)\)</span> sont toutes à l’extérieur du disque unité et l’inverse de <span class="math inline">\(\Phi(z)\)</span> s’écrit alors comme une série de puissances positives de <span class="math inline">\(B\)</span>. Multipliée par <span class="math inline">\(\Theta(B)\)</span>, on garde une série en puissances positives de <span class="math inline">\(B\)</span> et on a donc l’écriture : <span class="math display">\[
+<p>La représentation étant causale, les racines du polynôme <span class="math inline">\(\Phi(z)\)</span> sont toutes à l’extérieur du disque unité. L’inverse de <span class="math inline">\(\Phi(z)\)</span> s’écrit alors comme une série de puissances positives de <span class="math inline">\(B\)</span>. Multipliée par <span class="math inline">\(\Theta(B)\)</span>, on garde une série en puissances positives de <span class="math inline">\(B\)</span> et on a donc l’écriture : <span class="math display">\[
 X_t=\Phi^{-1}(B)\Theta(B)\varepsilon_t=\varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i},
 \text{ pour tout }t\in \Z.
 \]</span> Grâce à cette écriture MA(<span class="math inline">\(\infty\)</span>) de <span class="math inline">\((X_t)_{t\in \Z}\)</span>, on peut réécrire l’équation <span class="math display">\[
@@ -1115,97 +1206,130 @@ X_t-\varphi_1X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p}=\varepsilon_t
 \left(\varepsilon_{t-p}+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-p-i}\right)\\
 &amp;=\varepsilon_t
 +\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}.
-\end{eqnarray*}\]</span> En identifiant les coefficients devant les <span class="math inline">\(\varepsilon_t\)</span>, on obtient les équations : <span class="math display">\[\begin{eqnarray*} &amp;&amp;\psi_1-\varphi_1=\theta_1,\\
-&amp;&amp;\psi_2-\varphi_1\psi_1-\varphi_2=\theta_2,\\
-&amp;&amp;\psi_3-\varphi_1\psi_2-\varphi_2\psi_1-\varphi_3=\theta_3\\ \end{eqnarray*}\]</span> et ainsi de suite. C’est bien la formule annoncée dans la proposition.</p>
+\end{eqnarray*}\]</span> En identifiant les coefficients devant chaque <span class="math inline">\(\varepsilon_t\)</span>, on obtient bien la formule annoncée.</p>
 </div>
 </div>
 </div>
 <div id="prp-ARMAARinf" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.8 (Ecriture AR(<span class="math inline">\(\infty\)</span>)) </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus ARMA(p,q) de <strong>représentation minimale et inversible</strong>. Il admet alors la représentation AR(<span class="math inline">\(\infty\)</span>) <span class="math display">\[
+<p><span class="theorem-title"><strong>Proposition 5.17 (Ecriture AR(<span class="math inline">\(\infty\)</span>)) </strong></span>Soit <span class="math inline">\((X_t)_{t\in \Z}\)</span> un processus ARMA(p,q) de <strong>représentation minimale et inversible</strong>. Il admet alors la représentation AR(<span class="math inline">\(\infty\)</span>) <span class="math display">\[
 \varepsilon_t=\Theta^{-1}(B)\Phi(B)X_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i},
 \]</span> où les coefficients <span class="math inline">\((\pi_i)_{i\in N}\)</span> forment une famille absolument sommable et vérifient l’équation de récurrence linéaire : <span class="math display">\[
 \pi_i+\sum_{j=1}^q\theta_j\pi_{i-j}=-\varphi_i,\ \forall i\in \N,
 \]</span> avec <span class="math inline">\(\pi_i=0\)</span> pour <span class="math inline">\(i&lt;0\)</span>, <span class="math inline">\(\varphi_0=-1\)</span> et <span class="math inline">\(\varphi_i=0\)</span> pour <span class="math inline">\(i&gt;p\)</span>.</p>
 </div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Preuve
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La représentation étant inversible, les racines du polynôme <span class="math inline">\(\Theta(z)\)</span> sont toutes à l’extérieur du disque unité. L’inverse de <span class="math inline">\(\Theta(z)\)</span> s’écrit alors comme une série de puissances positives de <span class="math inline">\(B\)</span>. Multipliée par <span class="math inline">\(\Phi(B)\)</span>, on garde une série en puissances positives de <span class="math inline">\(B\)</span> et on a donc l’écriture : <span class="math display">\[
+\varepsilon_t=\Theta^{-1}(B)\Phi(B)X_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i},
+\text{ pour tout }t\in \Z.
+\]</span> Grâce à cette écriture AR(<span class="math inline">\(\infty\)</span>), on peut réécrire l’équation <span class="math display">\[
+X_t-\varphi_1X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p}=\varepsilon_t
++\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}
+\]</span> sous la forme <span class="math display">\[\begin{eqnarray*}
+&amp; &amp; X_t-\varphi_1 X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p} \\
+&amp;=&amp; \left(X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i}\right)
++\theta_1 \left(X_{t-1}+\sum_{i=1}^{+\infty}\pi_iX_{t-i-1}\right)+\cdots+\theta_q \left(X_{t-q}+\sum_{i=1}^{+\infty}\pi_iX_{t-i-q}\right)
+\end{eqnarray*}\]</span> En identifiant les coefficients devant chaque <span class="math inline">\(X_t\)</span>, on obtient bien la formule annoncée.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="liaisons-temporelles-2" class="level3" data-number="5.4.3">
 <h3 data-number="5.4.3" class="anchored" data-anchor-id="liaisons-temporelles-2"><span class="header-section-number">5.4.3</span> Liaisons temporelles</h3>
-<p>Autocorrélation avec l’écriture ARMA(<span class="math inline">\(p,q\)</span>)</p>
+<p>On considère un processus <span class="math inline">\((X_t)_{t\in\Z}\)</span> qui est un ARMA(<span class="math inline">\(p,q\)</span>) d’équation <span class="math display">\[X_{t}-\underset{j=1}{\stackrel{p}{\sum}}\varphi_jX_{t-j}=\varepsilon_{t} +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t-i}.\]</span></p>
 <ul>
-<li>Soit <span class="math inline">\(X_{t+h}-\underset{j=1}{\stackrel{p}{\sum}}\varphi_jX_{t+h-j}=\varepsilon_{t+h} +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i}\)</span></li>
-<li>La covariance de chaque terme avec <span class="math inline">\(X_t\)</span> donne <span class="math display">\[\begin{eqnarray*}
-\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j) &amp;=&amp;
-\C\left(\varepsilon_{t+h}
-+\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i},X_t\right)\\ &amp;=&amp;
-\C\left(\varepsilon_{t+h}
-+\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i},\varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i}\right).
-\end{eqnarray*}\]</span></li>
-<li>Pour <span class="math inline">\(h&gt;q\)</span>, on a <span class="math inline">\(\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=0.\)</span></li>
-<li>Pour <span class="math inline">\(0\leq h\leq q\)</span>, on obtient <span class="math display">\[
-\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=\sigma^2\left(\sum_{i=0}^{q-h}\theta_{h+i}\psi_i{}\right)\textrm{ avec } \psi_0=1
-\]</span></li>
+<li>Fonction d’autocorrélation à partir de l’écriture ARMA(<span class="math inline">\(p,q\)</span>) : <br> On considère <span class="math inline">\(X_{t+h}-\underset{j=1}{\stackrel{p}{\sum}}\varphi_jX_{t+h-j}=\varepsilon_{t+h} +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i}\)</span> et on prend la covariance avec <span class="math inline">\(X_t\)</span> ce qui donne <span class="math display">\[\begin{eqnarray*}
+  \gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j) &amp;=&amp;
+  \C\left(\varepsilon_{t+h}
+  +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i},X_t\right)\\ &amp;=&amp;
+  \C\left(\varepsilon_{t+h}
+  +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i},\varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i}\right).
+  \end{eqnarray*}\]</span></li>
 </ul>
-<p>Autocorrélation avec l’écriture MA(<span class="math inline">\(\infty\)</span>)</p>
+<p>On a ausi que pour <span class="math inline">\(h&gt;q\)</span>, <span class="math inline">\(\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=0.\)</span><br> Pour <span class="math inline">\(0\leq h\leq q\)</span>, on obtient <span class="math display">\[
+\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=\sigma^2\left(\sum_{i=0}^{q-h}\theta_{h+i}\psi_i{}\right)\textrm{ avec } \psi_0=1
+\]</span></p>
+<ul>
+<li>Fonction d’autocorrélation avec l’écriture MA(<span class="math inline">\(\infty\)</span>) :</li>
+</ul>
 <p>En utilisant l’écriture MA(<span class="math inline">\(\infty\)</span>) du processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> on obtient cette fois-ci <span class="math display">\[
 \gamma_X(h)=\C\left(
 \varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i},\varepsilon_{t+h}+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t+h-i}\right)=\sigma^2\sum_{i=0}^{+\infty}
 \psi_i\psi_{i+h}.
 \]</span></p>
-<p>Remarques :</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarques
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>La première expression obtenue, sous forme de relation de récurrence, permet de montrer que les autocorrélations simples décroissent de manière exponentielle ou sinusoïdale amortie vers 0 avec <span class="math inline">\(h\)</span>. On peut montrer le même genre de résultat pour les autocorrélations partielles.</li>
-<li>On constate ainsi, qu’à la différence des cas particuliers des processus AR(<span class="math inline">\(p\)</span>) ou MA(<span class="math inline">\(q\)</span>), il n’existe pas de caractérisation aisée pour les modèles ARMA(<span class="math inline">\(p,q\)</span>). Les autocorrélations simples ou partielles ne s’annulent pas à partir d’un certain rang.</li>
-</ul>
-</section>
-<section id="propriétés-3" class="level3" data-number="5.4.4">
-<h3 data-number="5.4.4" class="anchored" data-anchor-id="propriétés-3"><span class="header-section-number">5.4.4</span> Propriétés</h3>
-<div id="prp-" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.9 </strong></span>Soient, pour <span class="math inline">\(\left( i,j\right)\in\N^2\)</span>, <span class="math display">\[\begin{align*}
-\Omega_{i,j} &amp;=\left[ \begin{array}[c]{ccccc}
-\rho_X\left( i\right) &amp;\rho_X\left( i-1\right) &amp;\ldots &amp;\ldots &amp;\rho_X\left(
-i-j+1\right)\\ \rho_X\left( i-1\right) &amp;\rho_X\left( i\right) &amp;\rho_X\left(
-i-1\right) &amp;\ldots &amp;\rho_X\left( i-j\right)\\ \rho_X\left( i-2\right)
-&amp;\rho_X\left( i-1\right) &amp;\rho_X\left( i\right) &amp;\ddots &amp;\vdots\\ \vdots &amp;\vdots
-&amp;\ddots &amp;\ddots &amp;\rho_X\left( i-1\right)\\ \rho_X\left( i-j+1\right)
-&amp;\rho_X\left( i-j\right) &amp;\ldots &amp;\rho_X\left( i-1\right) &amp;\rho_X\left( i\right)
-\end{array} \right] ,\\ \Delta_{i,j} &amp;=\det\left(\Omega_{i,j}\right).
-\end{align*}\]</span> Pour un processus <span class="math inline">\(\text{ARMA}\left( p,q\right)\)</span>, on a :</p>
-<ul>
-<li><span class="math inline">\(\forall\left(i,j\right)\in\N^2,i&gt;q,j&gt;p:\Delta_{i,j}=0\)</span></li>
-<li><span class="math inline">\(\forall\left( i,j\right)\in\N^2,i\leq q:\Delta_{i,p}\neq0\)</span></li>
-<li><span class="math inline">\(\forall\left( i,j\right)\in\N^2,j\leq p:\Delta_{q,j}\neq0.\)</span></li>
+<li>La première expression obtenue sous forme de relation de récurrence, permet de montrer que les autocorrélations simples décroissent de manière exponentielle ou sinusoïdale amortie vers 0 avec <span class="math inline">\(h\)</span>. On peut montrer le même genre de résultat pour les autocorrélations partielles.</li>
+<li>On constate, qu’à la différence des cas particuliers des processus AR(<span class="math inline">\(p\)</span>) ou MA(<span class="math inline">\(q\)</span>), il n’existe pas de caractérisation aisée pour les modèles ARMA(<span class="math inline">\(p,q\)</span>). Les autocorrélations simples ou partielles ne s’annulent pas à partir d’un certain rang.</li>
 </ul>
 </div>
-</section>
-<section id="méthode-du-coin" class="level3" data-number="5.4.5">
-<h3 data-number="5.4.5" class="anchored" data-anchor-id="méthode-du-coin"><span class="header-section-number">5.4.5</span> Méthode du coin</h3>
-<div id="prp-MethCoin" class="proposition theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 5.10 (Méthode du coin) </strong></span>On peut visualiser le résultat précédent sous forme matricielle en représentant la matrice (pour <span class="math inline">\(k\)</span> assez grand) <span class="math display">\[
+</div>
+<!--
+
+::: {#prp- .proposition}
+Soient, pour $\left( i,j\right)\in\N^2$, \begin{align*} 
+\Omega_{i,j} &=\left[ \begin{array}[c]{ccccc}
+\rho_X\left( i\right) &\rho_X\left( i-1\right) &\ldots &\ldots &\rho_X\left(
+i-j+1\right)\\ \rho_X\left( i-1\right) &\rho_X\left( i\right) &\rho_X\left(
+i-1\right) &\ldots &\rho_X\left( i-j\right)\\ \rho_X\left( i-2\right)
+&\rho_X\left( i-1\right) &\rho_X\left( i\right) &\ddots &\vdots\\ \vdots &\vdots
+&\ddots &\ddots &\rho_X\left( i-1\right)\\ \rho_X\left( i-j+1\right)
+&\rho_X\left( i-j\right) &\ldots &\rho_X\left( i-1\right) &\rho_X\left( i\right)
+\end{array} \right] ,\\ \Delta_{i,j} &=\det\left(\Omega_{i,j}\right).
+\end{align*} Pour un processus $\text{ARMA}\left( p,q\right)$, on a :
+
+-   $\forall\left(i,j\right)\in\N^2,i>q,j>p:\Delta_{i,j}=0$
+-   $\forall\left( i,j\right)\in\N^2,i\leq q:\Delta_{i,p}\neq0$
+-   $\forall\left( i,j\right)\in\N^2,j\leq p:\Delta_{q,j}\neq0.$
+:::
+
+### Méthode du coin
+
+::: {#prp-MethCoin .proposition}
+## Méthode du coin
+
+On peut visualiser le résultat précédent sous forme matricielle en représentant la matrice (pour $k$ assez grand) $$
 M=\left(\Delta_{i,j}\right)_{\left(i,j\right)\in\left\{1,\ldots,k\right\} ^{2}}
-\]</span> et faire ainsi apparaître un coin : <span class="math display">\[
-M=\left[ \begin{tabular}[c]{cccccc} $\Delta_{1,1}$ &amp;$\ldots$
-&amp;$\Delta_{1,p}$ &amp;$\Delta_{1,p+1}$ &amp;$\ldots$ &amp;$\Delta_{1,k}$\\ $\vdots$
-&amp;&amp;$\vdots$ &amp;$\vdots$ &amp;&amp;$\vdots$\\ $\Delta_{q,1}$ &amp;$\ldots$ &amp;$\Delta_{q,p}$
-&amp;$\Delta_{q,p+1}$ &amp;$\ldots$ &amp;$\Delta_{q,k}$\\\cline{4-6} $\Delta_{q+1,1}$
-&amp;$\ldots$ &amp;$\Delta_{q+1,p}$ &amp;\multicolumn{1}{|c}{} &amp;&amp;\\ $\vdots$ &amp;&amp;$\vdots$
-&amp;\multicolumn{1}{|c}{} &amp;0 &amp;\\ $\Delta_{k,1}$ &amp;$\ldots$ &amp;$\Delta_{k,p}$
-&amp;\multicolumn{1}{|c}{} &amp;&amp; \end{tabular} \right].
-\]</span></p>
-</div>
+$$ et faire ainsi apparaître un coin : $$ 
+M=\left[ \begin{tabular}[c]{cccccc} $\Delta_{1,1}$ &$\ldots$
+&$\Delta_{1,p}$ &$\Delta_{1,p+1}$ &$\ldots$ &$\Delta_{1,k}$\\ $\vdots$
+&&$\vdots$ &$\vdots$ &&$\vdots$\\ $\Delta_{q,1}$ &$\ldots$ &$\Delta_{q,p}$
+&$\Delta_{q,p+1}$ &$\ldots$ &$\Delta_{q,k}$\\\cline{4-6} $\Delta_{q+1,1}$
+&$\ldots$ &$\Delta_{q+1,p}$ &\multicolumn{1}{|c}{} &&\\ $\vdots$ &&$\vdots$
+&\multicolumn{1}{|c}{} &0 &\\ $\Delta_{k,1}$ &$\ldots$ &$\Delta_{k,p}$
+&\multicolumn{1}{|c}{} && \end{tabular} \right]. 
+$$
+:::
+
+-->
 </section>
 </section>
 <section id="vers-les-processus-arima-sarima" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="vers-les-processus-arima-sarima"><span class="header-section-number">5.5</span> Vers les processus ARIMA/ SARIMA</h2>
 <section id="arima" class="level3" data-number="5.5.1">
 <h3 data-number="5.5.1" class="anchored" data-anchor-id="arima"><span class="header-section-number">5.5.1</span> ARIMA</h3>
-<ul>
-<li><p>Dans la pratique les processus sont rarement stationnaires</p></li>
-<li><p>Généralisation des processus ARMA pour les étendre à des processus non stationnaires.</p></li>
-<li><p>L’idée générale, essentiellement conçue pour les processus non stationnaires à tendance polynomiale, est de différencier suffisamment le processus initial afin d’obtenir un processus sans tendance et appliquer un modèle ARMA sur le processus différencié. Cette classe de modèle est connue sous le nom de processus <strong>ARIMA (AutoRegressive Integrated Moving Average)</strong>.</p></li>
-</ul>
+<p>Dans la pratique, les processus sont rarement stationnaires. Les modèles <strong>ARIMA (AutoRegressive Integrated Moving Average)</strong> sont une extension des processus ARMA aux processus non stationnaires. Ils sont basés sur l’idée générale suivante essentiellement conçue pour les processus non stationnaires à tendance polynomiale : on peut différencier suffisamment le processus initial afin d’obtenir un processus sans tendance et appliquer un modèle ARMA sur le processus différencié.</p>
 <div id="def-arima" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 5.6 </strong></span>On dit qu’un processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <strong>ARIMA</strong><span class="math inline">\((p,d,q)\)</span> (<span class="math inline">\(p,d,q\in\mathbb N\)</span>) s’il vérifie l’équation : <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 5.6 </strong></span>On dit qu’un processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation [<strong>ARIMA</strong><span class="math inline">\((p,d,q)\)</span>]]{style=“color:blue;”} (<span class="math inline">\(p,d,q\in\mathbb N\)</span>) s’il vérifie l’équation : <span class="math display">\[
 \Phi(B)(I-B)^dX_t= c + \Theta(B)\varepsilon_t,\ \forall t\in\Z
 \]</span> où <span class="math display">\[\begin{eqnarray*}
 &amp; &amp; c\in\mathbb{R}\\
@@ -1214,72 +1338,170 @@ M=\left[ \begin{tabular}[c]{cccccc} $\Delta_{1,1}$ &amp;$\ldots$
 &amp; &amp; (\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)
 \end{eqnarray*}\]</span></p>
 </div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Remarques
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><p>On peut montrer que, dans le cas d’un processus ARIMA<span class="math inline">\((p,d,q)\)</span>, le processus <span class="math inline">\((I-B)^dX_t\)</span> est asympotiquement (au sens quand <span class="math inline">\(t\to +\infty\)</span>) un processus ARMA(p,q).</p></li>
 <li><p>On peut aussi établir des représentations AR(<span class="math inline">\(\infty\)</span>) et MA(<span class="math inline">\(\infty\)</span>) pour les processus ARIMA.</p></li>
 </ul>
-<p>Si la série temporelle suit un ARIMA(p,d,0) alors l’ACF et le PACF sur les <strong>données différenciées</strong> vérifient</p>
+</div>
+</div>
+<p>Par rapport aux caractéristiques évoquées précédemment (voir <span class="quarto-unresolved-ref">?sec-liaisonsAR</span> et <span class="quarto-unresolved-ref">?sec-liaisonsMA</span>) sur les autocorrélations et autocorrélations partielles pour les processus AR et MA (voir <span class="quarto-unresolved-ref">?sec-liaisonsAR</span> et <span class="quarto-unresolved-ref">?sec-liaisonsMA</span>), on a le résultat suivant.</p>
+<div id="prp-ARIMA" class="proposition theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 5.18 </strong></span>&nbsp;</p>
+<ul>
+<li><p>Si la série temporelle suit un ARIMA(p,d,0) alors l’ACF et le PACF sur les <strong>données différenciées</strong> vérifient</p>
 <ul>
 <li>l’ACF décroit exponentiellement ou sinusoidal</li>
 <li>Un pic significatif au lag <span class="math inline">\(p\)</span> sur le PACF et pas après le lag <span class="math inline">\(p\)</span></li>
-</ul>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Si la série temporelle suit un ARIMA(0, d, q) alors l’ ACF et le PACF sur les <strong>données différenciées</strong> vérifient :</p>
+</ul></li>
+<li><p>Si la série temporelle suit un ARIMA(0, d, q) alors l’ ACF et le PACF sur les <strong>données différenciées</strong> vérifient :</p>
 <ul>
-<li>le PACF est décroissant exponentiellement ou sinusoidal;</li>
-<li>Un pic significatif au lag <span class="math inline">\(q\)</span> pour l’ACF et pas après le lag <span class="math inline">\(q\)</span></li>
+<li>le PACF est décroissant exponentiellement ou sinusoidal</li>
+<li>Un pic significatif au lag <span class="math inline">\(q\)</span> pour l’ACF et pas après le lag <span class="math inline">\(q\)</span><br>
+</li>
+</ul></li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div id="exm-ARIMA" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 5.5 </strong></span>Pour illustrer la <a href="#prp-ARIMA">Proposition&nbsp;<span>5.18</span></a>, la <a href="#fig-exARIMA310">Figure&nbsp;<span>5.8</span></a> montre les autocorrélations et autocorrélations partielles empiriques pour les mesures différenciées une fois du processus <span class="math display">\[
+(I-0.1 B -0.2 B^2 - 0.6 B^3)(I-B) X_t = \varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)
+\]</span></p>
+<div id="fig-exARIMA310" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exARIMA310-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exARIMA310-1.png" class="img-fluid figure-img" data-ref-parent="fig-exARIMA310" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exARIMA310-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exARIMA310-2.png" class="img-fluid figure-img" data-ref-parent="fig-exARIMA310" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrélations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.8: Résultats pour le processus ARIMA(3,1,0) <span class="math inline">\((I-0.1 B -0.2 B^2 - 0.6 B^3)(I-B) X_t = \varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)\)</span></figcaption><p></p>
+</figure>
+</div>
+<p>Pour illustrer la <a href="#prp-ARIMA">Proposition&nbsp;<span>5.18</span></a>, la <a href="#fig-exARIMA013">Figure&nbsp;<span>5.9</span></a> montre les autocorrélations et autocorrélations partielles empiriques pour les mesures différenciées une fois du processus <span class="math display">\[
+(I-B) X_t = (I-0.6 B -0.6 B^2 - 0.2 B^3)\varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)
+\]</span></p>
+<div id="fig-exARIMA013" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exARIMA013-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exARIMA013-1.png" class="img-fluid figure-img" data-ref-parent="fig-exARIMA013" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exARIMA013-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exARIMA013-2.png" class="img-fluid figure-img" data-ref-parent="fig-exARIMA013" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrélations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.9: Résultats pour le processus ARIMA(0,1,3) <span class="math inline">\((I-B) X_t = (I-0.6 B -0.6 B^2 - 0.2 B^3)\varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)\)</span></figcaption><p></p>
+</figure>
 </div>
 </div>
 </section>
 <section id="sélection-de-modèle" class="level3" data-number="5.5.2">
 <h3 data-number="5.5.2" class="anchored" data-anchor-id="sélection-de-modèle"><span class="header-section-number">5.5.2</span> Sélection de modèle</h3>
-<p>Si on a plusieurs modèles ARIMA en compétition <span class="math inline">\(\texttt{mod}_1,\ldots,\texttt{mod}_K\)</span></p>
+<p>Quand on étudie une série temporelle, on peut être amené à hésiter entre plusieurs modèles pour la modéliser au mieux. Supposons que l’on considère une collection de modèles ARIMA <span class="math inline">\(\mathcal M = \left\{\texttt{mod}_1,\ldots,\texttt{mod}_K\right\}\)</span>. On est dans le cadre classique d’un problème de sélection de modèles. On traite donc ce problème par les étapes suivantes :</p>
 <ul>
-<li><p>On estime les paramètres de chaque modèle <span class="math inline">\(\texttt{mod}_k\)</span> considéré (par maximum de vraisemblance le plus souvent)</p></li>
-<li><p>On utilise un critère pénalisé pour choisir le meilleur modèle</p>
+<li><p>Ajustement de chaque modèle <span class="math inline">\(\texttt{mod}_k\)</span>: Pour chaque modèle fixé, on estime les paramètres (par maximum de vraisemblance le plus souvent)</p></li>
+<li><p>On minimise un critère pénalisé pour choisir le meilleur modèle. Par exemple,</p>
 <ul>
-<li><p><span class="math inline">\(\mbox{AIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + 2 (p+q+1+\mathbb{1}_{c\neq 0})\)</span></p></li>
-<li><p><span class="math inline">\(\mbox{AICc}(\texttt{mod}_k) = \mbox{AIC}(\texttt{mod}_k) + \frac{2 (p+q+1+\mathbb{1}_{c\neq 0})(p+q+2+\mathbb{1}_{c\neq 0})}{n-p-q-2-\mathbb{1}_{c\neq 0}}\)</span></p></li>
-<li><p><span class="math inline">\(\mbox{BIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + (p+q+1+\mathbb{1}_{c\neq 0}) \log(n)\)</span></p></li>
+<li><p>le critère AIC : <span class="math inline">\(\mbox{AIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + 2 (p+q+1+\mathbb{1}_{c\neq 0})\)</span></p></li>
+<li><p>le critère AIC corrigé : <span class="math inline">\(\mbox{AICc}(\texttt{mod}_k) = \mbox{AIC}(\texttt{mod}_k) + \frac{2 (p+q+1+\mathbb{1}_{c\neq 0})(p+q+2+\mathbb{1}_{c\neq 0})}{n-p-q-2-\mathbb{1}_{c\neq 0}}\)</span></p></li>
+<li><p>le critère BIC : <span class="math inline">\(\mbox{BIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + (p+q+1+\mathbb{1}_{c\neq 0}) \log(n)\)</span></p></li>
 </ul></li>
 </ul>
-<p>::: { .example #exm-selmod}</p>
-<ul>
-<li><p>Données simulées sous un modèle ARIMA(1,1,2) <span class="math display">\[
+<div id="exm-selmod" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 5.6 </strong></span>Pour illustrer la sélection de modèle, on a ici simulées une série temporelle selon le modèle ARIMA(1,1,2) suivant</p>
+<p><span class="math display">\[
 (I-0.8 B)(I-B) X_t = (I-0.3B+0.6 B^2)\varepsilon_t,\ \ (\varepsilon_t)_t\sim \text{WN}(0,1.5)
-\]</span></p></li>
-<li><p>Sélection de modèles</p></li>
-</ul>
+\]</span></p>
+<p>En <a href="#fig-exselmod">Figure&nbsp;<span>5.10</span></a>, on trace la série temporelle étudiée <span class="math inline">\((X_t)_{t\in\Z}\)</span> ainsi que les autocorrélations et autocorrélations partielles empiriques de <span class="math inline">\(((I-B)X_t)_{t\in\Z}\)</span>.</p>
+<div id="fig-exselmod" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exselmod-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exselmod-1.png" class="img-fluid figure-img" data-ref-parent="fig-exselmod" width="672"></p>
+<figcaption class="figure-caption">(a) Série temporelle observée sur les 200 premiers temps</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exselmod-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exselmod-2.png" class="img-fluid figure-img" data-ref-parent="fig-exselmod" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exselmod-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exselmod-3.png" class="img-fluid figure-img" data-ref-parent="fig-exselmod" width="672"></p>
+<figcaption class="figure-caption">(c) Autocorrélations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.10: Résultats pour une série temporelle simulées selon un modèle ARIMA(1,1,2).</figcaption><p></p>
+</figure>
+</div>
+<p>On considère la collection de modèles suivante <span class="math inline">\(\mathcal M = \{ARIMA(p,1,q),\ p\in\{1,2,3,4\},\ q\in\{0,1,2\}\}\)</span>. On calcule les différents critères évoqués précédemment. Au vu des résultats ci-dessous, les trois critères sélectionnent un modèle ARIMA(1,1,2).</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>            mod    AIC   AICc    BIC
-1  ARIMA(1,1,0) 726.60 726.66 733.19
-2  ARIMA(2,1,0) 710.20 710.32 720.10
-3  ARIMA(3,1,0) 696.78 696.98 709.97
-4  ARIMA(4,1,0) 689.34 689.65 705.83
-5  ARIMA(1,1,1) 718.32 718.44 728.21
-6  ARIMA(2,1,1) 706.41 706.62 719.60
-7  ARIMA(3,1,1) 695.02 695.33 711.51
-8  ARIMA(4,1,1) 689.89 690.33 709.68
-9  ARIMA(1,1,2) 676.91 677.12 690.11
-10 ARIMA(2,1,2) 676.89 677.20 693.38
-11 ARIMA(3,1,2) 678.87 679.30 698.66</code></pre>
+1  ARIMA(1,1,0) 677.50 677.56 684.09
+2  ARIMA(2,1,0) 662.93 663.05 672.83
+3  ARIMA(3,1,0) 654.65 654.85 667.84
+4  ARIMA(4,1,0) 626.42 626.73 642.91
+5  ARIMA(1,1,1) 670.44 670.57 680.34
+6  ARIMA(2,1,1) 662.15 662.36 675.34
+7  ARIMA(3,1,1) 641.34 641.64 657.83
+8  ARIMA(4,1,1) 627.87 628.30 647.66
+9  ARIMA(1,1,2) 628.95 629.16 642.15
+10 ARIMA(2,1,2) 630.34 630.65 646.83
+11 ARIMA(3,1,2) 632.20 632.63 651.99
+12 ARIMA(4,1,2) 628.39 628.97 651.48</code></pre>
+</div>
 </div>
 </div>
 </section>
 <section id="sarima" class="level3" data-number="5.5.3">
 <h3 data-number="5.5.3" class="anchored" data-anchor-id="sarima"><span class="header-section-number">5.5.3</span> SARIMA</h3>
-<p>SARIMA = Seasonal ARIMA : extension des modèles ARIMA à des séries présentant une saisonnalité.</p>
-<div class="definition">
-<p>On dit qu’un processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <strong>SARIMA</strong><span class="math inline">\((p,d,q)(P,D,Q)[s]\)</span> s’il vérifie l’équation : <span class="math display">\[
+<p>Les modèles SARIMA, pour Seasonal ARIMA, sont une extension des modèles ARIMA à des séries temporelles présentant une saisonnalité.</p>
+<div id="def-SARIMA" class="definition theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.7 </strong></span>On dit qu’un processus <span class="math inline">\((X_t)_{t\in \Z}\)</span> admet une représentation <span style="color:blue;"><strong>SARIMA</strong><span class="math inline">\((p,d,q)(P,D,Q)[s]\)</span></span> s’il vérifie l’équation : <span class="math display">\[
 \textcolor{red}{(I-B^s)^D\Phi_P(B^s)}\textcolor{blue}{\Phi_p(B)(I-B)^d}\ X_t=c + \textcolor{blue}{\Theta_q(B)}\textcolor{red}{\Theta_Q(B^s)}\varepsilon_t,\ \forall t\in\Z
 \]</span> où <span class="math display">\[\begin{eqnarray*}
 &amp; &amp; c\in\mathbb{R}\\
@@ -1290,8 +1512,7 @@ M=\left[ \begin{tabular}[c]{cccccc} $\Delta_{1,1}$ &amp;$\ldots$
 &amp; &amp; (\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)
 \end{eqnarray*}\]</span></p>
 </div>
-<section id="identification-des-ordres" class="level4" data-number="5.5.3.1">
-<h4 data-number="5.5.3.1" class="anchored" data-anchor-id="identification-des-ordres"><span class="header-section-number">5.5.3.1</span> Identification des ordres</h4>
+<p>En pratique, voici comment on peut procéder pour “identifier” les différents ordres :</p>
 <ul>
 <li><p>Choix de <span class="math inline">\(d\)</span>, <span class="math inline">\(D\)</span> et <span class="math inline">\(s\)</span> :</p>
 <ul>
@@ -1307,35 +1528,116 @@ M=\left[ \begin{tabular}[c]{cccccc} $\Delta_{1,1}$ &amp;$\ldots$
 </ul></li>
 </ul>
 <div id="exm-sarima" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 5.3 </strong></span>&nbsp;</p>
-<ul>
-<li>Données simulées selon un modèle SARIMA(0,1,1)(0,1,1)[12] <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 5.7 </strong></span>Dans cet exemple, on simule une série temporelle selon un modèle SARIMA(0,1,1)(0,1,1)[12] <span class="math display">\[
 (I-B^{12})(I-B) X_t = (I+0.8 B)(I+0.4 B^{12})\varepsilon_t
-\]</span></li>
-</ul>
+\]</span></p>
+<p>La série est représentée en <a href="#fig-exSARIMA1-Xt">Figure&nbsp;<span>5.11</span></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exSARIMA1-Xt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMA1-Xt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.11: Série temporelle simulée selon un modèle SARIMA(0,1,1)(0,1,1)[12]</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La <a href="#fig-exSARIMAmonth">Figure&nbsp;<span>5.12</span></a> permet de partir sur une saisonnalité par mois pour la série temporelle <span class="math inline">\((s=12)\)</span>.</p>
+<div id="fig-exSARIMAmonth" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exSARIMAmonth-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAmonth-1.png" class="img-fluid figure-img" data-ref-parent="fig-exSARIMAmonth" width="672"></p>
+<figcaption class="figure-caption">(a) Tracé de la série par mois</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exSARIMAmonth-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAmonth-2.png" class="img-fluid figure-img" data-ref-parent="fig-exSARIMAmonth" width="672"></p>
+<figcaption class="figure-caption">(b) Tracé des points <span class="math inline">\((X_t,X_{t+h})\)</span> pour <span class="math inline">\(h\in\{1,\ldots,12\}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.12: Pour l’étude de la saisonnalité.</figcaption><p></p>
+</figure>
+</div>
+<p>On trace ensuite les autocorrélations et autocorrélations empiriques pour la série <span class="math inline">\((X_t)\)</span> (voir <a href="#fig-exSARIMAACF">Figure&nbsp;<span>5.13</span></a>)).</p>
+<div id="fig-exSARIMAACF" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exSARIMAACF-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAACF-1.png" class="img-fluid figure-img" data-ref-parent="fig-exSARIMAACF" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exSARIMAACF-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAACF-2.png" class="img-fluid figure-img" data-ref-parent="fig-exSARIMAACF" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrelations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.13: Autocorrélations et autocorrélations partielles de la série <span class="math inline">\((X_t)_{t\in\Z}\)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>La <a href="#fig-exSARIMAdiffXt">Figure&nbsp;<span>5.14</span></a> (resp. <a href="#fig-exSARIMAdiff12Xt">Figure&nbsp;<span>5.15</span></a>) représente la série temporelle différentiée <span class="math inline">\((I-B)X_t\)</span> (resp. <span class="math inline">\((I-B^{12})X_t\)</span>)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exSARIMAdiffXt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAdiffXt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.14: Tracé de la série temporelle différenciée <span class="math inline">\(((I-B)X_t)_{t\in\Z}\)</span>.</figcaption>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exSARIMAdiff12Xt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAdiff12Xt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.15: Tracé de la série temporelle différenciée <span class="math inline">\(((I-B^{12})X_t)_{t\in\Z}\)</span>.</figcaption>
+</figure>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<p><span class="math display">\[
+<p>On trace ensuite en <a href="#fig-exSARIMAYt">Figure&nbsp;<span>5.16</span></a>, les autocorrélations et autocorrélations partielles empiriques de la série <span class="math display">\[
 Y_t = (I-B^{12})(I-B) X_t
 \]</span></p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div id="fig-exSARIMAYt" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exSARIMAYt-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAYt-1.png" class="img-fluid figure-img" data-ref-parent="fig-exSARIMAYt" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
 </div>
 </div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exSARIMAYt-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-exSARIMAYt-2.png" class="img-fluid figure-img" data-ref-parent="fig-exSARIMAYt" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrelations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.16: Autocorrélations et autocorrélations partielles de la série <span class="math inline">\(Y_t = (I-B^{12})(I-B) X_t\)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>On décide alors d’ajuster sur la série <span class="math inline">\((X_t)_{t\in\Z}\)</span> un modèle SARIMA(0,1,1)(0,1,1)[12]. L’estimation des paramètres est donnée ici à l’aide de la fonction <code>arima()</code> et on teste ensuite la blancheur des résidus avec la fonction <code>Box.test()</code> :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>res<span class="ot">&lt;-</span><span class="fu">arima</span>(Xt,<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">seasonal=</span><span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">period=</span><span class="dv">12</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1361,40 +1663,70 @@ X-squared = 0.67745, df = 1, p-value = 0.4105</code></pre>
 </div>
 </div>
 </div>
+<p>Pour finir ce chapitre, on étude un jeu de données réelles concernant la pollution en oxyde d’azote à Londre.</p>
 <div id="exm-ozone" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 5.4 (Pollution en oxyde d’azote à Londron) </strong></span>&nbsp;</p>
+<p><span class="theorem-title"><strong>Example 5.8 (Pollution en oxyde d’azote à Londron) </strong></span>La <a href="#fig-azoteLondre">Figure&nbsp;<span>5.17</span></a> représente la mesure de pollution en oxyde d’azote à Londre par heure entre le 1/01/98 et le 21/01/98. On trace les autocorrélations empiriques (voir en <a href="#fig-azoteLondreACF">Figure&nbsp;<span>5.18</span></a>) et les autocorrélations partielles empiriques (voir en <a href="#fig-azoteLondrepACF">Figure&nbsp;<span>5.19</span></a>) de cette série temporelle <span class="math inline">\((X_t)\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div id="fig-azoteLondre" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-azoteLondre-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.17: Mesure de l’oxyde d’azote dans l’air à Londre par heure entre le 1/01/98 et le 21/01/98.</figcaption>
+</figure>
 </div>
 </div>
-<ul>
-<li>ACF des données</li>
-</ul>
+</div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div id="fig-azoteLondreACF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-azoteLondreACF-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.18: Autocorrélations de la série <span class="math inline">\(X_t\)</span></figcaption>
+</figure>
 </div>
 </div>
-<ul>
-<li>ACF / pACF des données différenciées</li>
-</ul>
+</div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<div id="fig-azoteLondrepACF" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-azoteLondrepACF-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.19: Autocorrélations partielles de la série <span class="math inline">\(X_t\)</span></figcaption>
+</figure>
 </div>
 </div>
-<p><span class="math inline">\(\Longrightarrow\)</span> on peut considérer des modèles ARIMA avec</p>
-<ul>
-<li><p><span class="math inline">\(0\leq q\leq 12\)</span>, <span class="math inline">\(0\leq p \leq 2\)</span></p></li>
-<li><p><span class="math inline">\(0\leq Q \leq 2\)</span>, <span class="math inline">\(0\leq P \leq 1\)</span></p></li>
-<li><p>Sélection de modèles ARIMA</p></li>
-</ul>
+</div>
+<p>On analyse ensuite les autocorrélations et autocorrélations partielles empiriques de la série différenciée <span class="math inline">\(Y_t = (I-B^{24}) X_t\)</span> (voir <a href="#fig-azoteLondreACFdiff">Figure&nbsp;<span>5.20</span></a>). On peut alors considérer des modèles SARIMA avec <span class="math inline">\(0\leq q\leq 12\)</span>, <span class="math inline">\(0\leq p \leq 2\)</span>, <span class="math inline">\(0\leq Q \leq 2\)</span>, <span class="math inline">\(0\leq P \leq 1\)</span>.</p>
+<div id="fig-azoteLondreACFdiff" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-azoteLondreACFdiff-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-azoteLondreACFdiff-1.png" class="img-fluid figure-img" data-ref-parent="fig-azoteLondreACFdiff" width="672"></p>
+<figcaption class="figure-caption">(a) Autocorrélations empiriques</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-azoteLondreACFdiff-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-azoteLondreACFdiff-2.png" class="img-fluid figure-img" data-ref-parent="fig-azoteLondreACFdiff" width="672"></p>
+<figcaption class="figure-caption">(b) Autocorrelations partielles empiriques</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.20: Autocorrélations et autocorrélations partielles de la série <span class="math inline">\(Y_t = (I-B^{24})X_t\)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>On met donc en place une sélection de modèles avec le critère AIC à l’aide de la fonction <code>auto.arima()</code>. On retient un modèle SARIMA<span class="math inline">\((0,1,1)(0,0,1)[24]\)</span> et on contrôle la blancheur des résidus obtenus.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res<span class="ot">&lt;-</span><span class="fu">auto.arima</span>(tta,<span class="at">ic=</span><span class="fu">c</span>(<span class="st">"aic"</span>),</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">max.p=</span><span class="dv">2</span>,<span class="at">max.q=</span><span class="dv">12</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">max.P=</span><span class="dv">1</span>,<span class="at">max.Q=</span><span class="dv">2</span>,<span class="at">seasonal=</span><span class="cn">TRUE</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>res<span class="ot">&lt;-</span><span class="fu">auto.arima</span>(tta,<span class="at">ic=</span><span class="fu">c</span>(<span class="st">"aic"</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">max.p=</span><span class="dv">2</span>,<span class="at">max.q=</span><span class="dv">12</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">max.P=</span><span class="dv">1</span>,<span class="at">max.Q=</span><span class="dv">2</span>,<span class="at">seasonal=</span><span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: tta 
 ARIMA(0,1,1)(0,0,1)[24] with drift 
@@ -1416,18 +1748,34 @@ data:  res$residuals
 X-squared = 0.10787, df = 1, p-value = 0.7426</code></pre>
 </div>
 </div>
-<ul>
-<li>Résultat</li>
-</ul>
+<p>On représente en <a href="#fig-azoteLondrefitted">Figure&nbsp;<span>5.21</span></a> la série temporelle ajustée par ce modèle par rapport à la série temporelle observée.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="chap4_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<div id="fig-azoteLondrefitted" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap4_files/figure-html/fig-azoteLondrefitted-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.21: Série temporelle estimée avec un modèle SARIMA(0,1,1)(0,0,1)(24) par rapport à la série temporelle observée.</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-aragon2016" class="csl-entry" role="listitem">
+Aragon, Yves. 2016. <em>S<span>é</span>ries Temporelles Avec r</em>. EDP sciences.
+</div>
+<div id="ref-brockwell2002introduction" class="csl-entry" role="listitem">
+Brockwell, Peter J, and Richard A Davis. 2002. <em>Introduction to Time Series and Forecasting</em>. Springer.
+</div>
+<div id="ref-brockwell2009time" class="csl-entry" role="listitem">
+———. 2009. <em>Time Series: Theory and Methods</em>. Springer science &amp; business media.
+</div>
+<div id="ref-dauxois" class="csl-entry" role="listitem">
+Dauxois, Jean-Yves. 2020. <span>“Introduction à l’étude Des Séries Temporelles.”</span> Polycopié cours INSA Toulouse.
+</div>
+</div>
 </section>
 </section>
 

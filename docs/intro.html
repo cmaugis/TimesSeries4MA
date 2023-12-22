@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -228,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-seaice" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-seaice-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.3: Evolution de la surface de la glace dans l’Artique.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1.3: Evolution de la surface de la glace dans l’Artique. En haut à gauche, la série temporelle. En haut à droite, chaque courbe représente l’évoluton d’une année selon les différents mois. En bas, regroupement des mesures par mois.</figcaption>
 </figure>
 </div>
 </div>
@@ -242,7 +261,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-AirP" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="intro_files/figure-html/fig-AirP-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;1.4: Nombre de passagers (en milliers) ayant emprunté les lignes aériennes de 1949 à 1960.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1.4: Nombre de passagers (en milliers) ayant emprunté les lignes aériennes de 1949 à 1960 à gauche. La série est log-transformée à droite.</figcaption>
 </figure>
 </div>
 </div>
@@ -250,12 +269,21 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p><br></p>
 <p>Les exemples de séries temporelles ne manquent pas. On pourrait encore citer l’évolution de la température sur une période donnée, la concentration en polluants au cours du temps, le cours d’une action en finance, la consommation en électricité, l’évolution des recherches d’un mot sur internet, l’électrocardiogramme d’une personne en médecine, ….</p>
-<p>Dans la suite de ce cours, on suppose que la séries observée est une réalisation d’une suite de variables aléatoires. Il faut bien noter que <strong>l’ordre est important</strong> puisque l’on étudie un phénomène au cours du temps.</p>
+<p>Dans la suite de ce cours, on suppose que la série observée est une réalisation d’une suite de variables aléatoires. Il faut bien noter que <strong>l’ordre est important</strong> puisque l’on étudie un phénomène au cours du temps.</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>On note <span class="math inline">\(Y_t\)</span> la valeur du phénomène au temps <span class="math inline">\(t\in T\)</span> où <span class="math inline">\(T\)</span> est l’espace de <strong>temps discret</strong> (souvent <span class="math inline">\(T=\N\)</span> voire <span class="math inline">\(\Z\)</span>). Le processus <span class="math inline">\((Y_t)_{t\in T}\)</span> est alors appelé <strong>série temporelle</strong>.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="quelles-questions-autour-de-létude-dune-série-temporelle" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="quelles-questions-autour-de-létude-dune-série-temporelle"><span class="header-section-number">1.2</span> Quelles questions autour de l’étude d’une série temporelle ?</h2>
-<p>Nous sommes tout d’abord confronter au problème de la <strong>modélisation</strong> d’une série temporelle. On va chercher à ajuster un modèle qui décrit “au mieux” le comportement de la série temporelle. Ceci va nécessiter d’estimer les paramètres pour ajuster le modèle, tester son adéquation à la série temporelle étudiée, voire faire de la sélection de modèle entre plusieurs modèles en compétition.</p>
+<p>Nous sommes tout d’abord confrontés au problème de la <strong>modélisation</strong> d’une série temporelle. On va chercher à ajuster un modèle qui décrit “au mieux” le comportement de la série temporelle. Ceci va nécessiter d’estimer les paramètres pour ajuster le modèle, tester son adéquation à la série temporelle étudiée, voire faire de la sélection de modèle entre plusieurs modèles en compétition.</p>
 <p>Il est important de noter que l’on ne recherche pas un ajustement exact aux données. L’objectif est d’extraire la structure générale du signal et d’éliminer le bruit. On va en particulier chercher à déceler la présence d’une tendance, d’une saisonnalité dans les données.</p>
 <p>Si l’on reprend la série temporelle du nombre de passagers aériens (voir <a href="#exm-AirP">Example&nbsp;<span>1.4</span></a>), on peut estimer une saisonnalité et en déduire la série corrigée des variations saisonnières (voir <a href="#fig-AirPCV">Figure&nbsp;<span>1.5</span></a>). On reviendra plus tard sur cette notion.</p>
 <div class="cell">
@@ -268,7 +296,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>Après l’analyse et la modélisation d’une série temporelle, on est souvent intéressé par la <strong>prévision</strong> des futures valeurs de la série. Par exemple, on peut chercher à prédire la température dans les jours à venir, la concentration en ozone, … Plus formellement, à partir des <span class="math inline">\(n\)</span> premiers instants <span class="math inline">\(Y_1,\ldots,Y_n\)</span> de la série, on souhaite prévoir la valeur suivante <span class="math inline">\(Y_{n+1}\)</span> ou plus éloignée dans le temps <span class="math inline">\(Y\_{n+h}\)</span>. Un exemple de prévision sur l’année suivante de la série temporelle AirPassengers est données en <a href="#fig-AirPPrev">Figure&nbsp;<span>1.6</span></a>. On devra s’intéresser alors à l’erreur de prédiction, à la taille des intervalles de prédiction, …</p>
+<p>Après l’analyse et la modélisation d’une série temporelle, on est souvent intéressé par la <strong>prévision</strong> des futures valeurs de la série. Par exemple, on peut chercher à prédire la température dans les jours à venir, la concentration en ozone, … Plus formellement, à partir des <span class="math inline">\(n\)</span> premiers instants <span class="math inline">\(Y_1,\ldots,Y_n\)</span> de la série, on souhaite prévoir la valeur suivante <span class="math inline">\(Y_{n+1}\)</span> ou plus éloignée dans le temps <span class="math inline">\(Y_{n+h}\)</span>. Un exemple de prévision sur l’année suivante de la série temporelle AirPassengers est données en <a href="#fig-AirPPrev">Figure&nbsp;<span>1.6</span></a>. On devra s’intéresser alors à l’erreur de prédiction, à la taille des intervalles de prédiction, …</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-AirPPrev" class="quarto-figure quarto-figure-center anchored">
@@ -281,6 +309,20 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-aragon2016" class="csl-entry" role="listitem">
+Aragon, Yves. 2016. <em>S<span>é</span>ries Temporelles Avec r</em>. EDP sciences.
+</div>
+<div id="ref-brockwell2002introduction" class="csl-entry" role="listitem">
+Brockwell, Peter J, and Richard A Davis. 2002. <em>Introduction to Time Series and Forecasting</em>. Springer.
+</div>
+<div id="ref-brockwell2009time" class="csl-entry" role="listitem">
+———. 2009. <em>Time Series: Theory and Methods</em>. Springer science &amp; business media.
+</div>
+<div id="ref-dauxois" class="csl-entry" role="listitem">
+Dauxois, Jean-Yves. 2020. <span>“Introduction à l’étude Des Séries Temporelles.”</span> Polycopié cours INSA Toulouse.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -228,9 +247,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="décomposition-dune-série-temporelle" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="décomposition-dune-série-temporelle"><span class="header-section-number">2.1</span> Décomposition d’une série temporelle</h2>
-<p>Comme on a pu le constater dans les exemples de l’ <a href="./intro.html">introduction</a>, quitte à faire une transformation des données au préalable, on peut décomposer une série temporelle en un modèle additif composé de trois termes de la façon suivante.</p>
+<p>Comme on a pu le constater dans les exemples de l’ <a href="./intro.html">introduction</a>, quitte à faire une transformation des données au préalable, on peut décomposer une série temporelle en un <strong>modèle additif</strong> composé de trois termes de la façon suivante.</p>
 <div id="def-modadd" class="definition theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.1 (Décomposition en modèle additif) </strong></span>La série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> se décompose en</p>
+<p><span class="theorem-title"><strong>Definition 2.1 (Décomposition en modèle additif) </strong></span><br> La série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> se décompose en</p>
 <p><span id="eq-mod-add"><span class="math display">\[
 Y_t=m_t+s_t+X_t,\ \forall t\in T
 \tag{2.1}\]</span></span></p>
@@ -241,34 +260,32 @@ Y_t=m_t+s_t+X_t,\ \forall t\in T
 <li><span class="math inline">\(X_t\)</span> est un <span style="color:blue;"><strong>bruit aléatoire stationnaire</strong></span> appelé parfois résidu. Ce terme sera à définir dans la suite.</li>
 </ul>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Remarque">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Hypothèse de somme nulle de la saisonnalité sur la période <span class="math inline">\(r\)</span>
+Remarque
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>Cette hypothèse n’est pas contraignante. En effet, on peut s’y ramener facilement en modifiant la tendance : si <span class="math inline">\(\sum_{h=1}^rs_{t+h}= a\)</span> alors on définit <span class="math inline">\(\tilde s_{t} = s_t - \frac a r\)</span> et <span class="math inline">\(\tilde m_t = m_t + \frac a r\)</span>.</p>
+<p>L’hypothèse de somme nulle de la saisonnalité sur la période <span class="math inline">\(r\)</span> n’est pas une hypothèse contraignante. En effet, on peut s’y ramener facilement en modifiant la tendance : si <span class="math inline">\(\sum_{h=1}^rs_{t+h}= a\)</span> alors on définit <span class="math inline">\(\tilde s_{t} = s_t - \frac a r\)</span> et <span class="math inline">\(\tilde m_t = m_t + \frac a r\)</span>.</p>
 </div>
 </div>
 </div>
 <p>Si la saisonnalité et les variations semblent croître, on peut parfois atténuer ce phénomène en tentant une transformation des données. C’est en particulier ce que l’on peut constater sur les données <em>AirPassengers</em> quand on prend leur logarithme (voir <a href="intro.html#fig-AirP">Figure&nbsp;<span>1.4</span></a>). Donc quitte à faire une transformation des données, on peut supposer le modèle additif (<a href="#eq-mod-add">Equation&nbsp;<span>2.1</span></a>).</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Objectif du cours
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ul>
 <li>Apprendre à modéliser et estimer les composantes tendance <span class="math inline">\((m_t)_{t\in T}\)</span> et saisonnalité <span class="math inline">\((s_t)_{t\in T}\)</span></li>
@@ -277,27 +294,23 @@ Objectif du cours
 </ul>
 </div>
 </div>
-</div>
 <p>La méthode générale pour étudier une série temporelle est la suivante :</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Méthode générale d’étude
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>Etape 1</strong> : on trace la série des données observées <span class="math inline">\((Y_1,\ldots, Y_n)\)</span> et on essaie de déceler ses principales caractéristiques : une tendance, une composante saisonnière, une ou des ruptures dans le comportement de la série, une ou des observations aberrantes.</p></li>
-<li><p><strong>Etape 2</strong> : On estime / supprime la tendance <span class="math inline">\((m_t)_{t\in T}\)</span> et la composante saisonnière <span class="math inline">\((s_t)_{t\in T}\)</span> pour obtenir une série <span class="math inline">\((X_t)_{t\in T}\)</span> de résidus stationnaires. On peut utiliser pour cela plusieurs techniques : transformer les données, estimer les tendances et composantes saisonnières puis les supprimer des données, différencier la série.</p></li>
-<li><p><strong>Etape 3</strong> : Choisir un modèle de série stationnaire pour les résidus</p></li>
+<li><p><strong>Etape 2</strong> : On estime / supprime la tendance <span class="math inline">\((m_t)_{t\in T}\)</span> et la composante saisonnière <span class="math inline">\((s_t)_{t\in T}\)</span> pour obtenir une série <span class="math inline">\((X_t)_{t\in T}\)</span> de résidus stationnaires. Pour cela, on peut utiliser plusieurs techniques: transformer les données, estimer les tendances et composantes saisonnières puis les supprimer des données, différencier la série.</p></li>
+<li><p><strong>Etape 3</strong> : Choisir un modèle de processus stationnaire pour la série des résidus</p></li>
 <li><p><strong>Etape 4</strong> : Prévoir les valeurs futures de la série en prévoyant d’abord celles des résidus puis remonter jusqu’à la série initiale en utilisant les transformations inverses.</p></li>
 </ul>
-</div>
 </div>
 </div>
 </section>
@@ -313,7 +326,7 @@ Y_t=m_t+X_t,\ \forall  t\in T.
 <ul>
 <li>Tendance linéaire : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t\)</span></li>
 <li>Tendance quadratique : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2\)</span></li>
-<li>Tendance polynomiale : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2+\cdots+\alpha_n t^n\)</span></li>
+<li>Tendance polynomiale : <span class="math inline">\(m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2+\cdots+\alpha_k t^k\)</span></li>
 <li>Tendance exponentielle : <span class="math inline">\(m_t=c_0+c_1\alpha^t\)</span></li>
 <li>Tendance de Gompertz : <span class="math inline">\(m_t=\exp(c_0+c_1\alpha^t)\)</span></li>
 <li>Tendance Logistique : <span class="math inline">\(m_t=1/(c_0+c_1\alpha^t)\)</span></li>
@@ -328,7 +341,7 @@ m_t=\sum_{j=1}^p\alpha_j m_t^{(j)}.
 <span class="math display">\[\begin{eqnarray*}
 (\hat \alpha_1,\ldots,\hat \alpha_p)
 &amp;=&amp;\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n(Y_t-m_t)^2 \\
-&amp;=&amp;\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n \left(Y_t-\alpha_1 m_t^{(1)}-\ldots - \alpha_p m_t^{(p)}\right)^2
+&amp;=&amp;\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n \left(Y_t-\alpha_1 m_t^{(1)}-\ldots - \alpha_p m_t^{(p)}\right)^2.
 \end{eqnarray*}\]</span>
 <p>On peut constater que l’on se ramène à un problème de régression linéaire de la forme</p>
 <p><span class="math display">\[
@@ -461,11 +474,9 @@ M=\sum_{h=-m_1}^{m_2}\theta_h B^{-h},
 <p>L’<span style="color:blue;"><strong>ordre</strong></span> de la moyenne mobile est l’entier <span class="math inline">\(m_1+m_2+1\)</span>.</p>
 <p>La moyenne mobile est dite</p>
 <ul>
-<li><span style="color:blue;"><strong>normalisée</strong></span> si <span class="math display">\[
-\sum_{h=-m_1}^{m_2} \theta_h=1
-\]</span></li>
-<li><span style="color:blue;"><strong>centrée</strong></span> si <span class="math inline">\(m_1=m_2\)</span></li>
-<li><span style="color:blue;"><strong>symétrique</strong></span> si <span class="math inline">\(m_1=m_2=m\)</span> et <span class="math inline">\(\theta_h=\theta_{-h}\)</span>, pour <span class="math inline">\(h=1,\ldots,m\)</span>.</li>
+<li><span style="color:blue;"><strong>normalisée</strong></span> si <span class="math inline">\(\sum_{h=-m_1}^{m_2} \theta_h=1.\)</span> <br> Il s’agit alors d’une moyenne au sens où on l’entend habituellement.</li>
+<li><span style="color:blue;"><strong>centrée</strong></span> si <span class="math inline">\(m_1=m_2\)</span> <br> On prend autant d’instants du passé que du futur.</li>
+<li><span style="color:blue;"><strong>symétrique</strong></span> si <span class="math inline">\(m_1=m_2=m\)</span> et <span class="math inline">\(\theta_h=\theta_{-h}\)</span>, pour <span class="math inline">\(h=1,\ldots,m\)</span>. <br> On donne des poids identiques aux instants passés et futurs de même ordre.</li>
 </ul>
 </div>
 <p><br></p>
@@ -485,17 +496,17 @@ M\ Y_t&amp;=&amp; \sum_{h=-m_1}^{m_2}\theta_h B^{-h}\ Y_t\\
 <div id="exm-M" class="example theorem example">
 <p><span class="theorem-title"><strong>Example 2.2 (Exemple important de la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span>) </strong></span><br> Soit <span class="math inline">\(q\in \mathbb N^*\)</span>. On considère la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> définie par<br>
 <span class="math display">\[
-M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{j=-q}^qY_{t-j}
+M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{j=-q}^qY_{t-j}.
 \]</span> <span class="math inline">\(M_{2q+1}\)</span> est une moyenne mobile avec <span class="math inline">\(m_1=m_2=q\)</span> et <span class="math inline">\(\theta_h=\frac{1}{1+2q} \mathbb 1_{|h|\leq q}\)</span>. C’est donc une moyenne mobile finie, symétrique et normalisée d’ordre <span class="math inline">\(2q+1\)</span>. Au vu de la définition des coefficients, cette moyenne mobile peut être vue comme un filtre “passe-bas”.</p>
-<p>La moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> laisse invariante les tendances linéaires : si <span class="math inline">\(m_t=a+bt\)</span> alors <span class="math display">\[
+<p>La moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> laisse invariante les tendances linéaires :<br> si <span class="math inline">\(m_t=a+bt\)</span> alors <span class="math display">\[
 M_{2q+1}m_t = \frac{1}{2q+1}\sum_{j=-q}^qm_{t-j}=
 \frac{1}{2q+1}\sum_{j=-q}^q (a + bt -b j) = a+bt = m_t.
 \]</span></p>
 <p>Soit une série temporelle <span class="math inline">\((Y_t)_{t\in T}\)</span> de la forme <span class="math inline">\(Y_t=m_t+X_t\)</span>, où <span class="math inline">\(m_t\)</span> est la tendance et <span class="math inline">\(X_t\)</span> un processus centré. Si la tendance est pratiquement linéaire et que la moyenne empirique des <span class="math inline">\(X_t\)</span> est proche de 0 (ce qui est en tout cas vrai pour <span class="math inline">\(q\)</span> grand), on a <span class="math display">\[
 M_{2q+1}Y_t=\frac{1}{2q+1}\sum_{j=-q}^qm_{t-j}+\frac{1}{2q+1}\sum_{j=-q}^qX_{t-j}\approx m_t.
 \]</span></p>
-<p><span class="math inline">\(\Longrightarrow\)</span> la moyenne mobile nous donne une estimation de la tendance quand elle est pratiquement linéaire.</p>
-<p>Pour illustrer ce point, on observe les <span class="math inline">\(50\)</span> premières réalisations d’une série temporelle <span class="math inline">\((Y_t)_{t\in \mathbb N}\)</span> définie par <span class="math inline">\(Y_t = (5+0.1 t) + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,1)\)</span>.<br>
+<p><span style="color:red;"><span class="math inline">\(\Longrightarrow\)</span> la moyenne mobile nous donne une estimation de la tendance quand elle est pratiquement linéaire.</span></p>
+<p>Pour illustrer ce point, on observe les <span class="math inline">\(50\)</span> premières réalisations d’une série temporelle <span class="math inline">\((Y_t)_{t\in \mathbb N}\)</span> définie par <span class="math inline">\(Y_t = (5+0.1 t) + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d }}{\sim} \mathcal{N}(0,1)\)</span>.<br>
 La <a href="#fig-ExMM">Figure&nbsp;<span>2.2</span></a> montre l’estimation de la tendance par la moyenne mobile <span class="math inline">\(M_{2q+1}\)</span> <span class="math display">\[
   \hat m_t = \frac{1}{2q+1}\underset{j=-q}{\stackrel{q}{\sum}}\ Y_{t-j},\ \ \forall q+1\leq t \leq n-q
 \]</span> pour <span class="math inline">\(2q+1=3\)</span> et <span class="math inline">\(2q+1=7\)</span>.</p>
@@ -597,15 +608,38 @@ Preuve
 <li><span class="math inline">\(Y_t^{[2]} = 1 + 0.05 t + X_t\)</span> avec <span class="math inline">\(X_t\underset{\textrm{i.i.d}}{\sim} \mathcal{N}(0,0.1)\)</span></li>
 <li><span class="math inline">\(Y_t^{[3]} = \mathbb{1}_{1\leq t \leq 25}+ 2 \mathbb{1}_{t&gt;25} + X_t\)</span> avec <span class="math inline">\(X_t\underset{\textrm{i.i.d}}{\sim} \mathcal{N}(0,0.1)\)</span></li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-exlissexpo" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-exlissexpo" class="cell quarto-layout-panel">
 <figure class="figure">
-<p><img src="chap1_files/figure-html/fig-exlissexpo-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.4: Exemples de lissage exponentiel simple</figcaption>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exlissexpo-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpo-1.png" class="img-fluid figure-img" data-ref-parent="fig-exlissexpo" width="672"></p>
+<figcaption class="figure-caption">(a) La série temporelle <span class="math inline">\(Y_t^{[1]}\)</span></figcaption>
 </figure>
 </div>
 </div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exlissexpo-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpo-2.png" class="img-fluid figure-img" data-ref-parent="fig-exlissexpo" width="672"></p>
+<figcaption class="figure-caption">(b) La série temporelle <span class="math inline">\(Y_t^{[2]}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exlissexpo-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpo-3.png" class="img-fluid figure-img" data-ref-parent="fig-exlissexpo" width="672"></p>
+<figcaption class="figure-caption">(c) La série temporelle <span class="math inline">\(Y_t^{[3]}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.4: Exemples de lissage exponentiel simple</figcaption><p></p>
+</figure>
 </div>
 </div>
 <p>Dans le cadre du lissage exponentiel simple, on vient de voir que la prévision est constante. Une extension est le lissage exponentiel double où l’on souhaite une prédiction linéaire. Cette prédiction est donnée par</p>
@@ -620,14 +654,40 @@ Preuve
 \end{array}\right.
 \]</span></p>
 <p>Dans la même famille de méthode, on peut citer la méthode de Holt-Winters qui est un lissage exponentiel double avec une formule de mise à jour différente (voir <a href="#fig-exlissexpoHW">Figure&nbsp;<span>2.5</span></a>).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-exlissexpoHW" class="quarto-figure quarto-figure-center anchored">
+<div id="exm-lissexpodouble" class="example theorem example">
+<p><span class="theorem-title"><strong>Example 2.4 </strong></span>On reprend les trois séries de l’exemple <a href="#exm-lissexpo">Example&nbsp;<span>2.3</span></a> et on applique un lissage exponentiel double avec la méthode de Holt-Winters.</p>
+<div id="fig-exlissexpoHW" class="cell quarto-layout-panel">
 <figure class="figure">
-<p><img src="chap1_files/figure-html/fig-exlissexpoHW-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.5: Reprise des exemples précédents avec ici la méthode de Holt-Winters.</figcaption>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exlissexpoHW-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpoHW-1.png" class="img-fluid figure-img" data-ref-parent="fig-exlissexpoHW" width="672"></p>
+<figcaption class="figure-caption">(a) La série temporelle <span class="math inline">\(Y_t^{[1]}\)</span></figcaption>
 </figure>
 </div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exlissexpoHW-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpoHW-2.png" class="img-fluid figure-img" data-ref-parent="fig-exlissexpoHW" width="672"></p>
+<figcaption class="figure-caption">(b) La série temporelle <span class="math inline">\(Y_t^{[2]}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exlissexpoHW-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exlissexpoHW-3.png" class="img-fluid figure-img" data-ref-parent="fig-exlissexpoHW" width="672"></p>
+<figcaption class="figure-caption">(c) La série temporelle <span class="math inline">\(Y_t^{[3]}\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.5: Reprise des exemples précédents avec ici la méthode de Holt-Winters.</figcaption><p></p>
+</figure>
 </div>
 </div>
 </section>
@@ -648,11 +708,10 @@ Preuve
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Attention à la manipulation de cet opérateur.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Attention à la manipulation de cet opérateur.</p>
 <ul>
 <li><span class="math inline">\(\nabla^2 Y_t = (I-B)(I-B) Y_t = Y_t - 2 Y_{t-1} + Y_{t-2}\)</span></li>
 <li><span class="math inline">\(\nabla^3 Y_t = (I-B)\nabla^2 Y_t = Y_t - 3 Y_{t-1} + 3 Y_{t-2} - Y_{t-3}\)</span></li>
@@ -674,46 +733,82 @@ Preuve
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>On raisonne par récurrence. - Pour <span class="math inline">\(k=1\)</span> : pour une tendance linéaire <span class="math inline">\(m_t=a+bt\)</span>, on a <span class="math inline">\(\nabla m_t=a+bt-a -b(t-1)=b.\)</span> - On suppose la proposition vraie au rang <span class="math inline">\(k\)</span> - Au rang <span class="math inline">\(k+1\)</span>: soit la tendance <span class="math inline">\(m_t = \underset{j=0}{\stackrel{k+1}{\sum}} a_j t^j = a_{k+1} t^{k+1} + P_k(t)\)</span>. Alors <span class="math display">\[\begin{eqnarray*}
-    \nabla^{k+1} m_t &amp;=&amp; \nabla^k (I-B)(a_{k+1} t^{k+1} + P_k(t))\\
-    &amp;=&amp; \nabla^k \left[a_{k+1} (t^{k+1} - (t-1)^{k+1}) + P_k(t) - P_k(t-1)\right]\\
-    &amp;=&amp; \nabla^k \left[a_{k+1} (t-t+1) Q_{k}(t) + P_k(t) - P_k(t-1)\right]\\
-    &amp;=&amp; \textrm{constante}
-    \end{eqnarray*}\]</span></p>
+<p>On raisonne par récurrence.</p>
+<ul>
+<li>Pour <span class="math inline">\(k=1\)</span> : pour une tendance linéaire <span class="math inline">\(m_t=a+bt\)</span>, on a <span class="math inline">\(\nabla m_t=a+bt-a -b(t-1)=b.\)</span></li>
+<li>On suppose la proposition vraie au rang <span class="math inline">\(k\)</span></li>
+<li>Au rang <span class="math inline">\(k+1\)</span>: soit la tendance <span class="math inline">\(m_t = \underset{j=0}{\stackrel{k+1}{\sum}} a_j t^j = a_{k+1} t^{k+1} + P_k(t)\)</span>. Alors <span class="math display">\[\begin{eqnarray*}
+  \nabla^{k+1} m_t &amp;=&amp; \nabla^k (I-B)(a_{k+1} t^{k+1} + P_k(t))\\
+  &amp;=&amp; \nabla^k \left[a_{k+1} (t^{k+1} - (t-1)^{k+1}) + P_k(t) - P_k(t-1)\right]\\
+  &amp;=&amp; \nabla^k \left[a_{k+1} (t-t+1) Q_{k}(t) + P_k(t) - P_k(t-1)\right]\\
+  &amp;=&amp; \textrm{constante}
+  \end{eqnarray*}\]</span></li>
+</ul>
 </div>
 </div>
 </div>
 <p>La différenciation permet d’éliminer les tendances polynomiales et donc pratiquement toutes les tendances car elles peuvent très souvent être approchées par des polynômes. Attention, il faut bien noter que cette technique permet d’éliminer la tendance mais ne l’estime pas.</p>
 <div id="exm-diff1" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 2.4 </strong></span>En <a href="#fig-exdiff1">Figure&nbsp;<span>2.6</span></a>, on a simulé une série temporelle définie par <span class="math inline">\(Y_t = 1 + \frac{1}{20} t + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,0.25)\)</span>. On voit que la différenciation de la série <span class="math inline">\(\nabla Y_t\)</span> élimine la tendance linéaire.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-exdiff1" class="quarto-figure quarto-figure-center anchored">
+<p><span class="theorem-title"><strong>Example 2.5 </strong></span>En <a href="#fig-exdiff1">Figure&nbsp;<span>2.6</span></a>, on a simulé une série temporelle définie par <span class="math inline">\(Y_t = 1 + \frac{1}{20} t + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d }}{\sim} \mathcal{N}(0,0.25)\)</span>. On voit que la différenciation de la série <span class="math inline">\(\nabla Y_t\)</span> élimine la tendance linéaire.</p>
+<div id="fig-exdiff1" class="cell quarto-layout-panel">
 <figure class="figure">
-<p><img src="chap1_files/figure-html/fig-exdiff1-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.6: Illustration de l’élimination d’une tendance liéanire par la différenciation à l’ordre 1.</figcaption>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exdiff1-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff1-1.png" class="img-fluid figure-img" data-ref-parent="fig-exdiff1" width="672"></p>
+<figcaption class="figure-caption">(a) Représentation de la série <span class="math inline">\((Y_t)_{t\in T}\)</span> et la tendance linéaire <span class="math inline">\(t\mapsto 1 + \frac{1}{20} t\)</span> en bleu</figcaption>
 </figure>
 </div>
 </div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exdiff1-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff1-2.png" class="img-fluid figure-img" data-ref-parent="fig-exdiff1" width="672"></p>
+<figcaption class="figure-caption">(b) Représentation de la différenciation de la série <span class="math inline">\(\nabla Y_t\)</span></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.6: Illustration de l’élimination d’une tendance linéaire par la différenciation à l’ordre 1.</figcaption><p></p>
+</figure>
 </div>
 </div>
 <p><br></p>
 <div id="exm-diff2" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 2.5 </strong></span>Dans cet exemple, on a simulé une série temporelle définie par <span class="math inline">\(Y_t = 1 - 5\ t + 0.25\ t^2 + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,100)\)</span>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="chap1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-exdiff2" class="quarto-figure quarto-figure-center anchored">
+<p><span class="theorem-title"><strong>Example 2.6 </strong></span>Dans cet exemple, on a simulé une série temporelle définie par <span class="math inline">\(Y_t = 1 - 5\ t + 0.25\ t^2 + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d }}{\sim} \mathcal{N}(0,100)\)</span>.</p>
+<div id="fig-exdiff2" class="cell quarto-layout-panel">
 <figure class="figure">
-<p><img src="chap1_files/figure-html/fig-exdiff2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.7: Illustration de l’élimination d’une tendance quadratique par une différenciation d’ordre 2 mais pas d’ordre 1</figcaption>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exdiff2-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff2-1.png" class="img-fluid figure-img" data-ref-parent="fig-exdiff2" width="672"></p>
+<figcaption class="figure-caption">(a) Représentation de la série <span class="math inline">\((Y_t)_t\)</span> et de la tendance quadratique en rouge</figcaption>
 </figure>
 </div>
 </div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exdiff2-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff2-2.png" class="img-fluid figure-img" data-ref-parent="fig-exdiff2" width="672"></p>
+<figcaption class="figure-caption">(b) Différenciation à l’ordre 1</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-exdiff2-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="chap1_files/figure-html/fig-exdiff2-3.png" class="img-fluid figure-img" data-ref-parent="fig-exdiff2" width="672"></p>
+<figcaption class="figure-caption">(c) Différenciation à l’ordre 2</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.7: Illustration de l’élimination d’une tendance quadratique par une différenciation d’ordre 2 mais pas d’ordre 1</figcaption><p></p>
+</figure>
 </div>
 </div>
 </section>
@@ -744,14 +839,14 @@ Y_t=\sum_{j=1}^p\alpha_j m_t^{(j)}+\sum_{\ell=1}^q\beta_\ell s_t^{(\ell)}+X_t,\ 
 <li>une combinaison de fonctions sinusoïdales.</li>
 </ul>
 <p>On peut noter que les saisonnalités <span class="math inline">\(s_t^{(\ell)}\)</span> peuvent avoir des périodes différentes.</p>
-<p>On cherche donc à estimer le vecteur des coefficients inconnus <span class="math inline">\(\theta = (\alpha_1,\ldots,\alpha_p,\beta_1,\ldots,\beta_q)\)</span> par la méthode des moindres carrés. On obtient alors les estimateurs <span class="math inline">\(\hat \theta = (\hat\alpha_1,\ldots,\hat\alpha_p,\hat\beta_1,\ldots,\hat\beta_q)\)</span> et on récupère les données ajustées</p>
+<p>On cherche donc à estimer le vecteur des coefficients inconnus <span class="math inline">\(\theta = (\alpha_1,\ldots,\alpha_p,\beta_1,\ldots,\beta_q)'\)</span> par la méthode des moindres carrés. On obtient alors les estimateurs <span class="math inline">\(\hat \theta = (\hat\alpha_1,\ldots,\hat\alpha_p,\hat\beta_1,\ldots,\hat\beta_q)'\)</span> et on récupère les données ajustées</p>
 <p><span class="math display">\[
 \hat Y_t=\hat m_t+\hat s_t=\sum_{j=1}^p\hat \alpha_j m_t^{(j)}+\sum_{\ell=1}^q \hat\beta_\ell s_t^{(\ell)},\ \forall t \in T.
 \]</span></p>
 <p>La <strong>série corrigée des variations saisonnières</strong> (CVS) est alors définie par</p>
 <p><span class="math display">\[\hat Y^{\text{CVS}}_t=Y_t-\hat s_t.\]</span></p>
 <div id="exm-MSEms" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 2.6 </strong></span>Dans cet exemple, on s’intéresse à la série temporelle <span class="math inline">\(Y_t = 0.5 t + 3 \mbox{cos}\left(\frac{\pi\ t}{6}\right)+X_t,\ X_t \textrm{ i.i.d }\mathcal{N}(0,1)\)</span>. On considère les fonctions de tendance polynomiales <span class="math inline">\(m_t^{(j)}=t^j\)</span> pour <span class="math inline">\(j\in\{1,2,3\}\)</span> et les fonctions de saisonnalité définies par <span class="math inline">\(s_t^{(\ell)}=\mbox{cos}(\theta_{\ell} t)\)</span> avec <span class="math inline">\((\theta_1,\theta_2,\theta_3)=(\frac{\pi}{6},\frac{\pi}{4},\frac{\pi}{3})\)</span>. A l’aide de la fonction <code>lm()</code>, on ajuste un modèle de régression linéaire</p>
+<p><span class="theorem-title"><strong>Example 2.7 </strong></span>Dans cet exemple, on s’intéresse à la série temporelle <span class="math inline">\(Y_t = 0.5 t + 3 \mbox{cos}\left(\frac{\pi\ t}{6}\right)+X_t,\ X_t \underset{\textrm{ i.i.d }}{\sim}\mathcal{N}(0,1)\)</span>. On considère les fonctions de tendance polynomiales <span class="math inline">\(m_t^{(j)}=t^j\)</span> pour <span class="math inline">\(j\in\{1,2,3\}\)</span> et les fonctions de saisonnalité définies par <span class="math inline">\(s_t^{(\ell)}=\mbox{cos}(\theta_{\ell} t)\)</span> avec <span class="math inline">\((\theta_1,\theta_2,\theta_3)=(\frac{\pi}{6},\frac{\pi}{4},\frac{\pi}{3})\)</span>. A l’aide de la fonction <code>lm()</code>, on ajuste un modèle de régression linéaire</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -838,9 +933,7 @@ M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{h=-q}^qm_{t-h}+\frac{1}{2q+1} \sum_{h=-q}^q s_{
 <h4 data-number="2.3.2.2" class="anchored" data-anchor-id="cas-dune-périodicité-paire"><span class="header-section-number">2.3.2.2</span> Cas d’une périodicité paire</h4>
 <p>Si la périodicité est paire <span class="math inline">\(r=2q\)</span>, on peut utiliser une approche similaire en considérant la moyenne mobile symétrique normalisée : <span class="math display">\[
 M_{2q}Y_t=\frac{1}{2q}\left(Y_{t-q+\frac{1}{2}}+\ldots+Y_{t-\frac{1}{2}}+Y_{t+\frac{1}{2}}+\ldots+Y_{t+q-\frac{1}{2}}\right),
-\textrm{ où }
-Y_{t-\frac{1}{2}}=\frac{1}{2}\left(Y_{t-1}+Y_t\right)
-\]</span> pour estimer la tendance et éliminer la saisonnalité.</p>
+\]</span> où <span class="math inline">\(Y_{t-\frac{1}{2}}=\frac{1}{2}\left(Y_{t-1}+Y_t\right)\)</span> pour estimer la tendance et éliminer la saisonnalité.</p>
 <p>Pour se convaincre que la saisonnalité est éliminée, on peut réécrire <span class="math inline">\(M_{2q}Y_t\)</span> : <span class="math display">\[\begin{eqnarray*}
 M_{2q}Y_t &amp;=&amp; \frac{1}{2q} \underset{h=-(q-1)}{\stackrel{q}{\sum}} Y_{(t+h)-\frac 1 2} \\
 &amp;=&amp; \frac{1}{2q} \underset{h=-(q-1)}{\stackrel{q}{\sum}} \frac 1 2 (Y_{t+h-1}+Y_{t+h}) \\
@@ -853,7 +946,7 @@ M_{2q}Y_t &amp;=&amp; \frac{1}{2q} \underset{h=-(q-1)}{\stackrel{q}{\sum}} Y_{(t
 X_t=Y_t-\tilde m_t -\hat s_t,\forall t\in T
 \]</span></p>
 <div id="exm-elec" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 2.7 </strong></span>On s’intéresse à la consommation trimestrielle en électricité d’une entreprise de 1997 à 1999. Les valeurs observées sont données dans la <a href="#tbl-elec">Table&nbsp;<span>2.1</span></a> et représentées en <a href="#fig-elec">Figure&nbsp;<span>2.9</span></a>. On observe une périodicité par trimestre <span class="math inline">\(r=2q=4\)</span>.</p>
+<p><span class="theorem-title"><strong>Example 2.8 </strong></span>On s’intéresse à la consommation trimestrielle en électricité d’une entreprise de 1997 à 1999. Les valeurs observées sont données dans la <a href="#tbl-elec">Table&nbsp;<span>2.1</span></a> et représentées en <a href="#fig-elec">Figure&nbsp;<span>2.9</span></a>. On observe une périodicité par trimestre <span class="math inline">\(r=2q=4\)</span>.</p>
 <div id="tbl-elec" class="anchored">
 <table class="table">
 <caption>Table&nbsp;2.1: Consommation électrique par trimestre de 1997 à 1999</caption>
@@ -944,19 +1037,19 @@ X_t=Y_t-\tilde m_t -\hat s_t,\forall t\in T
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>elec<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">4.5</span>,<span class="fl">4.1</span>,<span class="fl">3.7</span>,<span class="fl">5.1</span>,<span class="fl">5.5</span>,<span class="fl">4.9</span>,<span class="fl">4.4</span>,<span class="fl">6.5</span>,<span class="fl">7.2</span>,<span class="fl">6.4</span>,<span class="fl">4.8</span>,<span class="fl">6.8</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">decompose</span>(<span class="fu">ts</span>(<span class="at">data=</span>elec,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1997</span>,<span class="dv">1</span>),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">1999</span>,<span class="dv">4</span>),<span class="at">frequency=</span><span class="dv">4</span>),<span class="at">type=</span><span class="st">"additive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<p><img src="chap1_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 <div id="exm-AirPdecompo" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 2.8 </strong></span>On reprend la série <em>AirPassengers</em> (voir <a href="intro.html#exm-AirP">Example&nbsp;<span>1.4</span></a>). La <a href="#fig-AirPdecompo">Figure&nbsp;<span>2.10</span></a> donne la sortie de la fonction <code>decompose()</code> appliquée sur la série logtransformée. On retrouve la saisonnalité (de période une année) et une tendance croissante pratiquement linéaire.</p>
+<p><span class="theorem-title"><strong>Example 2.9 </strong></span>On reprend la série <em>AirPassengers</em> (voir <a href="intro.html#exm-AirP">Example&nbsp;<span>1.4</span></a>). La <a href="#fig-AirPdecompo">Figure&nbsp;<span>2.10</span></a> donne la sortie de la fonction <code>decompose()</code> appliquée sur la série logtransformée. On retrouve la saisonnalité (de période une année) et une tendance croissante pratiquement linéaire.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">decompose</span>(<span class="fu">log</span>(AirPassengers),<span class="at">type=</span><span class="st">"additive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-AirPdecompo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="chap1_files/figure-html/fig-AirPdecompo-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.10: Sortie de la fonction decompose sur la série AirPassengers logtransformée.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.10: Sortie de la fonction decompose() sur la série AirPassengers logtransformée.</figcaption>
 </figure>
 </div>
 </div>
@@ -977,7 +1070,7 @@ X_t=Y_t-\tilde m_t -\hat s_t,\forall t\in T
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+<span class="math inline">\(\nabla_r \neq \nabla^r\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -985,7 +1078,7 @@ Warning
 </div>
 </div>
 <div id="exm-AirPdiffperiode" class="example theorem example">
-<p><span class="theorem-title"><strong>Example 2.9 </strong></span>On applique l’opérateur de différenciation <span class="math inline">\(\nabla_{12}\)</span> à la série <em>AirPassengers</em> logtransformée. <a href="#fig-AirPdiffperiodique">Figure&nbsp;<span>2.11</span></a> montre la série initiale à gauche et la série différenciée <span class="math inline">\(\nabla_{12} Y_t\)</span> à droite. Cette dernière ne présente plus de saisonnalité.</p>
+<p><span class="theorem-title"><strong>Example 2.10 </strong></span>On applique l’opérateur de différenciation <span class="math inline">\(\nabla_{12}\)</span> à la série <em>AirPassengers</em> logtransformée. <a href="#fig-AirPdiffperiodique">Figure&nbsp;<span>2.11</span></a> montre la série initiale à gauche et la série différenciée <span class="math inline">\(\nabla_{12} Y_t\)</span> à droite. Cette dernière ne présente plus de saisonnalité.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-AirPdiffperiodique" class="quarto-figure quarto-figure-center anchored">
@@ -1017,6 +1110,20 @@ This is text with [special]{style="color:red;"} formatting.
 -->
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-aragon2016" class="csl-entry" role="listitem">
+Aragon, Yves. 2016. <em>S<span>é</span>ries Temporelles Avec r</em>. EDP sciences.
+</div>
+<div id="ref-brockwell2002introduction" class="csl-entry" role="listitem">
+Brockwell, Peter J, and Richard A Davis. 2002. <em>Introduction to Time Series and Forecasting</em>. Springer.
+</div>
+<div id="ref-brockwell2009time" class="csl-entry" role="listitem">
+———. 2009. <em>Time Series: Theory and Methods</em>. Springer science &amp; business media.
+</div>
+<div id="ref-dauxois" class="csl-entry" role="listitem">
+Dauxois, Jean-Yves. 2020. <span>“Introduction à l’étude Des Séries Temporelles.”</span> Polycopié cours INSA Toulouse.
+</div>
+</div>
 </section>
 </section>
 
