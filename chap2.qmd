@@ -69,8 +69,7 @@ Un [**bruit blanc fort**]{style="color:blue;"} est une suite de variables indép
 On note $(X_t)_{t\in T} \sim \text{IID}(0,\sigma^2)$.
 :::
 
-<br>
-Dans le cas d'un bruit blanc fort, il n'y a aucun dépendance entre les observations. En particulier, la connaissance de $X_1,\ldots,X_n$ n'informe en rien sur la valeur (future) de $X_{n+h}$. Si la loi commune des v.a. est gaussienne, on parle de bruit blanc gaussien (la @fig-bbN donne un exemple de simulation d'une partie de trajectoire).
+<br> Dans le cas d'un bruit blanc fort, il n'y a aucun dépendance entre les observations. En particulier, la connaissance de $X_1,\ldots,X_n$ n'informe en rien sur la valeur (future) de $X_{n+h}$. Si la loi commune des v.a. est gaussienne, on parle de bruit blanc gaussien (la @fig-bbN donne un exemple de simulation d'une partie de trajectoire).
 
 ::: {#def-bbG .definition}
 On appelle [**bruit blanc gaussien**]{style="color:blue;"}, tout bruit blanc fort pour lequel la loi commune des v.a.r. $(X_t)_{t\in T}$ est une $\mathcal N(0,\sigma^2)$.
@@ -112,8 +111,7 @@ $$ où $(X_t)_{t\in \mathbb N}$ est un bruit blanc fort.
 Si ce dernier est un processus binaire ($\mathbb{P}(X_t=1)=\mathbb{P}(X_t=-1)=\frac 1 2$) alors la marche aléatoire $(S_t)_{t\in \mathbb N}$ est dite **symétrique simple**.
 :::
 
-<br>
-La @fig-exmarchealea montre des exemples de trajectoires de marches aléatoires.
+<br> La @fig-exmarchealea montre des exemples de trajectoires de marches aléatoires.
 
 ```{r}
 #| echo: false
@@ -281,8 +279,6 @@ Si les séries $\underset{i=0}{\stackrel{n}{\sum}}X_i$ et $\underset{j=0}{\stack
 $$
 :::
 
-<br>
-
 ::: {#cor-covserie .corollary}
 Si les séries $\underset{i=0}{\stackrel{n}{\sum}}X_i$ et $\underset{j=0}{\stackrel{n}{\sum}}Y_j$ convergent dans $L^2$ vers $\underset{i=0}{\stackrel{+\infty}{\sum}}X_i$ et $\underset{j=0}{\stackrel{+\infty}{\sum}}Y_j$ respectivement alors on a $$
 \C \left( \sum_{i=0}^{+\infty}X_i , \sum_{j=0}^{+\infty}Y_j  \right)=\sum_{i=0}^{+\infty}\sum_{j=0}^{+\infty} \C (X_i,Y_j).
@@ -291,7 +287,7 @@ $$
 
 ### Projection orthogonale
 
-Les projections dans l'espace $L^2$ s'appuient sur la propriété d'Hilbert de cet espace. Rappelons d'abord la définition d'un sous-espace vectoriel fermé d'un espace de Hilbert dans notre cadre. 
+Les projections dans l'espace $L^2$ s'appuient sur la propriété d'Hilbert de cet espace. Rappelons d'abord la définition d'un sous-espace vectoriel fermé d'un espace de Hilbert dans notre cadre.
 
 ::: {#def-sevferme .definition}
 Un [**sous-espace vectoriel**]{style="color:blue;"} $\mathcal H$ de l'espace $L^2 (\Omega,\mathcal A,P)$ est dit [**fermé**]{style="color:blue;"} s'il contient toutes ses limites $$
@@ -324,17 +320,15 @@ $$ où
 
 Le terme restant, le processus $X_t$, est donc supposé être "plus stable" dans un sens que l'on va ici définir. C'est la notion de **stationnarité** que l'on va expliquer dans cette section.
 
-
-
 ::: {#def-stationF .definition}
 Un processus $(X_t)_{t\in \mathbb Z}$ est dit [**stationnaire au sens fort**]{style="color:blue;"} si la loi de tout vecteur $(X_{t_1},\ldots,X_{t_n})$ est invariante par translation temporelle : $$
 \mathcal L (X_{t_1},\ldots,X_{t_n})=\mathcal L (X_{t_1+h},\ldots,X_{t_n+h}),\ \forall (t_1,\ldots,t_n)\in \mathbb Z^n \textrm{ et } h\in \mathbb Z.
 $$
 :::
 
-Par conséquence, sous la stationnarité forte, toutes les v.a.r $X_t$ ont la même loi. On a immédiatement qu'un bruit blanc fort est stationnaire au sens fort.
+Par conséquent, sous la stationnarité forte, toutes les v.a.r $X_t$ ont la même loi. On a immédiatement qu'un bruit blanc fort est stationnaire au sens fort.
 
-Cette hypothèse de stationnarité forte est très contraignante et peu réaliste en pratique. Aussi on va lui préférer la notion de **stationnarité faible**. Pour introduire la notion de stationnarité faible pour les processus du second ordre, nous avons besoin de définir tout d'abord la fonction moyenne et la fonction covariance des processus du second ordre.
+Cette hypothèse de stationnarité forte est très contraignante et peu réaliste en pratique. Aussi on va lui préférer la notion de **stationnarité faible**. Pour introduire la notion de stationnarité faible pour les processus du second ordre, nous avons besoin de définir tout d'abord la **fonction moyenne** et la **fonction covariance** des processus du second ordre.
 
 ::: {#def-moyCov .definition}
 Soit $(X_t)_{t\in \mathbb Z}$ un processus du second ordre.
@@ -364,18 +358,17 @@ Un processus du second ordre $(X_t)_{t\in \mathbb Z}$ est dit [**faiblement stat
     \end{eqnarray*}
 :::
 
-::: {.callout-important collapse="false"}
+::: {.callout-important icon="false"}
 ### Remarques
 
 -   Un processus fortement stationnaire est stationnaire au sens faible. Mais la réciproque est fausse !
-
 -   Si le processus est faiblement stationnaire alors $\V (X_t)=\V (X_0),\ \forall t\in \mathbb Z.$
 :::
 
 ::: {#exm-stationbb .example}
 ## Bruit blanc fort / faible
 
-Si le processus $(X_t)_{t\in \mathbb Z}$ est un bruit blanc fort dans $L^2$ alors elle est faiblement stationnaire puisque : $$
+Si le processus $(X_t)_{t\in \mathbb Z}$ est un bruit blanc fort dans $L^2$ alors il est faiblement stationnaire puisque : $$
 \mu_X(t)=0,\ \forall t\in\mathbb Z
 \textrm{  et }
 \C(X_{t+h},X_t)=\sigma^2 \mathbb{1}_{h=0} = \left\{
@@ -409,7 +402,7 @@ On peut le vérifier plus largement sur la fonction covariance : pour $h\in\N$, 
 ### Fonction d'autocovariance (ACVF)
 
 ::: {#def-ACVF .definition}
-Soit $(X_t)_{t\in\Z}$ une série temporelle faiblement stationnaire.
+Soit $(X_t)_{t\in\Z}$ un processus faiblement stationnaire.
 
 Sa [**fonction d'autocovariance**]{style="color:blue;"} $\gamma_X(\cdot)$ est la fonction définie par \begin{eqnarray*}
 \begin{array}{rcl}
@@ -442,7 +435,7 @@ La fonction d'autocovariance $\gamma_X(.)$ vérifie les propriétés suivantes :
 ### Fonction d'autocorrélation (ACF)
 
 ::: {#def-ACF .definition}
-Soit $(X_t)_{t\in\Z}$ une série temporelle faiblement stationnaire.
+Soit $(X_t)_{t\in\Z}$ un proecssus faiblement stationnaire.
 
 Sa fonction [**d'autocorrélation**]{style="color:blue;"} $\rho_X(\cdot)$ est définie par \begin{eqnarray*}
 \begin{array}{rcl}
@@ -465,7 +458,7 @@ Ainsi les fonctions ACVF et ACF mesurent le degré de dépendance entre les vale
 ::: {#exm-ACVFbbG .example}
 ## Bruit blanc gaussien
 
-On considère la série $(\varepsilon_t)_{t\in T}$ avec les $\varepsilon_t$ i.i.d $\mathcal N(0,1)$. La trajectoire observée de cette série temporelle est représentée en @fig-exbbACF-1. En traçant le nuage de points de coordonnées $(X_t,X_{t+1})$ (voir @fig-exbbACF-2), on constate qu'il n'y a pas de dépendance entre deux temps successifs. Sur l'autocorrélogramme empirique (@fig-exbbACF-3), on a un pic à 1 pour $h=0$ et des valeurs proches de 0 pour $h\geq 1$.
+<br> On considère la série $(\varepsilon_t)_{t\in T}$ avec les $\varepsilon_t$ i.i.d $\mathcal N(0,1)$. La trajectoire observée de cette série temporelle est représentée en @fig-exbbACF-1. En traçant le nuage de points de coordonnées $(X_t,X_{t+1})$ (voir @fig-exbbACF-2), on constate qu'il n'y a pas de dépendance entre deux temps successifs. Sur l'autocorrélogramme empirique (@fig-exbbACF-3), on a un pic à 1 pour $h=0$ et des valeurs proches de 0 pour $h\geq 1$.
 
 ```{r}
 #| echo: false
@@ -505,7 +498,7 @@ rm(T,Xt,bacf,bacfdf)
 ::: {#exm-ACVFMA1 .example}
 ## Moyenne mobile d'ordre 1 MA(1)
 
-Soit $(X_t)_{t\in \Z}$ une série temporelle MA(1) définie par $$
+<br> Soit $(X_t)_{t\in \Z}$ une série temporelle MA(1) définie par $$
 X_t = \varepsilon_t + \theta\ \varepsilon_{t-1}, \forall t\in\mathbb Z \textrm{ avec } (\varepsilon_t)_t\sim \text{WN}(0,\sigma^2).
 $$
 
@@ -654,14 +647,13 @@ On suppose que le processus $(\varepsilon_t)_{t\in\mathbb Z}$ est tel que, pour 
 &\iff& \varepsilon_t \bot \mathcal{H}_{t-1}:=sp\{X_{t-1},X_{t-2},\ldots\}.
 \end{eqnarray*}
 
-Le processus $X_t$ est centré car : $\E[X_t] = \phi \E[X_{t-1}] + \E[\varepsilon_t] = \phi \mathbb E [X_{t-1}] + 0$. Or le processus $(X_t)_{t\in\Z}$ est stationnaire donc $\E[X_t]=\E[X_{t-1}]$. On obtient donc que\
-$\E[X_t] = \phi \mathbb E [X_{t}]$ d'où $\mathbb E[X_t] =0$ car $\phi\neq 0$.
+Le processus $X_t$ est centré car : $\E[X_t] = \phi \E[X_{t-1}] + \E[\varepsilon_t] = \phi \mathbb E [X_{t-1}] + 0$. Or le processus $(X_t)_{t\in\Z}$ est stationnaire donc $\E[X_t]=\E[X_{t-1}]$. On obtient donc que $\E[X_t] = \phi \mathbb E [X_{t}]$ d'où $\mathbb E[X_t] =0$ car $\phi\neq 0$.
 
 Déterminons maintenant la fonction d'autocovariance / autocorrélation : soit $h\in\mathbb N$, \begin{eqnarray*}
 \gamma_X(h)=\C(X_t,X_{t+h})
 &=&\mathbb E[X_tX_{t+h}]\\
 &=&\mathbb E[\left(\phi X_{t+h-1}+\varepsilon_{t+h}\right)X_t]\\
-&=&\phi \C(X_{t+h-1},X_t)+ \C(\varepsilon_{t+h},X_t)
+&=&\phi \C(X_{t+h-1},X_t)+ \C(\varepsilon_{t+h},X_t).
 \end{eqnarray*}
 
 Or par hypothèse, $\varepsilon_t \bot \mathcal{H}_{t-1}$ donc $$
@@ -778,8 +770,30 @@ $$ pour tout $n$ et tout vecteur $(a_1,\ldots,a_n)\in\R^n$.
 Une fonction réelle définie sur $\Z$ est une fonction d'autocovariance d'une série temporelle **si et seulement si** elle est paire et semi-définie positive.
 :::
 
-::: proof
-A ECRIRE
+::: {.callout-warning collapse="true" icon="false"}
+### Preuve
+
+$\Rightarrow$) : Soit $\gamma_X(.)$ la fonction d'autocovariance de $(X_t)_{t\in\Z}$. On a déjà montré précédemment qu'elle est paire. Montrons qu'elle est semi-définie positive: soit $(a_1,\ldots,a_n)\in\R^n$,
+
+```{=tex}
+\begin{eqnarray*}
+\underset{i=1}{\stackrel{n}{\sum}}\underset{j=1}{\stackrel{n}{\sum}} a_i a_j \gamma_X(i-j) &=& \underset{i=1}{\stackrel{n}{\sum}}\underset{j=1}{\stackrel{n}{\sum}} a_i a_j \C(X_{t-i},X_{t-j})\\
+&= & \C\left(\underset{i=1}{\stackrel{n}{\sum}} a_i X_{t-i}, \underset{j=1}{\stackrel{n}{\sum}}a_j X_{t-j}\right)\\
+&=& \V\left(\underset{i=1}{\stackrel{n}{\sum}} a_i X_{t-i}\right) \geq 0.
+\end{eqnarray*}
+```
+<br> $\Leftarrow$) Soit $K:\Z\rightarrow\R$ paire et demi-définie positive. On veut montrer qu'il existe un processus stationnaire tel que $\gamma_X(.)=K(.)$. <br>
+
+$\forall n\in\N^\star,\ \forall \mathbf{t}=(t_1,\ldots,t_n)\in\Z^n$. Soit $F_{\mathbf{t}}$ la loi sur $\R^n$ de fonction caractéristique $$
+\Phi_{\mathbf{t}}(\mathbf{u}) = \exp\left[-\frac 1 2 \mathbf{u}' \mathbb K \mathbf{u}\right]
+$$ où $\mathbf{u}=(u_1,\ldots,u_n)'\in\R^n$ et la matrice $\mathbb{K}=(K(t_i - t_j))_{i,j=1,\ldots,n}$. <br> Comme $K$ est semi-définie positive, $\mathbb{K}$ est une matrice semi-définie positive et donc $\Phi_{\mathbf{t}}(.)$ est la fonction caractéristique d'un vecteur gaussien $\mathcal{N}(0,\mathbb K)$.
+
+On peut alors vérifier que $$
+\underset{u_i\rightarrow 0}{\lim} \Phi_{\mathbf t}(\mathbf u) = \Phi_{\mathbf{t}_{-i}}(\mathbf{u}_{-i}) = \exp\left[-\frac 1 2 \mathbf{u}_{-i}' \mathbb{K}_{\mathbf{t}_{-i}} \mathbf{u}_{-i}\right]
+$$ où $\mathbf{t}_{-i} = (t_1,\ldots,t_{i-1},t_{i+1},\ldots,t_n)'$ et $\mathbf{u}_{-i} = (u_1,\ldots, u_{i-1}, u_{i+1},\ldots,u_n)'$. On conclut la preuve en utilisant le théorème d'existence de Kolmogorov : <br> $\{F_{\mathbf{t}}(.),\ \mathbf{t}\in \mathcal{T}\}$ sont les fonctions de distribution d'un processus stochastique si et seulement si pour tout $n$, $\mathbf{t}=(t_1,\ldots,t_n)\in\mathcal{T}$, $\mathbf{x}\in\R^n$ et $1\leq k \leq n$, $$
+\underset{x_k\rightarrow \infty}{\lim}
+F_{\mathbf{t}}(\mathbf{x}) = F_{\mathbf{t}_{-k}}(\mathbf{x}_{-k}) 
+$$ où $\mathbf{t}_{-k} = (t_1,\ldots,t_{k-1},t_{k+1},\ldots,t_n)'$ et $\mathbf{x}_{-k} = (x_1,\ldots, x_{k-1}, x_{k+1},\ldots,x_n)'$.
 :::
 
 <br>
@@ -865,7 +879,7 @@ $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 -   Existence de la série $(Y_t)_{t\in\Z}$ :
 
@@ -875,12 +889,12 @@ On a $\underset{j\in \Z}{\sum} \|\psi_j X_{t-j}\|_{L^2} = \underset{j\in \Z}{\su
 
 $\|Y_t\|_{L^2} = \|\underset{j\in\Z}{\sum} \psi_j X_{t-j}\|_{L^2} \leq \underset{j\in\Z}{\sum} \|\psi_j X_{t-j}\|_{L^2} < +\infty$
 
--   La fonction moyenne de $(Y_t)_{t\in\Z}$ : $\E[Y_t] = \E\left[ \underset{j\in\Z}{\sum} \psi_j X_{t-j} \right] = \underset{j\in\Z}{\sum} \psi_j \E\left[X_{t-j} \right] = \mu_X \left(\underset{j\in\Z}{\sum} \psi_j \right)$ car $\underset{j\in\Z}{\sum}|\psi_j|<+\infty$. Donc la fonction moyenne constante.
+-   La fonction moyenne de $(Y_t)_{t\in\Z}$ : $\E[Y_t] = \E\left[ \underset{j\in\Z}{\sum} \psi_j X_{t-j} \right] = \underset{j\in\Z}{\sum} \psi_j \E\left[X_{t-j} \right] = \mu_X \left(\underset{j\in\Z}{\sum} \psi_j \right)$ car $\underset{j\in\Z}{\sum}|\psi_j|<+\infty$. Donc la fonction moyenne est constante.
 
 -   La fonction d'autocovariance de $(Y_t)_{t\in\Z}$ : \begin{eqnarray*}
     \C(Y_t,Y_{t+h}) 
-    &=& \C\left(\underset{j\in\Z}{\sum} \psi_j X_{t-j}, \underset{i\in\Z}{\sum} \psi_i X_{t+h-i} \right)\\
-    &=& \underset{j\in\Z}{\sum} \underset{i\in\Z}{\sum} \psi_i\psi_j \C\left(X_{t-j},X_{t+h-i}\right)\\
+    &=& \C\left(\underset{i\in\Z}{\sum} \psi_j X_{t-i}, \underset{j\in\Z}{\sum} \psi_i X_{t+h-j} \right)\\
+    &=& \underset{j\in\Z}{\sum} \underset{i\in\Z}{\sum} \psi_i\psi_j \C\left(X_{t-i},X_{t+h-j}\right)\\
     &=&\underset{j\in\Z}{\sum} \underset{i\in\Z}{\sum} \psi_i\psi_j \gamma_X(h+i-j)\\
     &=& f(h)
     \end{eqnarray*} car $\underset{j\in\Z}{\sum}|\psi_j|<+\infty$ (échange $\C(.,.)$ et $\sum$, voir @cor-covserie).
@@ -907,7 +921,7 @@ $$ et de fonction d'autocovariance \begin{eqnarray*}
 
 Et pour une somme finie ?
 
-Soit $(\varepsilon_t)_{t\in \Z}$ un bruit blanc bb$(0,\sigma^2)$ et le processus $(Y_t)_{t\in \Z}$ défini par $$
+Soit $(\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)$ et le processus $(Y_t)_{t\in \Z}$ défini par $$
 Y_t=\sum_{i=0}^t\varepsilon_{t-i}
 $$
 
@@ -941,19 +955,17 @@ La proposition suivante donne une propriété d'existence de la densité spectra
 ::: {#prp-existdenspect .proposition}
 ## Existence de la densité spectrale
 
-La densité spectrale d'un processus stationnaire $(X_t)_{t\in \Z}$ de fonction d'autocovariance $\gamma_X(\cdot)$ existe dès que l'on a : $$
+<br> La densité spectrale d'un processus stationnaire $(X_t)_{t\in \Z}$ de fonction d'autocovariance $\gamma_X(\cdot)$ existe dès que l'on a : $$
 \sum_{h\in \Z}|\gamma_X(h)|<+\infty.
 $$
 :::
-
-<br>
 
 ::: {#prp-propdenspect .proposition}
 La densité spectrale d'un processus stationnaire $(X_t)_{t\in \Z}$ est une fonction réelle, continue, positive, paire et $2\pi$-périodique.
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 En réécrivant la densité spectrale, on a \begin{eqnarray*}
 f_X(\omega) 
@@ -961,9 +973,9 @@ f_X(\omega)
 &=& \frac{\gamma_X(0)}{2\pi} + \frac{1}{2\pi} \underset{h=-\infty}{\stackrel{-1}{\sum}} \gamma_X(h) e^{-i\omega h} + \frac{1}{2\pi} \underset{h=1}{\stackrel{+\infty}{\sum}} \gamma_X(h) e^{-i\omega h}\\
 &=&\frac{\gamma_X(0)}{2\pi} + \frac{1}{2\pi} \underset{h=1}{\stackrel{+\infty}{\sum}} \gamma_X(h) \left(e^{-i\omega h}+ e^{i\omega h}\right)\\
 &=&\frac{\gamma_X(0)}{2\pi} + \frac{1}{\pi} \underset{h=1}{\stackrel{+\infty}{\sum}} \gamma_X(h) \cos(\omega h)\\
-\end{eqnarray*} donc $f_X(.)$ est réelle, continue, paire et $2\pi$-périodique. Il reste à montrer que $f_X(.)$ est positive :
+\end{eqnarray*} donc $f_X(.)$ est réelle, continue, paire et $2\pi$-périodique.
 
-Pour $N\in\N$, on définit
+Il reste à montrer que $f_X(.)$ est positive. Pour $N\in\N$, on définit
 
 ```{=tex}
 \begin{eqnarray*}
@@ -984,7 +996,7 @@ f_N(\omega)
 &=& \frac{1}{2\pi} 
 \underset{h; |h|<N}{\sum} e^{-i\omega h} \gamma_X(h) 
 - \frac{1}{2\pi} 
-\underset{h; |h|<N}{\sum} \frac{|h|}{N} e^{-i\omega h} \gamma_X(h)\\
+\underset{h; |h|<N}{\sum} \frac{|h|}{N} e^{-i\omega h} \gamma_X(h).
 \end{eqnarray*}
 ```
 Comme $\underset{h\in\Z}{\sum}|\gamma_X(h)|<+\infty$, on a pour le premier terme que $$
@@ -1018,7 +1030,7 @@ $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 On peut écrire : \begin{eqnarray*}
 \int_{-\pi}^\pi f_X(\omega) \cos (\omega h )d\omega
@@ -1026,8 +1038,8 @@ On peut écrire : \begin{eqnarray*}
 &=&\frac{1}{2}\int_{-\pi}^\pi f_X(\omega)  e^{i\omega h}d\omega+\frac{1}{2}\int_{-\pi}^\pi f_X(\omega)  e^{-i\omega h}d\omega\\
 &=&\int_{-\pi}^\pi f_X(\omega) e^{i\omega h }d\omega \ \ \ \text{par parité de la densité spectrale}\\
 &=& \int_{-\pi}^\pi \frac{1}{2\pi}\sum_{k\in \Z}\gamma_X(k)e^{-i\omega k} e^{i\omega h }d\omega\\
-&=&\frac{1}{2\pi}\sum_{k\in \Z}\gamma_X(k) \int_{-\pi}^\pi  e^{i\omega (h-k)}d\omega \ \ \ \text{par la convergence normale de la série}.
-\end{eqnarray*} Or
+&=&\frac{1}{2\pi}\sum_{k\in \Z}\gamma_X(k) \int_{-\pi}^\pi  e^{i\omega (h-k)}d\omega
+\end{eqnarray*} par la convergence normale de la série. Or
 
 $$
 \int_{-\pi}^\pi  e^{i\omega (h-k)}d\omega = 
@@ -1068,7 +1080,7 @@ $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 -   Existence de la densité spectrale de $(Y_t)_{t\in\Z}$:
 

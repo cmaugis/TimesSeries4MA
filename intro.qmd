@@ -31,7 +31,7 @@ library(cowplot)
 
 L'objectif de ce cours est de donner les bases pour modéliser l'évolution dans le temps, ici supposé discret, d'un phénomène aléatoire. On parle de **série temporelle**.
 
-Nous allons ici donner quelques exemples de séries temporelles pour fixer les idées et introduire les questions qui peuvent être adressées autour de l'étude des séries temporelles. 
+Nous allons ici donner quelques exemples de séries temporelles pour fixer les idées et introduire les questions qui peuvent être adressées autour de l'étude des séries temporelles.
 
 ## Quelques exemples de séries temporelles
 
@@ -92,7 +92,7 @@ On peut aussi donner un exemple en climatologie. La @fig-seaice représente l'é
 #| message: false
 #| warning: false
 #| label: fig-seaice
-#| fig-cap: Evolution de la surface de la glace dans l'Artique.
+#| fig-cap: Evolution de la surface de la glace dans l'Artique. En haut à gauche, la série temporelle. En haut à droite, chaque courbe représente l'évoluton d'une année selon les différents mois. En bas, regroupement des mesures par mois. 
 
 ice <- read.table("sea-ice.txt")
 colnames(ice) <- c("year", "month", "day", "ice_km2")
@@ -127,7 +127,7 @@ Comme dernier exemple, on s'intéresse à la célèbre série temporelle *AirPas
 #| echo: false
 #| fig-height: 3.5
 #| label: fig-AirP
-#| fig-cap: Nombre de passagers (en milliers) ayant emprunté les lignes aériennes de 1949 à 1960. 
+#| fig-cap: Nombre de passagers (en milliers) ayant emprunté les lignes aériennes de 1949 à 1960 à gauche. La série est log-transformée à droite.
 #Nombre mensuel de passagers (en milliers) entre les années 1949 et 1960 dans les lignes aériennes.
 g1<-autoplot(AirPassengers)+xlab("")
 
@@ -142,13 +142,15 @@ grid.arrange(g1,g2,ncol=2)
 
 Les exemples de séries temporelles ne manquent pas. On pourrait encore citer l'évolution de la température sur une période donnée, la concentration en polluants au cours du temps, le cours d'une action en finance, la consommation en électricité, l'évolution des recherches d'un mot sur internet, l'électrocardiogramme d'une personne en médecine, ....
 
-Dans la suite de ce cours, on suppose que la séries observée est une réalisation d'une suite de variables aléatoires. Il faut bien noter que **l'ordre est important** puisque l'on étudie un phénomène au cours du temps.
+Dans la suite de ce cours, on suppose que la série observée est une réalisation d'une suite de variables aléatoires. Il faut bien noter que **l'ordre est important** puisque l'on étudie un phénomène au cours du temps.
 
+::: {.callout-note icon="false" appearance="simple"}
 On note $Y_t$ la valeur du phénomène au temps $t\in T$ où $T$ est l'espace de **temps discret** (souvent $T=\N$ voire $\Z$). Le processus $(Y_t)_{t\in T}$ est alors appelé **série temporelle**.
+:::
 
 ## Quelles questions autour de l'étude d'une série temporelle ?
 
-Nous sommes tout d'abord confronter au problème de la **modélisation** d'une série temporelle. On va chercher à ajuster un modèle qui décrit "au mieux" le comportement de la série temporelle. Ceci va nécessiter d'estimer les paramètres pour ajuster le modèle, tester son adéquation à la série temporelle étudiée, voire faire de la sélection de modèle entre plusieurs modèles en compétition.
+Nous sommes tout d'abord confrontés au problème de la **modélisation** d'une série temporelle. On va chercher à ajuster un modèle qui décrit "au mieux" le comportement de la série temporelle. Ceci va nécessiter d'estimer les paramètres pour ajuster le modèle, tester son adéquation à la série temporelle étudiée, voire faire de la sélection de modèle entre plusieurs modèles en compétition.
 
 Il est important de noter que l'on ne recherche pas un ajustement exact aux données. L'objectif est d'extraire la structure générale du signal et d'éliminer le bruit. On va en particulier chercher à déceler la présence d'une tendance, d'une saisonnalité dans les données.
 
@@ -191,7 +193,7 @@ autoplot(log(AirPassengers),series="Y")+
 #autoplot(ts(Aux,start=c(1949,1),frequency=12),facet=FALSE)+ylab("log(AirPAssengers)")+ theme(legend.position = "bottom",legend.title= element_blank())  
 ```
 
-Après l'analyse et la modélisation d'une série temporelle, on est souvent intéressé par la **prévision** des futures valeurs de la série. Par exemple, on peut chercher à prédire la température dans les jours à venir, la concentration en ozone, ... Plus formellement, à partir des $n$ premiers instants $Y_1,\ldots,Y_n$ de la série, on souhaite prévoir la valeur suivante $Y_{n+1}$ ou plus éloignée dans le temps $Y\_{n+h}$. Un exemple de prévision sur l'année suivante de la série temporelle AirPassengers est données en @fig-AirPPrev. On devra s'intéresser alors à l'erreur de prédiction, à la taille des intervalles de prédiction, ...
+Après l'analyse et la modélisation d'une série temporelle, on est souvent intéressé par la **prévision** des futures valeurs de la série. Par exemple, on peut chercher à prédire la température dans les jours à venir, la concentration en ozone, ... Plus formellement, à partir des $n$ premiers instants $Y_1,\ldots,Y_n$ de la série, on souhaite prévoir la valeur suivante $Y_{n+1}$ ou plus éloignée dans le temps $Y_{n+h}$. Un exemple de prévision sur l'année suivante de la série temporelle AirPassengers est données en @fig-AirPPrev. On devra s'intéresser alors à l'erreur de prédiction, à la taille des intervalles de prédiction, ...
 
 ```{r}
 #| echo: False

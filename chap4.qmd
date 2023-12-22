@@ -36,21 +36,21 @@ Dans ce chapitre, nous allons nous intéresser aux modèles ARMA qui sont très 
 
 ### Définitions
 
-Soit $(X_t)_{t\in \Z}$ un processus stationnaire du second ordre. Rappelons que l'opérateur retard $B$ est défini par $BX_t=X_{t-1}$ et l'opérateur avance $F$ par $FX_t=X_{t+1}$. Par composition, on a alors que $B^kX_t=X_{t-k}$ et $F^kX_t=X_{t+k}$. Puis par extension, un **polynôme en** $B$ (ou $F$) est défini par $$
+Soit $(X_t)_{t\in \Z}$ un processus stationnaire du second ordre. Rappelons que l'opérateur retard $B$ est défini par $BX_t=X_{t-1}$ et l'opérateur avance $F$ par $FX_t=X_{t+1}$. Par composition, on a alors que $B^kX_t=X_{t-k}$ et $F^kX_t=X_{t+k}$. Puis par extension, un **polynôme en** $B$ (ou $F$) est défini par 
+$$
 \left(\sum_{i=1}^p a_iB^i\right)X_t=\sum_{i=1}^p a_iX_{t-i}. 
 $$
 
-On a déjà utilisé ce type d'opérateur pour définir les moyennes mobiles (voir chapitre @sec-chap1). Nous avons également considéré la notion de série en $B$ quand nous avons introduit la notion de filtrage linéaire (voir @sec-chap3). Rappelons que nous avons vu que si $(X_t)_{t\in \Z}$ est un processus stationnaire, alors le processus $(Y_t)_{t\in \Z}$ défini par $$Y_t=\sum_{i\in \Z}a_iX_{t-i}$$ est également stationnaire, sous la condition de la convergence normale de la série des coefficients réels, i.e. sous l'hypothèse $\sum_{i\in \Z}|a_i|<+\infty$.
+On a déjà utilisé ce type d'opérateur pour définir les moyennes mobiles (voir @sec-chap1). Nous avons également considéré la notion de série en $B$ quand nous avons introduit la notion de filtrage linéaire (voir @sec-chap3). Rappelons que nous avons vu que si $(X_t)_{t\in \Z}$ est un processus stationnaire, alors le processus $(Y_t)_{t\in \Z}$ défini par $$Y_t=\sum_{i\in \Z}a_iX_{t-i}$$ est également stationnaire si $\sum_{i\in \Z}|a_i|<+\infty$.
 
 ::: {#def-serieB .definition}
-Soit $(a_i)_{i\in \Z}$ une famille absolument sommable de réels ($\sum_{i\in \Z}|a_i|<+\infty$). <br> On appelle [**série en** $B$]{style="color:blue;"} de coefficients $(a_i)_{i\in \Z}$ l'opérateur $$
+Soit $(a_i)_{i\in \Z}$ une famille absolument sommable de réels $\left(\sum_{i\in \Z}|a_i|<+\infty\right)$. <br> On appelle [**série en** $B$]{style="color:blue;"} de coefficients $(a_i)_{i\in \Z}$ l'opérateur $$
 P(B)=\sum_{i\in \Z}a_iB^i 
-$$ sur les processus stationnaires qui transforme le processus stationnaire $(X_t)_{t\in \Z}$ en un processus stationnaire $(Y_t)_{t\in \Z}$ défini par , pour tout $t\in \Z$, par $$
+$$ sur les processus stationnaires qui transforme le processus stationnaire $(X_t)_{t\in \Z}$ en un processus stationnaire $(Y_t)_{t\in \Z}$ défini par , pour tout $t\in \Z$, par 
+$$
 Y_t=P(B)X_t=\left(\sum_{i\in \Z}a_iB^i\right)X_t=\sum_{i\in \Z}a_iX_{t-i},\ \forall t\in\Z 
 $$
 :::
-
-<br>
 
 La manipulation des séries en $B$ se fait comme celle des séries réelles, en particulier pour les combinaisons linéaires et composées de séries.
 
@@ -59,28 +59,43 @@ On a les résultats suivants :
 
 -   La **combinaison linéaire** de deux séries en $B$ est une série en $B$.
 -   La **composée** de deux séries en $B$ est une série en $B$.
+
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
-Soient $P(B)=\sum_{i\in \Z}a_iB^i$ et $Q(B)=\sum_{i\in \Z}b_iB^i$ deux séries en $B$, donc telles que $\sum_{i\in \Z}|a_i|<+\infty$ et $\sum_{i\in \Z}|b_i|<+\infty$. Considérons l'opérateur $\lambda P(B)+Q(B)$ et appliquons le à un processus stationnaire $(X_t)_{t\in \Z}$. On obtient, pour tout $t\in \Z$ : \begin{eqnarray*} 
-\left(\lambda P(B)+Q(B)\right)X_t&=&\lambda
+Soient $P(B)=\sum_{i\in \Z}a_iB^i$ et $Q(B)=\sum_{i\in \Z}b_iB^i$ deux séries en $B$, donc telles que $\sum_{i\in \Z}|a_i|<+\infty$ et $\sum_{i\in \Z}|b_i|<+\infty$. Considérons l'opérateur $\lambda P(B)+Q(B)$ et appliquons le à un processus stationnaire $(X_t)_{t\in \Z}$. On obtient, pour tout $t\in \Z$ : 
+\begin{eqnarray*} 
+\left(\lambda P(B)+Q(B)\right)X_t
+&=&\lambda
 P(B)X_t+Q(B)X_t=\sum_{i\in \Z}\lambda a_iX_{t-i}+\sum_{i\in \Z}b_iX_{t-i}\\
 &=&\lim_{n\to +\infty}\sum_{i=-n}^{i=+n}\lambda a_iX_{t-i}+\lim_{n\to
-+\infty}\sum_{i=-n}^{i=+n}b_iX_{t-i}\\ &=&\lim_{n\to
++\infty}\sum_{i=-n}^{i=+n}b_iX_{t-i}\\ 
+&=&\lim_{n\to
 +\infty}\sum_{i=-n}^{i=+n}\left(\lambda a_iX_{t-i}+b_iX_{t-i}\right)=\sum_{i\in
 \Z}(\lambda a_i+b_i)X_{t-i}, 
-\end{eqnarray*} où la dernière égalité est justifiée par l'absolue convergence de la série $\sum(\lambda a_i+b_i)$ ga rantie par l'inégalité $$ 
+\end{eqnarray*} 
+où la dernière égalité est justifiée par l'absolue convergence de la série $\sum(\lambda a_i+b_i)$ garantie par l'inégalité 
+$$ 
 \sum_{i\in \Z} |\lambda a_i+b_i|\leq \lambda\sum_{i\in \Z}|
 a_i|+\sum_{i\in \Z}|b_i|<+\infty. 
-$$ On a bien alors $$
+$$ 
+On a bien alors 
+$$
 \lambda\sum_{i\in \Z}
-a_iB^i+\sum_{i\in \Z} b_iB^i=\sum_{i\in \Z}(\lambda a_i+b_i)B^i. $$ Considérons maintenant la composition des deux séries $P(B)$ et $Q(B)$. On a $$
+a_iB^i+\sum_{i\in \Z} b_iB^i=\sum_{i\in \Z}(\lambda a_i+b_i)B^i. 
+$$ 
+Considérons maintenant la composition des deux séries $P(B)$ et $Q(B)$. On a 
+$$
 P(B)\circ Q(B)X_t=P(B)Y_t, 
-$$ où $$ 
+$$ 
+où 
+$$ 
 Y_t=\sum_{j\in \Z} b_jX_{t-j}. 
-$$ On a donc \begin{eqnarray*} 
+$$ 
+On a donc 
+\begin{eqnarray*} 
 P(B)\circ Q(B)X_t&=&\sum_{i\in \Z} a_iY_{t-i}=\lim_{n\to
 +\infty}\sum_{i=-n}^na_iY_{t-i}\\ &=&\lim_{n\to
 +\infty}\sum_{i=-n}^na_i\left(\lim_{m\to +\infty}\sum_{j=-m}^mb_j
@@ -95,107 +110,120 @@ P(B)\circ Q(B)X_t=\sum_{k\in \Z}c_kB^k,
 $$ ce qui montre que la composition des deux séries en $B$ est bien une série en $B$.
 :::
 
-### Inversion de $I-\lambda B$
+### Inversion de $I-\lambda B$ 
 
--   Dans l'étude des modèles ARMA, on va avoir besoin de savoir quand et comment on peut inverser des polynômes en $B$
--   Commençons par un polynôme de degré 1 en $B$ : $I-\lambda B$.
--   Cet opérateur associe à tout processus stationnaire $(X_t)_{t\in \Z}$ un nouveau processus stationnaire $(Y_t)_{t\in \Z}$ tel que $$ 
-    Y_t=(I-\lambda
-    B)X_t=X_t-\lambda X_{t-1}. 
-    $$
--   Le problème de l'inversion du polynôme $I-\lambda B$ revient, une fois donné un processus stationnaire $(Y_t)_{t\in \Z}$, à déterminer s'il existe un processus stationnaire $(X_t)_{t\in \Z}$ vérifiant : $$ 
-    Y_t=(I-\lambda B)X_t=X_t-\lambda X_{t-1} 
-    $$ et de donner son expression en fonction du processus $(Y_t)_{t\in \Z}$.
+Dans l'étude des modèles ARMA, on va avoir besoin de savoir quand et comment on peut inverser des polynômes en $B$. On va donc ici commencer par le polynôme de degré 1 en $B$ : $I-\lambda B$.
 
-On va constater que ce polynôme $I-\lambda B$ est inversible seulement si $|\lambda|\neq 1$ et on obtiendra dans ce cas l'expression de son inverse.
+L'opérateur $P(B)=I-\lambda B$ associe à tout processus stationnaire $(X_t)_{t\in \Z}$ un nouveau processus stationnaire $(Y_t)_{t\in \Z}$ tel que 
+$$ 
+Y_t=(I-\lambda B)X_t=X_t-\lambda X_{t-1}. 
+$$
+Se donnant un processus stationnaire $(Y_t)_{t\in \Z}$, le problème de l'inversion du polynôme $I-\lambda B$ revient à déterminer s'il existe un processus stationnaire $(X_t)_{t\in \Z}$ vérifiant : 
+$$ 
+Y_t=(I-\lambda B)X_t=X_t-\lambda X_{t-1} 
+$$ et de donner son expression en fonction du processus $(Y_t)_{t\in \Z}$.
+
+On va montrer dans la suite que ce polynôme $P(B)=I-\lambda B$ est inversible seulement si $|\lambda|\neq 1$ et on obtiendra dans ce cas l'expression de son inverse.
 
 #### 1er Cas : $|\lambda|<1$
 
--   Soit la suite $(a_i)_{i\in \Z}$ définie par $a_i=0$ pour $i\in\mathbb Z \setminus \mathbb N$ et $a_i=\lambda^i$ pour $i\in \N$. On a alors $$ 
-    \sum_{i\in\Z}|a_i|=\sum_{i\in \N}|\lambda|^i<+\infty. 
-    $$
+- **Une solution :**
 
--   La série en $B$ de coefficients $(a_i)_{i\in \Z}$ est donc bien définie et on peut écrire $$
-    (I-\lambda B)\sum_{i\in \Z}a_iB^i=(I-\lambda B)\sum_{i\in
-    \N}\lambda^iB^i=\sum_{i\in \N}\lambda^iB^i-\sum_{i\in \N}\lambda^{i+1}B^{i+1}=I.
-    $$
+Soit la suite $(a_i)_{i\in \Z}$ définie par $a_i=0$ pour $i\in\mathbb Z \setminus \mathbb N$ et $a_i=\lambda^i$ pour $i\in \N$. On a alors 
+$$ 
+\sum_{i\in\Z}|a_i|=\sum_{i\in \N}|\lambda|^i<+\infty. 
+$$
 
--   Ainsi, pour un processus stationnaire $(Y_t)_{t\in \Z}$ donné, le processus $(X_t)_{t\in \Z}$ défini par $X_t=\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iY_{t-i}$ est solution de l'équation $$ 
-    Y_t=(I-\lambda B)X_t. 
-    $$
+La série en $B$ de coefficients $(a_i)_{i\in \Z}$ est donc bien définie et on peut écrire 
+\begin{eqnarray*}
+(I-\lambda B)\left(\sum_{i\in \Z}a_iB^i\right)
+&=&(I-\lambda B)\left(\sum_{i\in\N}\lambda^iB^i\right)\\
+&=&\sum_{i\in \N}\lambda^iB^i-\sum_{i\in \N}\lambda^{i+1}B^{i+1}=I.
+\end{eqnarray*}
 
--   Mais $(X_t)_{t\in\Z}$ avec $X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}$ n'est pas l'unique solution : soit $(X^*_t)_{t\in \Z}$ tel que $(I-\lambda B)X_t^*=0$. Le processus $(\tilde X_t)_{t\in \Z}$ défini par $\tilde X_t=X_t+X_t^*$ est tel que $$ 
-    Y_t=(I-\lambda B)\tilde X_t. 
-    $$
+Ainsi, pour un processus stationnaire $(Y_t)_{t\in \Z}$ donné, le processus $(X_t)_{t\in \Z}$ défini par $X_t=\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iY_{t-i}$ est solution de l'équation 
+$$ 
+Y_t=(I-\lambda B)X_t. 
+$$
 
--   Un processus $(X^*_t)_{t\in \Z}$ vérifiant $X_t^*-\lambda X_{t-1}^*=0$ est de la forme $X^*_t=\lambda^t A$, pour tout $t\in\Z$, où $A$ est une v.a.r. de $L^2$.
+- **Non unicité :**
 
--   Ainsi, étant donné un processus $(Y_t)_{t\in \Z}$, les solutions de l'équation $$ 
-    Y_t=(I-\lambda B)X_t,\ \forall t\in\Z 
-    $$ sont de la forme $$
-    \tilde X_t=X_t+X_t^*=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}+\lambda^t A,\ t\in\Z
-    $$
+$(X_t)_{t\in\Z}$ avec $X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}$ n'est pas l'unique solution. En effet, soit $(X^*_t)_{t\in \Z}$ tel que $(I-\lambda B)X_t^*=0$ et définissons le processus $(\tilde X_t)_{t\in \Z}$ par $\tilde X_t=X_t+X_t^*$. Alors on a que $Y_t=(I-\lambda B)\tilde X_t$.
 
--   Mais le processus $(X^*_t)_{t\in \Z}$ n'est pas stationnaire !
+Un processus $(X^*_t)_{t\in \Z}$ vérifiant $(I-\lambda B)X_t^* = X_t^*-\lambda X_{t-1}^*=0$ est de la forme $X^*_t=\lambda^t A$, pour tout $t\in\Z$, où $A$ est une v.a.r. de $L^2$. Ainsi, étant donné un processus $(Y_t)_{t\in \Z}$, les solutions de l'équation $Y_t=(I-\lambda B)X_t,\ \forall t\in\Z$ sont de la forme 
+$$
+\tilde X_t=X_t+X_t^*=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}+\lambda^t A,\ t\in\Z
+$$
 
--   Etant donné le processus $(Y_t)_{t\in \Z}$, **la solution stationnaire** de l'équation $$ 
-    Y_t=(I-\lambda B)X_t, 
-    $$ est le processus $(X_t)_{t\in \Z}$ défini par $$ 
-    X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}. 
-    $$
+Mais le processus $(X^*_t)_{t\in \Z}$ n'est pas stationnaire !
 
-::: proposiiton
-L'opérateur $(I-\lambda B)$ est donc inversible dans la classe des processus stationnaires d'inverse $\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iB^i$ quand $|\lambda|<1$.
+- **Unique solution stationnaire :**
+
+Etant donné le processus $(Y_t)_{t\in \Z}$, **la solution stationnaire** de l'équation $Y_t=(I-\lambda B)X_t$ est le processus $(X_t)_{t\in \Z}$ défini par 
+$$ 
+X_t=\sum_{i=0}^{+\infty}\lambda^iY_{t-i}. 
+$$
+
+::: {.proposition #prp-lambdainf1}
+L'opérateur $(I-\lambda B)$ est inversible dans la classe des processus stationnaires d'inverse $\underset{i=0}{\stackrel{+\infty}{\sum}}\lambda^iB^i$ quand $|\lambda|<1$.
 :::
 
 #### 2ème Cas : $|\lambda|>1$
 
--   On peut écrire $$ 
-    I-\lambda B=-\lambda B\left(I-\frac{1}{\lambda}F\right)
-    $$
--   Comme $|\frac 1 \lambda|<1$, par le même raisonnement que précédent, le polynôme $\left(I-\frac{1}{\lambda}F\right)$ est inversible dans la classe des processus stationnaires d'inverse $\sum_{i=0}^{+\infty}\lambda^{-i}F^i$.
--   Le processus $-\lambda B$ est inversible d'inverse $(-1/\lambda)F$.
+On peut écrire 
+$$ 
+I-\lambda B=-\lambda B\left(I-\frac{1}{\lambda}F\right)
+$$
+Comme $|\frac 1 \lambda|<1$, par le même raisonnement que précédent, le polynôme $\left(I-\frac{1}{\lambda}F\right)$ est inversible dans la classe des processus stationnaires d'inverse $\sum_{i=0}^{+\infty}\lambda^{-i}F^i$. Le processus $-\lambda B$ est inversible d'inverse $(-1/\lambda)F$.
 
-::: proposition
-Quand $|\lambda|>1$, le processus $I-\lambda B$ est inversible dans la classe des processus stationnaires d'inverse $$
-\left(\frac{-1}{\lambda}F\right)\sum_{i=0}^{+\infty}\frac{1}{\lambda^i}F^i=-\sum_{i=0}^{+\infty}\frac{1}{\lambda^{i+1}}F^{i+1}=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}F^j
+::: {.proposition #prp-lambdasup1}
+Quand $|\lambda|>1$, l'e processus'opérateur $I-\lambda B$ est inversible dans la classe des processus stationnaires d'inverse 
+$$
+\left(\frac{-1}{\lambda}F\right)\left(\sum_{i=0}^{+\infty}\frac{1}{\lambda^i}F^i\right)
+=-\sum_{i=0}^{+\infty}\frac{1}{\lambda^{i+1}}F^{i+1}=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}F^j
+$$
+
+
+Etant donné un processus stationnaire $(Y_t)_{t\in \Z}$, l'unique solution stationnaire de l'équation 
+$Y_t=(I-\lambda B)X_t$ est donc $(X_t)_{t\in \Z}$ défini par 
+$$ 
+X_t=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}Y_{t+j}. 
 $$
 :::
 
--   Le processus $(Y_t)_{t\in \Z}$ étant donné, l'unique solution stationnaire de l'équation $$ 
-    Y_t=(I-\lambda B)X_t, 
-    $$ est donc $(X_t)_{t\in \Z}$ définie par $$ 
-    X_t=-\sum_{j=1}^{+\infty}\frac{1}{\lambda^j}Y_{t+j}. 
-    $$
--   Remarque : cette fois-ci, l'expression de la solution $(X_t)_{t\in \Z}$ est fonction du futur du processus $(Y_t)_{t\in \Z}$ et non en fonction de son passé comme dans le cas $|\lambda|<1$.
+::: {.callout-note icon="false"}
+### Remarque 
+Dans le cas $|\lambda|>1$, l'expression de la solution $(X_t)_{t\in \Z}$ est fonction du futur du processus $(Y_t)_{t\in \Z}$ et non en fonction de son passé comme dans le cas $|\lambda|<1$.
+:::
 
 #### 3ème Cas : $|\lambda|=1$
 
-::: proposition
+::: {.proposition #prp-lambda1}
 Si $|\lambda|=1$, l'opérateur $I-\lambda B$ n'est pas inversible dans la classe des processus stationnaires.
 :::
 
--   Soit $(X_t)_{t\in \Z}$ le processus constant $X_t=m,\ \forall t\in\Z$. On a alors $$ 
-    (I- B)X_t= m-m=0, 
-    $$ ce qui prouve que l'opérateur n'est pas injectif et donc pas bijectif.
+::: {.callout-warning collapse="true" icon="false"}
+### Preuve
+-   Soit $(X_t)_{t\in \Z}$ le processus constant $X_t=m,\ \forall t\in\Z$. On a alors $(I- B)X_t= m-m=0$ ce qui prouve que l'opérateur n'est pas injectif et donc pas bijectif.
 
 -   On peut aussi montrer que $(I-B)$ n'est pas surjectif :
 
-si le processus constant $(Y_t)_{t\in\Z}$ égal à $m\neq 0$ avait un antécédent $(X_t)_{t\in \Z}$ stationnaire, ce dernier serait tel que : $$ 
-X_t-X_{t-1}=m,\ \forall t\in\Z 
-$$ On arrive alors à une contradiction car $\E [X_t-X_{t-1}]=0\neq m$.
+si le processus constant $(Y_t)_{t\in\Z}$ égal à $m\neq 0$ avait un antécédent $(X_t)_{t\in \Z}$ stationnaire, ce dernier serait tel que 
+$X_t-X_{t-1}=m,\ \forall t\in\Z$. On arrive alors à une contradiction car $\E [X_t-X_{t-1}]=0\neq m$.
+:::
 
 ### Inverse d'un polynôme en $B$
 
--   Considérons comme opérateur un polynôme en $B$ de la forme $$
+On considère maintenant un polynôme en $B$ de la forme 
+$$
     \Phi(B)=I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p. 
-    $$
--   Question : $\Phi(B)$ est-il inversible ? Se donnant un processus $(Y_t)_{t\in \Z}$, existe-t-il un unique processus stationnaire $(X_t)_{t\in \Z}$ tel que $$ 
-    \Phi(B)X_t=Y_t,\ \forall t\in\Z. 
-    $$
--   Dans les complexes, ce polynôme a $p$ racines non nécessairement distinctes. Comme il est non constant, ce polynome est scindé. On peut donc alors utiliser les résultats du polynôme $I-\lambda B$.
-
-Discussion des cas
+$$
+et on répondre à la question suivante : $\Phi(B)$ est-il inversible ?
+Se donnant un processus $(Y_t)_{t\in \Z}$, existe-t-il un unique processus stationnaire $(X_t)_{t\in \Z}$ tel que 
+$$ 
+\Phi(B)X_t=Y_t,\ \forall t\in\Z. 
+$$
+Dans les complexes, le polynôme $\Phi(z)$ a $p$ racines non nécessairement distinctes. Comme il est non constant, ce polynome est scindé. On peut donc alors utiliser les résultats du polynôme $I-\lambda B$. On a alors la discussion de cas suivante : 
 
 -   Si au moins une des racines est de module 1, alors il n'existe pas de processus stationnaire $(X_t)_{t\in \Z}$ solution de l'équation $\Phi(B)X_t=Y_t$.
 -   Si toutes les racines sont de module différent de 1, alors il existe une série en $B$, notée $\Psi(B)=\sum \psi_iB^i$, telle que :
@@ -204,9 +232,10 @@ Discussion des cas
 -   Si toutes les racines sont à l'extérieur du disque unité, alors l'inverse est une série en puissances positives de $B$ uniquement $$
     \Psi(B)=\sum_{i\in \N} \psi_iB^i 
     $$
--   Si toutes les racines sont à l'intérieur du disque unité, alors l'inverse est une série en puissances strictement positives de $F$ uniquement $$ 
-    \Psi(B)=\sum_{i\in \N^*} \psi_iF^i 
-    $$
+-   Si toutes les racines sont à l'intérieur du disque unité, alors l'inverse est une série en puissances strictement positives de $F$ uniquement 
+$$ 
+\Psi(B)=\sum_{i\in \N^*} \psi_iF^i 
+$$
 
 #### Comment déterminer l'inverse de $\Phi(B)$ ?
 
@@ -214,9 +243,11 @@ Si l'inverse du polynôme $\Phi(B)$ existe, on peut le déterminer par l'une de 
 
 -   *Identification* :
 
-Par exemple quand toutes les racines sont à l'extérieur du disque unité, on écrit $$
-\left(1-\varphi_1z-\varphi_2z^2-\cdots-\varphi_pz^p\right)  \sum_{i\in\N}\psi_iz^i=1 
-$$ dont on tire des équations donnant les expressions des coefficients $\psi_i$ en fonction des $\varphi_i$.
+Par exemple quand toutes les racines sont à l'extérieur du disque unité, on écrit 
+$$
+\left(1-\varphi_1z-\varphi_2z^2-\cdots-\varphi_pz^p\right)  \left(\sum_{i\in\N}\psi_iz^i\right)=1 
+$$ 
+dont on tire des équations donnant les expressions des coefficients $\psi_i$ en fonction des $\varphi_i$.
 
 -   *Décomposition en éléments simples de* $\Phi(z)$ : On écrit \begin{eqnarray*} \frac{1}{\Phi(z)}&=&\frac{1}{\prod_{i=1}^p (1-\lambda_iz)}\\
     &=&\sum_{i=1}^p\frac{a_i}{1-\lambda_iz}\\ &=&\sum_{i=1}^pa_i \sum_{j\in
@@ -228,90 +259,106 @@ $$ dont on tire des équations donnant les expressions des coefficients $\psi_i$
 
 ### Définition
 
--   Dans cette partie, on se restreint à des **processus centrés** sans perte de généralités
+Dans cette partie, on se restreint à des **processus centrés** sans perte de généralités
 
--   Dans de nombreuses situations pratiques la valeur en un instant $t$ d'une série temporelle peut s'écrire comme la somme d'une combinaison linéaire des valeurs précédentes de la série et d'un terme de bruit. Un tel modèle est connu sous le nom d'un **processus AR (AutoRegressive)**.
+Dans de nombreuses situations pratiques la valeur en un instant $t$ d'une série temporelle peut s'écrire comme la somme d'une combinaison linéaire des valeurs précédentes de la série et d'un terme de bruit. Un tel modèle est connu sous le nom d'un **processus AR (AutoRegressive)**.
 
 ::: {#def-ARp .definition}
 ## AR(p)
-
-On dit qu'un processus stationnaire $(X_t)_{t\in \Z}$ admet une représentation **auto-régressive d'ordre** $p$ (noté AR(p)) s'il vérifie l'équation récurrente : $$
+<br>
+On dit qu'un processus stationnaire $(X_t)_{t\in \Z}$ admet une représentation [**auto-régressive d'ordre**]{style="color:blue;"} $p$ (noté AR(p)) s'il vérifie l'équation récurrente : 
+$$
 X_t-\varphi_1X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p}=\varepsilon_t, 
-$$ où $(\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)$ et $(\varphi_1,\ldots,\varphi_p)\in\mathbb R^p$ avec $\varphi_p\neq0$.
+$$ 
+où $(\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)$ et $(\varphi_1,\ldots,\varphi_p)\in\mathbb R^p$ avec $\varphi_p\neq0$.
 
-Réécriture : un processus AR(p) vérifie l'équation : $\Phi(B)X_t=\varepsilon_t,\ \forall t\in\Z$ avec le polynome en $B$ $$ 
-\Phi(B)=I-\varphi_1 B-\varphi_2 B^2-\cdots-\varphi_p B^p. $$
+**Réécriture :** <br>
+Un processus AR(p) vérifie l'équation : $\Phi(B)X_t=\varepsilon_t,\ \forall t\in\Z$ avec le polynome en $B$ 
+$$ 
+\Phi(B)=I-\varphi_1 B-\varphi_2 B^2-\cdots-\varphi_p B^p.
+$$
 
-Cette représentation est dite **canonique** si le bruit blanc $(\varepsilon_t)_{t\in \Z}$ est tel que $\varepsilon_t\perp\mathcal H_{-\infty}^{t-1}(X)$ pour tout $t\in\Z$.
+Cette représentation est dite [**canonique**]{style="color:blue;"} si le bruit blanc $(\varepsilon_t)_{t\in \Z}$ est tel que $\varepsilon_t\perp\mathcal H_{-\infty}^{t-1}(X)$ pour tout $t\in\Z$.
 :::
 
--   Comme un processus AR doit être stationnaire par déf., les racines du polynôme $\Phi(z)$ doivent toutes être de module différent de 1 !
+::: {.callout-note icon="false"}
+### Remarque 
+Comme un processus AR doit être stationnaire par déf., les racines du polynôme $\Phi(z)$ doivent toutes être de module différent de 1 !
 
--   Illustration dans le cas AR(1) : Soit un processus AR(1) vérifiant $$
-    X_t-\varphi X_{t-1}=\varepsilon_t \textrm{ avec }\varphi=\pm 1. 
-    $$ Par itération, on a $X_t=\varphi^tX_0+\sum_{j=0}^{t-1}\varphi^j\varepsilon_{t-j}$. $$
-    \V(X_t)+\V(\varphi^tX_0)-2\varphi^t\C(X_t,X_0)=\sum_{j=0}^{t-1}\varphi^{2j}\V(\varepsilon_{t-j}).
-    $$ S'il existe un processus stationnaire $(X_t)_{t\in \Z}$ vérifiant cette équation, on doit donc avoir <!--$2\gamma_X(0)-2\varphi^t\gamma_X(t)=t\sigma^2$
+Soit un processus AR(1) vérifiant 
+$$
+X_t-\varphi X_{t-1}=\varepsilon_t \textrm{ avec }\varphi=\pm 1. 
+$$ 
+Par itération, on a $X_t=\varphi^tX_0+\sum_{j=0}^{t-1}\varphi^j\varepsilon_{t-j}$. 
+$$
+\V(X_t)+\V(\varphi^tX_0)-2\varphi^t\C(X_t,X_0)=\sum_{j=0}^{t-1}\varphi^{2j}\V(\varepsilon_{t-j}).
+$$ 
+S'il existe un processus stationnaire $(X_t)_{t\in \Z}$ vérifiant cette équation, on doit donc avoir <!--$2\gamma_X(0)-2\varphi^t\gamma_X(t)=t\sigma^2$
                             et donc --> $2- 2 \varphi^t\rho_X(t)=\frac{t\sigma^2}{\gamma_X(0)}.$ On aboutit à une contradiction en faisant tendre $t$ vers $+\infty$. <!--puisque le terme
                             de gauche reste borné et le terme de droite tend vers $+\infty$. Il n'existe
                             donc pas de processus stationnaire vérifiant cette équation.-->
+:::
 
 ### Un exemple instructif : le processus AR(1)
 
--   On considère $(X_t)_{t\in \Z}$ un processus AR(1), vérifiant donc l'équation de récurrence $$ 
-    X_t-\varphi X_{t-1}=\varepsilon_t,\ \forall t\in\Z 
-    $$ où $(\varepsilon_t)_{t\in \Z}$ est un bruit blanc $\text{WN}(0,\sigma^2)$ et $\varphi\neq 0$.
+On considère $(X_t)_{t\in \Z}$ un processus AR(1), vérifiant donc l'équation de récurrence 
+$$ 
+X_t-\varphi X_{t-1}=\varepsilon_t,\ \forall t\in\Z 
+$$ où $(\varepsilon_t)_{t\in \Z}$ est un bruit blanc $\text{WN}(0,\sigma^2)$ et $\varphi\neq 0$.
 
--   D'après l'étude précédente sur l'inversibilité de $I-\varphi B$, trois cas se présentent suivant les valeurs du paramètre $\varphi$.
+D'après l'étude précédente sur l'inversibilité de $I-\varphi B$, trois cas se présentent suivant les valeurs du paramètre $\varphi$.
 
 #### Cas $|\varphi|=1$
 
--   On a vu précédemment que dans ce cas, il n'existe pas de processus stationnaire $(X_t)_{t\in \Z}$ vérifiant l'équation $$ 
-    (I-\varphi B)X_t=\varepsilon_t. 
-    $$
--   Il n'existe donc pas de processus AR(1) de paramètre 1 ou -1.
+On a vu précédemment que dans ce cas, il n'existe pas de processus stationnaire $(X_t)_{t\in \Z}$ vérifiant l'équation 
+$(I-\varphi B)X_t=\varepsilon_t$. Il n'existe donc pas de processus AR(1) de paramètre 1 ou -1.
 
 #### Cas $|\varphi|<1$
 
--   Pour $|\varphi|<1$, l'inversibilité de $I-\varphi B$ est assurée dans la classe des processus stationnaires et $$ 
-    (I-\varphi B)^{-1}=\sum_{i=0}^{+\infty}\varphi^iB^i. 
-    $$
+- **Ecriture de $X_t$ en fonction du bruit blanc :**
 
--   Ainsi le processus AR(1) pour $|\varphi|<1$ s'écrit, en fonction du bruit blanc $(\varepsilon_t)_{t\in \Z}$, sous la forme : $$
-    X_t=\sum_{i=0}^{+\infty}\varphi^i\varepsilon_{t-i},\ \forall t\in\Z. 
-    $$
+Pour $|\varphi|<1$, l'inversibilité de $I-\varphi B$ est assurée dans la classe des processus stationnaires et 
+$$ 
+(I-\varphi B)^{-1}=\sum_{i=0}^{+\infty}\varphi^iB^i. 
+$$
 
--   Cette représentation est canonique :
+Ainsi le processus AR(1) pour $|\varphi|<1$ s'écrit, en fonction du bruit blanc $(\varepsilon_t)_{t\in \Z}$, sous la forme : 
+$$
+X_t=\sum_{i=0}^{+\infty}\varphi^i\varepsilon_{t-i},\ \forall t\in\Z. 
+$$
 
-    -   on déduit que $X_t\in\mathcal H_{-\infty}^t(\varepsilon)$ et donc $\mathcal H_{-\infty}^t(X)\subset \mathcal H_{-\infty}^t(\varepsilon)$ pour tout $t$ dans $\Z$
-    -   par propriété des bruits blancs $\varepsilon_t\perp \mathcal H_{-\infty}^{t-1}(\varepsilon)$
+De cette écriture, on en déduit que $X_t\in\mathcal H_{-\infty}^t(\varepsilon)$ et donc $\mathcal H_{-\infty}^t(X)\subset \mathcal H_{-\infty}^t(\varepsilon)$ pour tout $t$ dans $\Z$. De plus,    par propriété des bruits blancs $\varepsilon_t\perp \mathcal H_{-\infty}^{t-1}(\varepsilon)$. Ainsi $\varepsilon_t \perp \mathcal H_{-\infty}^{t-1}(X)$, donc cette représentation est **canonique**.  
 
-$\hspace{2cm}\Longrightarrow \varepsilon_t\perp\mathcal H_{-\infty}^{t-1}(X)$
 
-#### Cas $|\varphi|<1$
+- **Prévision linéaire optimale :**
 
--   Prévision linéaire optimale :
-
-Ayant observé $X_1,\ldots,X_n$, on prédit la valeur suivante de la série $X_{n+1}$ par $$ 
+Ayant observé $X_1,\ldots,X_n$, on prédit la valeur suivante de la série $X_{n+1}$ par 
+$$ 
 \hat X_n(1)=\EL(X_{n+1}|\mathcal
 H_{-\infty}^n(X))=\EL(\varphi X_n +\varepsilon_{n+1}|\mathcal
-H_{-\infty}^n(X))=\varphi X_n, 
-$$ car $\varepsilon_{n+1}\perp\mathcal H_{-\infty}^n(X)$.
+H_{-\infty}^n(X))=\varphi X_n 
+$$ 
+car $\varepsilon_{n+1}\perp\mathcal H_{-\infty}^n(X)$.
 
--   Le processus des innovations : $$ 
-    X_{t}-\hat X_{t-1}(1)=X_{t}-\varphi X_{t-1} = \varepsilon_{t},\ \forall t\in\Z
-    $$ C'est donc le bruit blanc $(\varepsilon_t)_{t\in \Z}$ dans la représentation AR(1).
+- **Processus des innovations :** 
 
-On verra que ce résultat reste valable pour tout modèle AR de représentation canonique.
+Dans ce cas, 
+$$ 
+X_{t}-\hat X_{t-1}(1)=X_{t}-\varphi X_{t-1} = \varepsilon_{t},\ \forall t\in\Z
+$$ 
+C'est donc le bruit blanc $(\varepsilon_t)_{t\in \Z}$ dans la représentation AR(1). On verra que ce résultat reste valable pour tout modèle AR de représentation canonique.
 
 #### Cas $|\varphi|>1$
 
--   Le polynôme $I-\varphi B$ est inversible d'inverse $$ 
+- **Ecriture (non canonique) de $X_t$ selon le bruit blanc :**
+
+D'après l'étude précédente, le polynôme $I-\varphi B$ est inversible d'inverse 
+$$ 
     (I-\varphi B)^{-1}=-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}F^i \textrm{  d'où  }
     X_t=-\sum_{i=1}^{+\infty}\frac{1}{\varphi^i}\varepsilon_{t+i}. 
-    $$
+$$
 
--   Cette représentation du processus AR(1) **n'est pas canonique** :
+Cette représentation du processus AR(1) **n'est pas canonique** car
 
 ```{=tex}
 \begin{eqnarray*}
@@ -319,38 +366,34 @@ On verra que ce résultat reste valable pour tout modèle AR de représentation 
 &=& -\frac{1}{\varphi}\V(\varepsilon_t)= -\frac{\sigma^2}{\varphi}\neq 0.
 \end{eqnarray*}
 ```
-#### Cas $|\varphi|>1$ - Prévision
 
--   Prévision linéaire optimale :
+- **Prévision linéaire optimale :**
 
-Ayant observé $X_1,\ldots,X_n$, on prédit la valeur suivante de la série $X_{n+1}$ par \begin{eqnarray*} 
+Ayant observé $X_1,\ldots,X_n$, on prédit la valeur suivante de la série $X_{n+1}$ par 
+\begin{eqnarray*} 
 \hat X_n(1)&=&\EL(X_{n+1}|\mathcal
 H_{-\infty}^n(X))\\ &=&\EL(\varphi X_n +\varepsilon_{n+1}|\mathcal
 H_{-\infty}^n(X))\\ &=&\varphi X_n+\EL(\varepsilon_{n+1}|\mathcal
 H_{-\infty}^n(X)) 
-\end{eqnarray*} le dernier terme n'ayant aucune raison d'être nul, puisque la représentation n'est pas canonique.
+\end{eqnarray*} 
+le dernier terme n'ayant aucune raison d'être nul, puisque la représentation n'est pas canonique.
 
--   Processus des innovations : \begin{eqnarray*} 
-    X_{t+1}-\hat X_t(1)&=&\varphi
-    X_t+\varepsilon_{t+1}-\varphi X_t-\EL(\varepsilon_{t+1}|\mathcal
-    H_{-\infty}^t(X))\\ &=&\varepsilon_{t+1}-\EL(\varepsilon_{t+1}|\mathcal
-    H_{-\infty}^t(X)) 
-    \end{eqnarray*} donc non confondus avec le bruit blanc utilisé dans la représentation (non canonique) du processus AR(1).
+- **Processus des innovations :** 
+\begin{eqnarray*} 
+X_{t+1}-\hat X_t(1)
+&=&\varphi X_t+\varepsilon_{t+1}-\varphi X_t-\EL(\varepsilon_{t+1}|\mathcal H_{-\infty}^t(X))\\ &=&\varepsilon_{t+1}-\EL(\varepsilon_{t+1}|\mathcal H_{-\infty}^t(X)) 
+\end{eqnarray*} 
+donc non confondus avec le bruit blanc utilisé dans la représentation (non canonique) du processus AR(1).
 
-#### Cas $|\varphi|>1$ : vers une représentation canonique
+- **Vers une représentation canonique :**
 
--   On va ici montrer que le processus AR(1) pour $|\varphi|>1$ possède un autre représentation, qui est canonique.
-
--   On utilise la formule reliant les densités spectrales de deux processus stationnaires dont l'un est le filtrage linéaire d'un autre :
-
-Partant de $(I-\varphi B)X_t=\varepsilon_t$, on a $$ 
+On va ici montrer que le processus AR(1) pour $|\varphi|>1$ possède un autre représentation, qui est canonique. Pour cela, on utilise la formule reliant les densités spectrales de deux processus stationnaires dont l'un est le filtrage linéaire d'un autre : partant de $(I-\varphi B)X_t=\varepsilon_t$, on a 
+$$ 
 f_X(\omega)|1-\varphi e^{-i\omega}|^2=f_\varepsilon(\omega)=\frac{\sigma^2}{2\pi} \Longleftrightarrow
 f_X(\omega)=\frac{\sigma^2}{2\pi}\frac{1}{|1-\varphi e^{-i\omega}|^2}. 
 $$
 
-#### Cas $|\varphi|>1$ : vers une représentation canonique
-
--   Soit le processus $(\eta_t)_{t\in \Z}$ défini par $\eta_t=X_t-\frac{1}{\varphi}X_{t-1},\ \forall t \in \Z$. \begin{eqnarray*}
+Soit le processus $(\eta_t)_{t\in \Z}$ défini par $\eta_t=X_t-\frac{1}{\varphi}X_{t-1},\ \forall t \in \Z$. Alors \begin{eqnarray*}
     f_\eta(\omega)&=&\textcolor{magenta}{f_X(\omega)} \left|1-\frac{1}{\varphi}
     e^{-i\omega}\right|^2
     =\textcolor{magenta}{\frac{\sigma^2}{2\pi}}\frac{|1-\frac{1}{\varphi}
@@ -362,37 +405,39 @@ $$
     =\frac{\sigma^2}{2\pi\varphi^2}. 
     \end{eqnarray*}
 
--   Nouvelle représentation AR(1) pour le processus $(X_t)_{t\in \Z}$ : $$
-    (I-\frac{1}{\varphi} B)X_t=\eta_t \textrm{ où } (\eta_t)_{t\in \Z}\sim
-    \text{WN}(0,\sigma^2/\varphi^2) 
-    $$ et la représentation est canonique car $|1/\varphi|<1$.
+On a donc une nouvelle représentation AR(1) pour le processus $(X_t)_{t\in \Z}$ : 
+$$
+(I-\frac{1}{\varphi} B)X_t=\eta_t \textrm{ où } (\eta_t)_{t\in \Z}\sim
+\text{WN}(0,\sigma^2/\varphi^2) 
+$$ et la représentation est canonique car $|1/\varphi|<1$. On a aussi que le processus $(\eta_t)_{t\in \Z}$ correspond au processus des innovations.
 
-On se retrouve aussi que le processus $(\eta_t)_{t\in \Z}$ correspond au processus des innovations.
+Cette étude du cas particulier du processus AR(1) nous a donc permis de voir que la représentation AR(1) n'est pas unique. En choisissant celle  avec le coefficient $\varphi$ ou $1/\varphi$ de module inférieur à 1, on a la représentation canonique. Ce résultat se généralise aux processus AR d'ordre quelconque.
 
-Cette petite étude du cas particulier du processus AR(1) nous a donc permis de voir que la représentation AR(1) n'est pas unique et qu'il suffit de prendre celle avec le coefficient $\varphi$ ou $1/\varphi$ inférieur à 1 pour "tomber" sur la représentation canonique. Ce résultat se généralise aux processus AR d'ordre quelconque.
+### Propriétés
 
-#### Propriétés
-
-Avant d'étudier plus en détail les propriétés des processus AR, notons, et c'est la moindre des choses, que de tels processus existent ! La proposition suivante généralise les résultats vus sur la surjectivité et l'inversibilité du polynôme en $I-\lambda B$ et décrit le processus AR en fonction du bruit blanc.
+La proposition suivante généralise les résultats vus sur la surjectivité et l'inversibilité du polynôme en $I-\lambda B$ et décrit le processus AR en fonction du bruit blanc.
 
 ::: {#prp-existAR .proposition}
 Soit $(\varepsilon_t)_{t\in \Z}$ un bruit blanc et $\Phi(B)$ un polynôme en $B$.
 
--   Il existe une infinité de processus du second ordre $(X_t)_{t\in \Z}$ vérifiant : $$
-    \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z. 
-    $$
--   Si les racines du polynôme $\Phi(B)$ sont \textbf{toutes de module différent de 1}, il existe une **unique solution stationnaire** $(X_t)_{t\in \Z}$. Elle s'écrit alors sous la forme d'un filtrage linéaire du bruit blanc $(\varepsilon_t)_{t\in \Z}$ : $$ 
-    X_t=\Psi(B)\varepsilon_t=\sum_{i\in\Z}\psi_i\varepsilon_{t-i},\ \forall t\in \Z. 
-    $$
--   Si les racines du polynômes sont **toutes à l'extérieur du disque unité**, alors l'écriture moyenne mobile du processus AR(p) ne considère que les valeurs passées du bruit blanc : $$
-    X_t=\Psi(B)\varepsilon_t=\sum_{i\in\textcolor{red}{\N}}\psi_i\varepsilon_{t-i},\ \forall t\in \Z.
-    $$
+-   Il existe une infinité de processus du second ordre $(X_t)_{t\in \Z}$ vérifiant : 
+$$
+\Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z. 
+$$
+-   Si les racines du polynôme $\Phi(B)$ sont **toutes de module différent de 1**, il existe une **unique solution stationnaire** $(X_t)_{t\in \Z}$. Elle s'écrit alors sous la forme d'un filtrage linéaire du bruit blanc $(\varepsilon_t)_{t\in \Z}$ : 
+$$ 
+X_t=\Psi(B)\varepsilon_t=\sum_{i\in\Z}\psi_i\varepsilon_{t-i},\ \forall t\in \Z. 
+$$
+-   Si les racines du polynômes sont **toutes à l'extérieur du disque unité**, alors l'écriture moyenne mobile du processus AR(p) ne considère que les valeurs passées du bruit blanc : 
+$$
+X_t=\Psi(B)\varepsilon_t=\sum_{i\in\textcolor{red}{\N}}\psi_i\varepsilon_{t-i},\ \forall t\in \Z.
+$$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
-Pour s'en convaincre, il suffit de factoriser le polynôme $\Phi(B)$ de degré $p$ en fonction de ses $p$ racines et d'appliquer $p$ fois le résultat d'inversibilité vu pour le polynôme $I-\lambda B$. C'est ce que nous avons décrit dans le paragraphe "Inverse_poly_B" de ce même chapitre.
+Pour s'en convaincre, il suffit de factoriser le polynôme $\Phi(B)$ de degré $p$ en fonction de ses $p$ racines et d'appliquer $p$ fois le résultat d'inversibilité vu pour le polynôme $I-\lambda B$. 
 :::
 
 Comme vu dans le cas du processus AR(1), il n'existe pas qu'une seule représentation d'un processus AR($p$). En revanche une seule de ces représentations est canonique.
@@ -400,7 +445,8 @@ Comme vu dans le cas du processus AR(1), il n'existe pas qu'une seule représent
 ::: {#prp-ARcano .proposition}
 Soit $(\varepsilon_t)_{t\in \Z}$ un bruit blanc et $\Phi(B)$ un polynôme en $B$ de degré $p$ exactement dont toutes les racines $(z_i = 1/ \lambda_i)_{i=1,\ldots,p}$ (non néc. distinctes) sont de module différent de 1.
 
-Soit $(X_t)_{t\in \Z}$ l'unique processus stationnaire AR(p) vérifiant $$
+Soit $(X_t)_{t\in \Z}$ l'unique processus stationnaire AR(p) vérifiant 
+$$
 \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z. 
 $$
 
@@ -408,26 +454,38 @@ $$
     \text{ pour tout }t\in \Z, \textrm{ où }(\eta_t)_{t\in \Z} \textrm{un bruit blanc}. 
     $$
 -   Toutes les représentations ont même ordre.
--   Une seule représentation est canonique : $$ 
+-   Une seule représentation est canonique : 
+    $$ 
     \tilde \Phi(B)X_t=\eta_t,\ \forall t\in \Z, 
-    $$ où $$ 
+    $$ où 
+    $$ 
     \tilde\Phi(B)=\prod_{i:|z_i|>1}\left(I-\lambda_iB\right)\prod_{i:|z_i|<1}\left(I-\frac{1}{\lambda_i}B\right).
     $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
-On montre seulement le dernier point. Le second est en effet évident et le premier point s'obtiendrait de manière tout à fait identique à ce qui suit en faisant un changement de racines qui ne retient pas uniquement celles à l'extérieur du disque unité. La démonstration est assez proche de ce que l'on a fait pour le processus AR(1) et utilise donc les densités spectrales. De l'équation $$
+On montre seulement le dernier point. 
+<!--
+Le second est en effet évident et le premier point s'obtiendrait de manière tout à fait identique à ce qui suit en faisant un changement de racines qui ne retient pas uniquement celles à l'extérieur du disque unité. -->
+La démonstration est assez proche de ce que l'on a fait pour le processus AR(1) et utilise donc les densités spectrales. De l'équation 
+$$
 \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z, 
-$$ on tire $$
+$$ on tire 
+$$
 f_X(\omega)\left| \Phi(e^{-i\omega}) \right|^2=f_\varepsilon(\omega). 
-$$ L'équation $$ 
+$$ 
+L'équation 
+$$ 
 \tilde \Phi(B)X_t=\eta_t, \text{ pour tout }t\in \Z, 
-$$ donne quant à elle $$ 
+$$ 
+donne quant à elle 
+$$ 
 f_\eta(\omega)=f_X(\omega)\left| \tilde\Phi(e^{-i\omega})
 \right|^2. 
-$$ En supposant toutes les racines de $\Phi(z)$ réelles, on peut refaire le même genre de raisonnement que celui fait pour le AR(1) et obtenir \begin{eqnarray*} f_\eta(\omega)&=&\frac{\left| \tilde\Phi(e^{-i\omega})
+$$ 
+En supposant toutes les racines de $\Phi(z)$ réelles, on peut refaire le même type de raisonnement que celui fait pour le AR(1) et obtenir \begin{eqnarray*} f_\eta(\omega)&=&\frac{\left| \tilde\Phi(e^{-i\omega})
 \right|^2}{\left| \Phi(e^{-i\omega})
 \right|^2}f_\varepsilon(\omega)=\frac{\sigma^2}{2\pi}\frac{\left|
 \prod_{j:|z_j|>1}\left(1-\lambda_je^{-i\omega}\right)\prod_{j:|z_j|<1}\left(1-\frac{1}{\lambda_j}e^{-i\omega}\right)
@@ -448,10 +506,10 @@ e^{i\omega}\right) \left(1-\bar \lambda e^{i\omega}\right)  \right|^2}{\left|
 e^{i\omega}}=1-\bar \lambda e^{-i\omega}) \end{eqnarray*} et on obtient le même résultat que dans le cas de racines réelles. On a donc prouvé que l'on avait, avec ce nouveau polynôme $\tilde \Phi(B)$ obtenu en remplaçant racines à l'intérieur du disque unité par leur inverse, une nouvelle représentation AR($p$) du processus $(X_t)_{t\in \Z}$ puisque $(\eta_t)_{t\in \Z}$ est un bruit blanc. Il reste à prouver que la représentation obtenue est canonique. Le raisonnement suit de près ce que l'on a fait pour le cas particulier du processus $AR(1)$. D'une part on montre l'égalité des histoires des processus $(X_t)_{t\in \Z}$ et $(\eta_t)_{t\in \Z}$, i.e. $$ \H_{-\infty}^t(X)=
 \H_{-\infty}^t(\eta). $$ On dit dans ce cas que le processus est \textbf{régulier}. C'est bien le cas ici puisque l'équation $$ \tilde \Phi(B)X_t=\eta_t, \text{
 pour tout }t\in \Z., $$ où $\tilde \Phi(B)$ est un polynôme avec puissance positives de $B$, assure la première inclusion\~: $\H_{-\infty}^t(\eta)\subset \H_{-\infty}^t(X)$. Mais comme $\tilde \Phi(B)$ possède par construction toutes ses racines hors du disque unité, il est inversible d'inverse ne faisant intervenir que les puissances positives de $B$ : $$ X_t=\sum_{i\in \N} \tilde
-\psi_i\eta_{t-i}. $$ On en déduit l'inclusion inverse : $\H_{-\infty}^t(X)\subset \H_{-\infty}^t(\eta)$ et donc l'égalité. La représentation canonique est alors bien acquise puisque, en tant que bruit blanc, le processus $(\eta_t)_{t\in \Z}$ est évidemment orthongonal à son passé, donc ici également orthogonal au passé de $(X_t)_{t\in \Z}$. \hfill $\Box$
+\psi_i\eta_{t-i}. $$ On en déduit l'inclusion inverse : $\H_{-\infty}^t(X)\subset \H_{-\infty}^t(\eta)$ et donc l'égalité. La représentation canonique est alors bien acquise puisque, en tant que bruit blanc, le processus $(\eta_t)_{t\in \Z}$ est évidemment orthongonal à son passé, donc ici également orthogonal au passé de $(X_t)_{t\in \Z}$. 
 :::
 
-#### Propriétés
+
 
 ::: {#prp-ARinnov .propositon}
 Si la représentation du processus AR(p) $$
@@ -460,7 +518,7 @@ $$ est canonique, le bruit blanc $(\varepsilon_t)_{t\in \Z}$ utilisé dans sa re
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
 Par définition le processus des innovations est donné par \begin{eqnarray*}
 X_{t+1}-\hat X_t(1)&=&X_{t+1}-\EL\left(
@@ -470,7 +528,7 @@ X_{t+1}-\hat X_t(1)&=&X_{t+1}-\EL\left(
 \end{eqnarray*} ce qui est bien le résultat annoncé.
 :::
 
-::: proposition
+::: {.proposition #prp-ARpMAinfini}
 Tout processus AR(p) de représentation canonique $$ \Phi(B)X_t=\varepsilon_t, \text{ pour tout }t\in \Z, $$ admet la représentation MA($\infty$) : $$ 
 X_t=\varepsilon_t +\sum_{i=1}^{+\infty}
 \psi_i\varepsilon_{t-i}. 
@@ -478,16 +536,17 @@ $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
 Nous avons déjà obtenu les éléments de cette proposition. La seule nouveauté, que l'on aurait pu noter plus tôt, est l'égalité à 1 du premier coefficient $\psi_0$ dans l'inverse du polynôme $\Phi (z)$. Ceci se voit facilement par identification du terme constant.
 :::
 
 ### Liaisons temporelles
 
--   Soit un processus $(X_t)_{t\in \Z}$ de représentation AR($p$) canonique : $$
-    \Phi(B)X_t=\varepsilon_t,\ \forall t\in \Z. 
-    $$
+Soit un processus $(X_t)_{t\in \Z}$ de représentation AR($p$) canonique : $$
+\Phi(B)X_t=\varepsilon_t,\ \forall t\in \Z. 
+$$
+
 -   Variance du processus $(X_t)_{t\in \Z}$ :\
     \begin{eqnarray*}
     \gamma_X(0)&=&\V(X_t)=\C\left(\sum_{i=1}^p\varphi_iX_{t-i}+\varepsilon_t,X_t\right)\\
@@ -497,20 +556,23 @@ Nous avons déjà obtenu les éléments de cette proposition. La seule nouveaut�
     &=&\sum_{i=1}^p \varphi_i
     \underbrace{\gamma_X(i)}_{\gamma_X(0)\rho_X(i)}+\V(\varepsilon_t) \textrm{ (car
     canonique)}. 
-    \end{eqnarray*} où la dernière égalité est obtenue par orthogonalité du bruit blanc par rapport à l'histoire du processus AR($p$) dans sa représentation canonique. On a alors Donc $$
+    \end{eqnarray*} où la dernière égalité est obtenue par orthogonalité du bruit blanc par rapport à l'histoire du processus AR($p$) dans sa représentation canonique. On a alors $$
     \gamma_X(0)=\frac{\sigma^2}{1-\sum_{i=1}^p\varphi_i\rho_X(i)}. 
     $$
 
-On peut faire de même pour les autocovariances : pour $h>0$, \begin{eqnarray*}
+- Autocovariances : pour $h>0$, \begin{eqnarray*}
 \gamma_X(h)=\C(X_t,X_{t+h})&=&\C\left(X_t,\sum_{i=1}^p\varphi_iX_{t+h-i}+\varepsilon_{t+h}\right)\\
 &=&\sum_{i=1}^p\varphi_i \C(X_tX_{t+h-i})+\C(X_t,\varepsilon_{t+h})\\
 &=&\sum_{i=1}^p\varphi_i \gamma_X(h-i) \text{ car  }\varepsilon_{t+h}\perp
 \mathcal H_{-\infty}^{t+h-1}(X). 
-\end{eqnarray*} D'où les autocorrélations satisfont l'équation linéaire récurrente d'ordre $p$ $$
-\rho_X(h)=\sum_{i=1}^p\varphi_i \rho_X(h-i),\ \forall h\in \N^* 
-$$
+\end{eqnarray*} 
 
--   Les autocorrélations vérifient donc l'équation matricielle dite de \textbf{Yule-Walker} :
+-  Autocorrélations : elles satisfont l'équation linéaire récurrente d'ordre $p$ 
+$$
+\rho_X(h)=\sum_{i=1}^p\varphi_i \rho_X(h-i),\ \forall h\in \N^* 
+$$ {#eq-RecurrencerhoAR}
+
+Les autocorrélations vérifient donc l'équation matricielle dite de \textbf{Yule-Walker} :
 
 ```{=tex}
 \begin{eqnarray*} 
@@ -525,51 +587,69 @@ $$
 \gamma_X(0)&=&\frac{\sigma^2}{1-\underset{i=1}{\stackrel{p}{\sum}}\varphi_i\rho_X(i)}. 
 \end{eqnarray*}
 ```
+
 ::: {#prp-ACFAR .proposition}
-**Autocorrélations simples d'un AR(p)** Les autocorrélations simples d'un processus AR(p) décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.
+### Autocorrélations simples d'un AR(p) 
+<br>
+Les autocorrélations simples d'un processus AR(p) décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
-L'équation (\ref{Recurrence_rho_AR}) vérifiée par les autocorrélations d'un AR($p$) est une équation de récurrence linéaire de polynôme caractéristique $$ r^p-\varphi_1r^{p-1}-\ldots
--\varphi_{p-1}r-\varphi_p=r^p\Phi\left(\frac{1}{r}\right). $$ Les racines (évidemment non nulles, puisque par définition $\varphi_p$ est non nul) de ce polynôme sont les inverses de celles du polynôme $\Phi(z)$ définissant l'AR($p$). D'après ce que l'on sait sur les solutions d'un équation linéaire récurrente, la solution de l'équation (\ref{Recurrence_rho_AR}) dans $\mathbb C$ est donc une combinaison linéaire de solutions de la forme $$
-(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\lambda_i^h, $$ où $k$ est l'ordre de multiplicité de la racine $z_i=1/\lambda_i$ de $\Phi(z)$. Or, puisqu'on considère la représentation canonique, les racines $z_i$ de $\Phi(z)$ sont de module à l'extérieur du disque unité. Ainsi, si toutes les solutions sont réelles alors les autocorrélations décroissent effectivement de manière exponentielle vers 0. Si une des racines $z_i=1/\lambda_i$ de $\Phi(z)$ n'est pas réelle, on sait alors que son conjugué l'est aussi et que les solutions réelles correspondant à ces deux racines conjuguées s'écrivent de la forme $$
-|\lambda_i|^h\left[(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\cos(\omega_i
-h)+(b_{i,0}+b_{i,1}h+\cdots+b_{i,k-1}h^{k-1})\sin(\omega_i h)\right], $$ où $\omega_i$ est le module de $\lambda_i$. Cette partie de Elles sont donc bien simusoïdales amorties.
+L'équation @eq-RecurrencerhoAR vérifiée par les autocorrélations d'un AR($p$) est une équation de récurrence linéaire de polynôme caractéristique $$ r^p-\varphi_1r^{p-1}-\ldots
+-\varphi_{p-1}r-\varphi_p=r^p\Phi\left(\frac{1}{r}\right). $$ Les racines (non nulles car $\varphi_p$ est non nul) de ce polynôme sont les inverses de celles du polynôme $\Phi(z)$ définissant l'AR($p$). La solution de l'équation @eq-RecurrencerhoAR dans $\mathbb C$ est donc une combinaison linéaire de solutions de la forme $$
+(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\lambda_i^h, 
+$$ 
+où $k$ est l'ordre de multiplicité de la racine $z_i=1/\lambda_i$ de $\Phi(z)$. Or, puisqu'on considère la représentation canonique, les racines $z_i$ de $\Phi(z)$ sont de module à l'extérieur du disque unité. Ainsi, si toutes les solutions sont réelles alors les autocorrélations décroissent effectivement de manière exponentielle vers 0. Si une des racines $z_i=1/\lambda_i$ de $\Phi(z)$ n'est pas réelle, on sait alors que son conjugué l'est aussi et que les solutions réelles correspondant à ces deux racines conjuguées s'écrivent sous la forme 
+$$
+\begin{array}{l l}
+|\lambda_i|^h & \left[(a_{i,0}+a_{i,1}h+\cdots+a_{i,k-1}h^{k-1})\cos(\omega_i h) \right.\\
+& \left. +(b_{i,0}+b_{i,1}h+\cdots+b_{i,k-1}h^{k-1})\sin(\omega_i h)\right], 
+\end{array}
+$$ 
+où $\omega_i$ est le module de $\lambda_i$. Elles sont donc bien simusoïdales amorties.
 :::
 
 ::: {#exm-ex1 .example}
-Pour un AR(1) d'équation canonique $$ 
-X_t=\varphi X_{t-1}+\varepsilon_t, 
-$$ on a $$ 
-\rho_X(h)=\varphi^{|h|}. 
-$$ On a bien la décroissance exponentielle des autocorrelations et on constate que le coefficient $\varphi$ d'un AR(1) est en fait la première autocovariance.
+Pour un AR(1) d'équation canonique 
+$X_t=\varphi X_{t-1}+\varepsilon_t,$ 
+on a 
+$\rho_X(h)=\varphi^{|h|}.$ 
+On a bien la décroissance exponentielle des autocorrelations et on constate que le coefficient $\varphi$ d'un AR(1) est en fait la première autocovariance.
 :::
 
-::: {#exm-ex2 .example}
-AR(2) - racines 2 et 5
+::: {#exm-ex2 .example}   
+Soit le processus AR(2) défini par $X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t$. 
+Les racines du polynome $\Phi(z)=0.1 z^2 -0.7 z +1$ sont $2$ et $5$. 
+La @fig-exAR2ACF montre la décroissante exponentielle des autocorrélations empiriques de ce processus. 
 
-$X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t$
 
 ```{r}
 #| echo: false
-#| fig-height: 10
+#| fig-height: 4
+#| fig-cap: ACF empirique du processus AR(2) $X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t$
+#| label: fig-exAR2ACF
 Xt1<-arima.sim(n=10000,model=list(order=c(2,0,0),ar=c(0.7,-0.1)))
 ggacf(Xt1)
 ```
 
-AR(2) - racines $2\pm i 2\sqrt{3}/3$
-
-$X_t = \frac{3}{4} X_{t-1} - \frac{3}{16} X_{t-2}+\varepsilon_t$
+Soit le processus AR(2) défini par $X_t = \frac{3}{4} X_{t-1} - \frac{3}{16} X_{t-2}+\varepsilon_t$. 
+Les racines du polynome $\Phi(z)=\frac{3}{16} z^2 - \frac 3 4 z +1$ sont $2\pm i 2\sqrt{3}/3$. 
+La @fig-exAR2ACF2 montre les autocorrélations empiriques de ce processus. 
 
 ```{r}
 #| echo: false
-#| fig-height: 10
+#| fig-height: 4
+#| fig-cap: ACF empirique du processus AR(2) $X_t = \frac{3}{4} X_{t-1} - \frac{3}{16} X_{t-2}+\varepsilon_t$
+#| label: fig-exAR2ACF2
 Xt2<-arima.sim(n=500,model=list(order=c(2,0,0),ar=c(3/4,-3/16)))
 ggacf(Xt2)
 ```
+
 :::
+
+<br>
 
 ::: {#prp-pACFAR .proposition}
 **Autocorrélations partielles d'un AR(p)**
@@ -581,7 +661,7 @@ Les autocorrélations partielles d'un processus AR(p) sont nulles à partir du r
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
 Il suffit d'écrire la définition de l'autocorrélation partielle. On sait que le coefficient $r_X(k)$ est donné par le coefficient $\alpha_k(k)$ dans la projection de $X_t$ sur $\H_{t-k}^{t-1}$, i.e. : $$
 \EL(X_t|\H_{t-k}^{t-1})=\alpha_1(k)X_{t-1}+\cdots+\alpha_k(k)X_{t-k}. 
@@ -590,29 +670,36 @@ $$ Ainsi, pour $k=p$, on peut écrire \begin{eqnarray*}
 &=&\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}, \end{eqnarray*} dont on tire $r_X(p)=\varphi_p\neq0$. Pour $k>p$, on a : \begin{eqnarray*}
 \EL(X_t|\H_{t-k}^{t-1})&=&\EL(\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}+\varepsilon_t,|\H_{t-k}^{t-1})\\
 &=&\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}\\
-&=&\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}+0\times
-X_{t-p-1}+\cdots+ 0\times X_{t-k} 
+&=&\varphi_1X_{t-1}+\varphi_2X_{t-2}+\cdots+\varphi_pX_{t-p}\\
+& &+0\times X_{t-p-1}+\cdots+ 0\times X_{t-k} 
 \end{eqnarray*} et donc $r_X(k)=0$.
 :::
 
-Remarques :
+::: {.callout-note icon="false"}
+### Remarques 
 
 -   La propriété $r_X(p)=\varphi_p$ n'est vraie que dans le cas d'une représentation canonique.
 -   On peut montrer que la propriété d'autocorrélations partielles nulles à partir d'un certain rang $p+1$ est caractéristique d'un AR($p$).
+:::
 
-::: example
+::: {#exm-ex3 .example}
+<br>
+Pour illustrer la propriété que les autocorrélations partielles d'un processus $AR(p)$ sont nulles à partir du rang p+1, les autocorrélations partielles empiriques sont tracées en @fig-exARpACF pour le processus $X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t$ (à gauche - AR(2)) et le processus $X_t = 0.7 X_{t-1}-0.1 X_{t-2}+0.2 X_{t-3}+\varepsilon_t$ (à droite - AR(3)). 
+
 ```{r}
 #| echo: false
-#| fig-height: 11
-ggpacf(Xt1)+ggtitle(TeX(r'($X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\epsilon_t$)'))+
+#| fig-height: 4
+#| label: fig-exARpACF
+#| layout-ncol: 2
+#| fig-cap: Autocorrélations partielles empiriques pour ...
+#| fig-subcap:  
+#|  - le processus $X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t$
+#|  - le processus $X_t = 0.7 X_{t-1}-0.1 X_{t-2}+0.2 X_{t-3}+\varepsilon_t$
+
+ggpacf(Xt1)+ #ggtitle(TeX(r'($X_t = 0.7 X_{t-1}-0.1 X_{t-2}+\varepsilon_t$)'))+
 theme(plot.title = element_text(size = 40))
-```
-
-```{r}
-#| echo: false
-#| fig-height: 11
 Xt3<-arima.sim(10000,model=list(order=c(3,0,0),ar=c(0.7,-0.1,0.2)))
-ggpacf(Xt3)+ggtitle(TeX(r'($X_t = 0.7 X_{t-1}-0.1 X_{t-2}+0.2 X_{t-3}+\epsilon_t$)'))+
+ggpacf(Xt3)+  #ggtitle(TeX(r'($X_t = 0.7 X_{t-1}-0.1 X_{t-2}+0.2 X_{t-3}+\varepsilon_t$)'))+
 theme(plot.title = element_text(size = 40))
 ```
 :::
@@ -622,22 +709,29 @@ theme(plot.title = element_text(size = 40))
 ### Définition
 
 ::: {#def-MAq .definition}
-On dit qu'un processus stationnaire $(X_t)_{t\in \Z}$ admet une représentation en **Moyenne Mobile d'ordre** $q$ (noté MA(q)) s'il vérifie l'équation $$
+On dit qu'un processus stationnaire $(X_t)_{t\in \Z}$ admet une représentation en [**moyenne mobile d'ordre $q$**]{style="color:blue;"}  (noté MA(q)) s'il vérifie l'équation 
+$$
 X_t=\varepsilon_t+\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}
 $$ où $(\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)$ et $(\theta_1,\ldots,\theta_q)\in\R^q$, $\theta_q\neq0$.
 
-Réécriture : $X_t=\Theta(B)\varepsilon\_t,\ \forall t\in\Z$ avec le polynôme en $B$ $\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q.$
+**Réécriture :**
+<br>
+$X_t=\Theta(B)\varepsilon\_t,\ \forall t\in\Z$ avec le polynôme en $B$ $\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q.$
 
-Cette représentation est dite **canonique** si les racines du polynôme $\Theta(z)$ sont toutes à l'extérieur du disque unité.
+Cette représentation est dite [**canonique**]{style="color:blue;"} si les racines du polynôme $\Theta(z)$ sont toutes à l'extérieur du disque unité.
 :::
 
-Rem : Contrairement à un AR, un MA est entièrement spécifié. A bruit blanc et paramètres $\theta_1,\ldots,\theta_q$ fixés, il ne correspond qu'un seul processus MA($q$) qui est le filtrage linéaire de $(\varepsilon_t)_{t\in \Z}$ par le filtre $$
+::: {.callout-note icon="false"}
+### Remarque 
+Contrairement à un AR, un MA est entièrement spécifié. A bruit blanc et paramètres $\theta_1,\ldots,\theta_q$ fixés, il ne correspond qu'un seul processus MA($q$) qui est le filtrage linéaire de $(\varepsilon_t)_{t\in \Z}$ par le filtre 
+$$
 \Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q.
 $$
+:::
 
 ### Propriétés
 
-::: proposition
+::: {.proposition #prp-MAprop}
 Soit $(\varepsilon_t)_{t\in \Z}$ un bruit blanc et $\Theta(B)$ un polynôme en $B$ de degré $q$ exactement dont toutes les racines (non néc. distinctes) sont de module différent de 1.
 
 Soit $(X_t)_{t\in \Z}$ un processus $\text{MA}(q)$ vérifiant $X_t=\Theta(B)\varepsilon_t, \forall t\in \Z.$
@@ -650,28 +744,53 @@ Soit $(X_t)_{t\in \Z}$ un processus $\text{MA}(q)$ vérifiant $X_t=\Theta(B)\var
 -   Un processus $\text{MA}$ est toujours centré.
 :::
 
-### Ecriture AR($\infty$)
-
-::: proposition
+::: { .proposition #prp-MAARinfini}
 Soit $(X_t)_{t\in \Z}$ un processus MA(q) de représentation canonique $$ 
 X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
 \textrm{ avec } (\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2) 
-$$ - Le processus des innovations correspond alors au bruit blanc $(\varepsilon_t)_{t\in \Z}$ de sa représentation canonique. - Le processus $(X_t)_{t\in \Z}$ possède une représentation AR($\infty$) : $$
+$$ 
+
+Alors le processus $(X_t)_{t\in \Z}$ possède une représentation AR($\infty$) : 
+$$
 \varepsilon_t=\sum_{i=0}^{+\infty}\pi_iX_{t-i} \textrm{ avec }\pi_0=1
 $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
-On va d'abord établir la représentation AR($\infty$). Comme mes racines du polynôme $\Theta(z)$ sont, par hypothèse que la représentation est canonique, toutes situées à l'extérieur du disque unité, l'opérateur $\Theta(B)$ est inversible d'inverse $$
-\Theta^{-1}(B)=\sum_{i=0}^{+\infty}\pi_iB^i=I+\sum_{i=1}^{+\infty}\pi_iB^i, 
-$$ la dernière égalité étant obtenue par identification des termes constants. On a donc bien $$ 
+Par hypothèse la représentation est canonique donc les racines du polynôme $\Theta(z)$ sont toutes situées à l'extérieur du disque unité. Ainsi l'opérateur $\Theta(B)$ est inversible d'inverse 
+$$
+\Theta^{-1}(B)=\sum_{i=0}^{+\infty}\pi_iB^i=I+\sum_{i=1}^{+\infty}\pi_iB^i,
+$$
+la dernière égalité étant obtenue par identification des termes constants. On a donc bien 
+$$
+\varepsilon_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i}.
+$$
+
+:::
+
+::: { .proposition #prp-MAinnovation}
+Soit $(X_t)_{t\in \Z}$ un processus MA(q) de représentation canonique 
+$$ 
+X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
+\textrm{ avec } (\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2) 
+$$ 
+Alors le processus des innovations correspond au bruit blanc $(\varepsilon_t)_{t\in \Z}$ de sa représentation canonique. 
+:::
+
+::: {.callout-warning collapse="true" icon="false"}
+### Preuve 
+
+A partir de la @prp-MAARinfini, on a que 
+$$ 
 \varepsilon_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i}. 
-$$ Ces écritures MA($q$) et AR($\infty$) du processus $(X_t)_{t\in \Z}$ montrent qu'il est régulier, i.e. $$ 
-\H_{-\infty}^t(X)= \H_{-\infty}^t(\varepsilon). 
-$$ On peut ainsi écrire \begin{eqnarray*}
-\EL(X_t|\H_{-\infty}^{t-1}(X))&=&\EL(X_t|\H_{-\infty}^{t-1}(\varepsilon))=\EL(
+$$ 
+
+Les écritures MA($q$) et AR($\infty$) du processus $(X_t)_{t\in \Z}$ montrent que $\H_{-\infty}^t(X)= \H_{-\infty}^t(\varepsilon)$. On peut ainsi écrire 
+\begin{eqnarray*}
+\EL(X_t|\H_{-\infty}^{t-1}(X))&=&\EL(X_t|\H_{-\infty}^{t-1}(\varepsilon))\\
+&=&\EL(
 \varepsilon_t+\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}|\H_{-\infty}^{t-1}(\varepsilon))\\
 &=&\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q},
 \end{eqnarray*} par orthoganilité du bruit blanc par rapport à son passé. On en déduit pour l'innovation $$
@@ -681,11 +800,12 @@ $$ ce qui achève la démonstration.
 
 ### Liaisons temporelles
 
--   Soit $$
-    X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z
-    $$ avec $\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q$ et $(\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,\sigma^2)$.
+On considère un processus $MA(q)$ 
+$$X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z$$ 
+avec $\Theta(B)=I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q$ et $(\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,\sigma^2)$.
 
--   Par la propriété d'orthogonalité d'un bruit blanc, on a
+- Variance du processus $(X_t)_{t\in\Z}$ : <br>  
+Par la propriété d'orthogonalité d'un bruit blanc, on a
 
 ```{=tex}
 \begin{eqnarray*} 
@@ -694,78 +814,104 @@ $$ ce qui achève la démonstration.
 &=&\sigma^2\left(1+\sum_{j=1}^q\theta_j^2\right). 
 \end{eqnarray*}
 ```
--   Pour la fonction d'autocovariance, on a $$
-      \gamma_X(h)=\C(X_t,X_{t+h})=\C\left(\varepsilon_t +
-      \sum_{j=1}^q\theta_j\varepsilon_{t-j},\varepsilon_{t+h} +
-      \sum_{i=1}^q\theta_i\varepsilon_{t+h-i}\right). 
-    $$
 
--   On a immédiatement que $\gamma_X(h)=0$ quand $h>q$.
+- Fonction d'autocovariance de $(X_t)_{t\in\Z}$ : 
 
--   Pour $h=1$ \begin{eqnarray*}
-    \C(X_t,X_{t+1})&=&\E\left[(\varepsilon_t +
+\begin{eqnarray*} 
+\gamma_X(h)&=&\C(X_t,X_{t+h})\\
+&=&\C\left(\varepsilon_t +
+\sum_{j=1}^q\theta_j\varepsilon_{t-j},\varepsilon_{t+h} +
+\sum_{i=1}^q\theta_i\varepsilon_{t+h-i}\right). 
+\end{eqnarray*}
+
+A partir de cette expression, on peut immédiatement remarquer que 
+$\gamma_X(h)=0$ pour $h>q$.  
+
+Pour $h=1$,  $\C(X_t,X_{t+1}) = \E\left[(\varepsilon_t +
     \sum_{j=1}^q\theta_j\varepsilon_{t-j})(\varepsilon_{t+1} +
-    \sum_{i=1}^q\theta_i\varepsilon_{t+1-i})\right]\\
-    &=&\sigma^2(\theta_1+\theta_1\theta_2+\cdots+\theta_{q-1}\theta_q).
-    \end{eqnarray*}
-
--   Pour $h=2$ : \begin{eqnarray*}
-    \C(X_t,X_{t+2})&=&\E\left[(\varepsilon_t +
+    \sum_{i=1}^q\theta_i\varepsilon_{t+1-i})\right]
+  =\sigma^2(\theta_1+\theta_1\theta_2+\cdots+\theta_{q-1}\theta_q)$. 
+  
+Pour $h=2$,  $\C(X_t,X_{t+2}) =\E\left[(\varepsilon_t +
     \sum_{j=1}^q\theta_j\varepsilon_{t-j})(\varepsilon_{t+2} +
-    \sum_{j=1}^q\theta_j\varepsilon_{t+2-j})\right]\\
-    &=&\sigma^2(\theta_2+\theta_1\theta_3+\cdots+\theta_{q-2}\theta_q).
-    \end{eqnarray*}
+    \sum_{j=1}^q\theta_j\varepsilon_{t+2-j})\right]
+=\sigma^2(\theta_2+\theta_1\theta_3+\cdots+\theta_{q-2}\theta_q)$.
 
--   Autocovariances : On en déduit pour tout $h$ dans $\N^*$ : \begin{eqnarray*}
-    \gamma_X(h)&=&\sigma^2(\theta_h+\theta_1\theta_{1+h}+\cdots+\theta_{q-h}\theta_q)
-    =\sigma^2\left(\theta_h+\sum_{i=1}^{q-h}\theta_i\theta_{i+h}\right).
-    \end{eqnarray*}
+On en déduit pour tout $h$ dans $\N^*$ : 
+\begin{eqnarray*}
+\gamma_X(h)&=&\sigma^2(\theta_h+\theta_1\theta_{1+h}+\cdots+\theta_{q-h}\theta_q)
+=\sigma^2\left(\theta_h+\sum_{i=1}^{q-h}\theta_i\theta_{i+h}\right).
+\end{eqnarray*}
 
-::: proposition
-**Autocorrélations simples d'un MA(q)** - Les autocorrélations simples d'un processus MA(q) sont nulles à partir du rang $q+1$ : $\rho_X(q)\neq 0$ et $\rho_X(h)=0$, pour $h>q$. - La propriété d'autocorrélations simples nulles à partir d'un certain rang $q+1$ est caractéristique d'un MA($q$)
+- Fonction d'autocorrélation de $(X_t)_{t\in\Z}$ : 
+
+::: {.proposition #prp-MAautocorr}
+### Autocorrélations simples d'un MA(q) 
+
+- Les autocorrélations simples d'un processus MA(q) sont nulles à partir du rang $q+1$ : 
+$$\rho_X(q)\neq 0 \textrm{ et }\rho_X(h)=0,\ \forall h>q.$$ 
+- La propriété d'autocorrélations simples nulles à partir d'un certain rang $q+1$ est caractéristique d'un MA($q$)
 :::
 
-::: example
+::: {.example }
+On considère le processus MA(2) défini par 
+$X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}$. 
+La @fig-exMA2ACF représente les autocorrélations empiriques de ce processus. On a bien des autocorrélations proche de 0 à partir de $h>2$.  
+
 ```{r}
 #| echo: false
 #| fig-height: 4
+#| fig-cap: ACF empirique du processus MA(2) $X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}$
+#| label: fig-exMA2ACF
 Xt1<-arima.sim(n=10000,model=list(order=c(0,0,2),ma=c(-0.7,0.1)))
-ggacf(Xt1)+ggtitle(TeX(r'($X_t = \epsilon_t - 0.7 \epsilon_{t-1}+0.1 \epsilon_{t-2}$)'))+
+ggacf(Xt1)+ #ggtitle(TeX(r'($X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}$)'))+
 theme(plot.title = element_text(size = 40))
 ```
+
+
+La @fig-exMA3ACF représente les autocorrélations empiriques du processus défini par 
+$X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2} -0.2 \varepsilon_{t-3}$. Les autocorrélations empiriques sont bien proche de 0 à partir de $h>3$. 
 
 ```{r}
 #| echo: false
 #| fig-height: 4
+#| fig-cap: ACF empirique du processus MA(3) $X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2} -0.2 \varepsilon_{t-3}$
+#| label: fig-exMA3ACF
 Xt2<-arima.sim(n=10000,model=list(order=c(0,0,3),ma=c(-0.7,0.1,-0.2)))
-ggacf(Xt2)+ggtitle(TeX(r'($X_t = \epsilon_t - 0.7 \epsilon_{t-1}+0.1 \epsilon_{t-2} -0.2 \epsilon_{t-3}$)'))+
+ggacf(Xt2)+  #ggtitle(TeX(r'($X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2} -0.2 \varepsilon_{t-3}$)'))+
 theme(plot.title = element_text(size = 40))
 ```
 :::
 
-::: proposition
-**Autocorrélations partielles d'un MA(q)** Les autocorrélations partielles d'un processus MA(q) sont solutions d'une équation linéaire récurrente d'ordre $q$. Elles décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.
+<br>
+
+::: {.proposition #prp-MAautocorpart}
+### Autocorrélations partielles d'un MA(q) 
+<br>
+Les autocorrélations partielles d'un processus MA(q) sont solutions d'une équation linéaire récurrente d'ordre $q$. Elles décroissent, de manière exponentielle ou sinusoïdale amortie, vers 0.
 :::
 
-::: example
-MA(2) - racines 2 et 5
-
-$X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}$
+::: {.example #exm-MAbis}
+<br>
+On reprend le processus MA(2) défini par $X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}$. Les racines du polynome $\Theta(z)$ associé sont 
+2 et 5. La @fig-exMA2pACF représente les autocorrélations partielles empiriques. 
 
 ```{r}
 #| echo: false
-#| fig-height: 10
+#| fig-height: 4
+#| fig-cap: pACF empirique du processus MA(2) $X_t = \varepsilon_t - 0.7 \varepsilon_{t-1}+0.1 \varepsilon_{t-2}$
+#| label: fig-exMA2pACF
 Xt1<-arima.sim(n=10000,model=list(order=c(0,0,2),ma=c(-0.7,0.1)))
 ggpacf(Xt1)
 ```
 
-MA(2) - racines $2\pm i 2\sqrt{3}/3$
-
-$X_t = \varepsilon_t + 0.4 \varepsilon_{t-1} - 0.45 \varepsilon_{t-2}$
+La @fig-exMA2pACF2 représente les autocorrélations partielles empirique du processus MA(2) défini par MA(2) $X_t = \varepsilon_t + 0.4 \varepsilon_{t-1} - 0.45 \varepsilon_{t-2}$, où les racines du polynome $\Theta(z)$ associé sont $2\pm i 2\sqrt{3}/3$.
 
 ```{r}
 #| echo: false
-#| fig-height: 10
+#| fig-height: 4
+#| fig-cap: pACF empirique du processus MA(2) $X_t = \varepsilon_t + 0.4 \varepsilon_{t-1} - 0.45 \varepsilon_{t-2}$
+#| label: fig-exMA2pACF2
 Xt2<-arima.sim(n=10000,model=list(order=c(0,0,2),ma=c((3/4),-3/16)))
 ggpacf(Xt2)
 ```
@@ -773,12 +919,13 @@ ggpacf(Xt2)
 
 ## Processus ARMA
 
+Nous allons maintenant étudier des processus stationnaires avec une partie AR et une partie MA. On les appelle processus ARMA pour [**AutoRegressive Moving Average**]{style="color:blue;"}. Ils sont très importants en pratique car on peut montrer que tout processus stationnaire peut être approché par un processus ARMA. 
+
 ### Définition
 
--   ARMA = AutoRegressive Moving Average
-
 ::: {#def-ARMA .definition}
-On dit qu'un processus stationnaire $(X_t)_{t\in \Z}$ admet une représentation **ARMA**$(p,q)$ s'il vérifie l'équation $$ 
+On dit qu'un processus stationnaire $(X_t)_{t\in \Z}$ admet une représentation [**ARMA**$(p,q)$]{style="color:blue;"} s'il vérifie l'équation 
+$$ 
 X_t=\textcolor{red}{\underset{j=1}{\stackrel{p}{\sum}} \varphi_j
 X_{t-j}} + \textcolor{blue}{\varepsilon_t +\underset{i=1}{\stackrel{q}{\sum}}
 \theta_i\varepsilon_{t-i}} 
@@ -787,25 +934,21 @@ $$ avec
 -   $(\varepsilon_t)_{t\in \Z}\sim\text{WN}(0,\sigma^2)$
 -   $(\varphi_1,\ldots, \varphi_p)\in\R^p,\ \varphi_p\neq0$
 -   $(\theta_1,\ldots,\theta_q)\in\R^{q},\ \theta_q\neq 0$
-:::
 
-Autre écriture
-
-::: definition
-En utilisant les polynômes en $B$ \begin{eqnarray*} \Phi(B)&=&I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p\\
+**Réécriture :** 
+<br>
+En utilisant les polynômes en $B$ 
+\begin{eqnarray*} \Phi(B)&=&I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p\\
 \text{ et }\Theta(B)&=&I+\theta_1B+\theta_2B^2+\cdots+\theta_qB^q,
-\end{eqnarray*} un processus ARMA(p,q) vérifie l'équation : $$
-\Phi(B)X_t=\Theta(B)\varepsilon_t,\ \forall t\in\Z. 
+\end{eqnarray*} un processus **ARMA(p,q)** vérifie l'équation : 
+$$
+\textcolor{red}{\Phi(B)X_t}=\textcolor{blue}{\Theta(B)\varepsilon_t},\ \forall t\in\Z. 
 $$
 :::
 
-Remarques :
-
--   AR($p$)= ARMA($p,0$), MA($q$) = ARMA($0,q$).
--   Les processus ARMA sont très importants en pratique car on peut montrer que tout processus stationnaire peut être approché par un processus ARMA.
 
 ::: {#def-typeARMA .definition}
-La représentation d'un processus ARMA$(p,q)$ $$ \Phi(B)X_t=\Theta(B)\varepsilon_t, $$ est dite
+La représentation d'un processus ARMA$(p,q)$ $\Phi(B)X_t=\Theta(B)\varepsilon_t$ est dite
 
 -   **minimale** si les polynômes $\Phi(z)$ et $\Theta(z)$ n'ont pas de racine commune
 -   **causale** si le polynôme $\Phi(z)$ a toutes ses racines à l'extérieur du disque unité
@@ -813,13 +956,18 @@ La représentation d'un processus ARMA$(p,q)$ $$ \Phi(B)X_t=\Theta(B)\varepsilon
 -   **canonique** si elle est causale et inversible.
 :::
 
-Si la représentation n'est pas minimale ($\Phi(z)$ et $\Theta(z)$ ont une ou des racine(s) commune(s)), alors deux cas peuvent se présenter :
+::: {.callout-note icon="false"}
+### Remarques 
+
+Si la représentation n'est pas minimale ($\Phi(z)$ et $\Theta(z)$ ont une ou des racine(s) commune(s)), alors 
 
 -   Soit aucune de ces racines communes n'est sur le cercle unité. Dans ce cas, le processus $(X_t)_{t\in \Z}$ admet aussi la représentation $$ 
     \tilde\Phi(B)X_t=\tilde \Theta(B)\varepsilon_t,\ \forall t\in\Z 
     $$ où les nouveaux polynômes sont obtenus à partir des précédents en enlevant les racines communes.
 
--   Si au moins une des racines communes est sur le cercle unité, alors il peut y avoir plus d'un unique processus stationnaire vérifiant l'équation. Dans la suite, on ne considèrera que des représentations minimales.
+-   Si au moins une des racines communes est sur le cercle unité, alors il peut y avoir plus d'un unique processus stationnaire vérifiant l'équation.<br> 
+**Dans la suite, on ne considèrera que des représentations minimales.**
+:::
 
 ### Ecritures MA($\infty$) et AR($\infty$)
 
@@ -834,9 +982,9 @@ $$ avec $\psi_i=0$ pour $i<0$, $\psi_0=1$, $\theta_0=1$ et $\theta_i=0$ pour $i>
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve 
 
-La représentation étant causale, les racines du polynôme $\Phi(z)$ sont toutes à l'extérieur du disque unité et l'inverse de $\Phi(z)$ s'écrit alors comme une série de puissances positives de $B$. Multipliée par $\Theta(B)$, on garde une série en puissances positives de $B$ et on a donc l'écriture : $$
+La représentation étant causale, les racines du polynôme $\Phi(z)$ sont toutes à l'extérieur du disque unité. L'inverse de $\Phi(z)$ s'écrit alors comme une série de puissances positives de $B$. Multipliée par $\Theta(B)$, on garde une série en puissances positives de $B$ et on a donc l'écriture : $$
 X_t=\Phi^{-1}(B)\Theta(B)\varepsilon_t=\varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i},
 \text{ pour tout }t\in \Z. 
 $$ Grâce à cette écriture MA($\infty$) de $(X_t)_{t\in \Z}$, on peut réécrire l'équation $$
@@ -849,9 +997,8 @@ $$ sous la forme \begin{eqnarray*}
 \left(\varepsilon_{t-p}+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-p-i}\right)\\
 &=\varepsilon_t
 +\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}.
-\end{eqnarray*} En identifiant les coefficients devant les $\varepsilon_t$, on obtient les équations : \begin{eqnarray*} &&\psi_1-\varphi_1=\theta_1,\\
-&&\psi_2-\varphi_1\psi_1-\varphi_2=\theta_2,\\
-&&\psi_3-\varphi_1\psi_2-\varphi_2\psi_1-\varphi_3=\theta_3\\ \end{eqnarray*} et ainsi de suite. C'est bien la formule annoncée dans la proposition.
+\end{eqnarray*} 
+En identifiant les coefficients devant chaque $\varepsilon_t$, on obtient bien la formule annoncée.
 :::
 
 ::: {#prp-ARMAARinf .proposition}
@@ -864,37 +1011,70 @@ $$ où les coefficients $(\pi_i)_{i\in N}$ forment une famille absolument sommab
 $$ avec $\pi_i=0$ pour $i<0$, $\varphi_0=-1$ et $\varphi_i=0$ pour $i>p$.
 :::
 
+::: {.callout-warning collapse="true" icon="false"}
+### Preuve 
+
+La représentation étant inversible, les racines du polynôme $\Theta(z)$ sont toutes à l'extérieur du disque unité. L'inverse de $\Theta(z)$ s'écrit alors comme une série de puissances positives de $B$. Multipliée par $\Phi(B)$, on garde une série en puissances positives de $B$ et on a donc l'écriture : 
+$$
+\varepsilon_t=\Theta^{-1}(B)\Phi(B)X_t=X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i},
+\text{ pour tout }t\in \Z. 
+$$ Grâce à cette écriture AR($\infty$), on peut réécrire l'équation 
+$$
+X_t-\varphi_1X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p}=\varepsilon_t
++\theta_1\varepsilon_{t-1}+\theta_2\varepsilon_{t-2}+\cdots+\theta_q\varepsilon_{t-q}
+$$ sous la forme 
+\begin{eqnarray*} 
+& & X_t-\varphi_1 X_{t-1}-\varphi_2X_{t-2}-\cdots-\varphi_pX_{t-p} \\
+&=& \left(X_t+\sum_{i=1}^{+\infty}\pi_iX_{t-i}\right)
++\theta_1 \left(X_{t-1}+\sum_{i=1}^{+\infty}\pi_iX_{t-i-1}\right)+\cdots+\theta_q \left(X_{t-q}+\sum_{i=1}^{+\infty}\pi_iX_{t-i-q}\right)
+\end{eqnarray*} 
+En identifiant les coefficients devant chaque $X_t$, on obtient bien la formule annoncée.
+:::
+
+
+
 ### Liaisons temporelles
 
-Autocorrélation avec l'écriture ARMA($p,q$)
+On considère un processus $(X_t)_{t\in\Z}$ qui est un ARMA($p,q$) d'équation 
+$$X_{t}-\underset{j=1}{\stackrel{p}{\sum}}\varphi_jX_{t-j}=\varepsilon_{t} +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t-i}.$$
 
--   Soit $X_{t+h}-\underset{j=1}{\stackrel{p}{\sum}}\varphi_jX_{t+h-j}=\varepsilon_{t+h} +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i}$
--   La covariance de chaque terme avec $X_t$ donne \scriptsize  \begin{eqnarray*}
+
+- Fonction d'autocorrélation à partir de l'écriture ARMA($p,q$) :
+<br>
+On considère 
+$X_{t+h}-\underset{j=1}{\stackrel{p}{\sum}}\varphi_jX_{t+h-j}=\varepsilon_{t+h} +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i}$ et on prend la covariance avec $X_t$  ce qui donne 
+    \begin{eqnarray*}
     \gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j) &=&
     \C\left(\varepsilon_{t+h}
     +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i},X_t\right)\\ &=&
     \C\left(\varepsilon_{t+h}
     +\underset{i=1}{\stackrel{q}{\sum}}\theta_i\varepsilon_{t+h-i},\varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i}\right).
     \end{eqnarray*}
--   Pour $h>q$, on a $\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=0.$
--   Pour $0\leq h\leq q$, on obtient $$
-    \gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=\sigma^2\left(\sum_{i=0}^{q-h}\theta_{h+i}\psi_i{}\right)\textrm{ avec } \psi_0=1 
-    $$
 
-Autocorrélation avec l'écriture MA($\infty$)
+On a ausi que pour $h>q$, $\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=0.$<br>
+Pour $0\leq h\leq q$, on obtient 
+$$
+\gamma_X(h)-\underset{j=1}{\stackrel{p}{\sum}}\varphi_j\gamma_X(h-j)=\sigma^2\left(\sum_{i=0}^{q-h}\theta_{h+i}\psi_i{}\right)\textrm{ avec } \psi_0=1 
+$$
 
-En utilisant l'écriture MA($\infty$) du processus $(X_t)_{t\in \Z}$ on obtient cette fois-ci $$ 
+- Fonction d'autocorrélation avec l'écriture MA($\infty$) : 
+
+En utilisant l'écriture MA($\infty$) du processus $(X_t)_{t\in \Z}$ on obtient cette fois-ci 
+$$ 
 \gamma_X(h)=\C\left(
 \varepsilon_t+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t-i},\varepsilon_{t+h}+\sum_{i=1}^{+\infty}\psi_i\varepsilon_{t+h-i}\right)=\sigma^2\sum_{i=0}^{+\infty}
 \psi_i\psi_{i+h}. 
 $$
 
-Remarques :
+::: {.callout-note icon="false"}
+### Remarques 
 
--   La première expression obtenue, sous forme de relation de récurrence, permet de montrer que les autocorrélations simples décroissent de manière exponentielle ou sinusoïdale amortie vers 0 avec $h$. On peut montrer le même genre de résultat pour les autocorrélations partielles.
--   On constate ainsi, qu'à la différence des cas particuliers des processus AR($p$) ou MA($q$), il n'existe pas de caractérisation aisée pour les modèles ARMA($p,q$). Les autocorrélations simples ou partielles ne s'annulent pas à partir d'un certain rang.
+-   La première expression obtenue sous forme de relation de récurrence, permet de montrer que les autocorrélations simples décroissent de manière exponentielle ou sinusoïdale amortie vers 0 avec $h$. On peut montrer le même genre de résultat pour les autocorrélations partielles.
+-   On constate, qu'à la différence des cas particuliers des processus AR($p$) ou MA($q$), il n'existe pas de caractérisation aisée pour les modèles ARMA($p,q$). Les autocorrélations simples ou partielles ne s'annulent pas à partir d'un certain rang.
+:::
 
-### Propriétés
+
+<!--
 
 ::: {#prp- .proposition}
 Soient, pour $\left( i,j\right)\in\N^2$, \begin{align*} 
@@ -931,18 +1111,17 @@ M=\left[ \begin{tabular}[c]{cccccc} $\Delta_{1,1}$ &$\ldots$
 $$
 :::
 
+-->
+
 ## Vers les processus ARIMA/ SARIMA
 
 ### ARIMA
 
--   Dans la pratique les processus sont rarement stationnaires
-
--   Généralisation des processus ARMA pour les étendre à des processus non stationnaires.
-
--   L'idée générale, essentiellement conçue pour les processus non stationnaires à tendance polynomiale, est de différencier suffisamment le processus initial afin d'obtenir un processus sans tendance et appliquer un modèle ARMA sur le processus différencié. Cette classe de modèle est connue sous le nom de processus **ARIMA (AutoRegressive Integrated Moving Average)**.
+Dans la pratique, les processus sont rarement stationnaires. Les modèles **ARIMA (AutoRegressive Integrated Moving Average)** sont une extension des processus ARMA aux processus non stationnaires. Ils sont basés sur l'idée générale suivante essentiellement conçue pour les processus non stationnaires à tendance polynomiale :  on peut différencier suffisamment le processus initial afin d'obtenir un processus sans tendance et appliquer un modèle ARMA sur le processus différencié. 
 
 ::: {#def-arima .definition}
-On dit qu'un processus $(X_t)_{t\in \Z}$ admet une représentation **ARIMA**$(p,d,q)$ ($p,d,q\in\mathbb N$) s'il vérifie l'équation : $$
+On dit qu'un processus $(X_t)_{t\in \Z}$ admet une représentation [**ARIMA**$(p,d,q)$]]{style="color:blue;"} ($p,d,q\in\mathbb N$) s'il vérifie l'équation : 
+$$
 \Phi(B)(I-B)^dX_t= c + \Theta(B)\varepsilon_t,\ \forall t\in\Z 
 $$ où \begin{eqnarray*} 
 & & c\in\mathbb{R}\\
@@ -952,66 +1131,119 @@ $$ où \begin{eqnarray*}
 \end{eqnarray*}
 :::
 
+::: {.callout-note icon="false"}
+### Remarques 
+
 -   On peut montrer que, dans le cas d'un processus ARIMA$(p,d,q)$, le processus $(I-B)^dX_t$ est asympotiquement (au sens quand $t\to +\infty$) un processus ARMA(p,q).
 
 -   On peut aussi établir des représentations AR($\infty$) et MA($\infty$) pour les processus ARIMA.
+:::
 
-Si la série temporelle suit un ARIMA(p,d,0) alors l'ACF et le PACF sur les **données différenciées** vérifient
+Par rapport aux caractéristiques évoquées précédemment (voir @sec-liaisonsAR et @sec-liaisonsMA) sur les autocorrélations et autocorrélations partielles pour les processus AR et MA (voir @sec-liaisonsAR et @sec-liaisonsMA), on a le résultat suivant. 
 
--   l'ACF décroit exponentiellement ou sinusoidal
--   Un pic significatif au lag $p$ sur le PACF et pas après le lag $p$
+::: {.proposition #prp-ARIMA}
+
+- Si la série temporelle suit un ARIMA(p,d,0) alors l'ACF et le PACF sur les **données différenciées** vérifient
+
+  -   l'ACF décroit exponentiellement ou sinusoidal
+  -   Un pic significatif au lag $p$ sur le PACF et pas après le lag $p$
+
+- Si la série temporelle suit un ARIMA(0, d, q) alors l' ACF et le PACF sur les **données différenciées** vérifient :
+
+  -   le PACF est décroissant exponentiellement ou sinusoidal
+  -   Un pic significatif au lag $q$ pour l'ACF et pas après le lag $q$  
+:::  
+
+::: {.example #exm-ARIMA}
+Pour illustrer la @prp-ARIMA, la @fig-exARIMA310 montre les autocorrélations et autocorrélations partielles empiriques pour les mesures différenciées une fois du processus 
+$$
+(I-0.1 B -0.2 B^2 - 0.6 B^3)(I-B) X_t = \varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)
+$$
 
 ```{r}
 #| echo: false
 #| fig-height: 4
+#| label: fig-exARIMA310
+#| layout-ncol: 2
+#| fig-cap: Résultats pour le processus ARIMA(3,1,0) $(I-0.1 B -0.2 B^2 - 0.6 B^3)(I-B) X_t = \varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)$
+#| fig-subcap:  
+#|  - Autocorrélations empiriques
+#|  - Autocorrélations partielles empiriques
 
 ts.sim<-arima.sim(list(order = c(3,1,0), ar = c(0.1,0.2,0.6)), n = 500)
-g1<-autoplot(acf(diff(ts.sim),plot=F))+ggtitle("ARIMA(3,1,0)")
-g2<-autoplot(pacf(diff(ts.sim),plot=F))+ggtitle("ARIMA(3,1,0)")
-grid.arrange(g1,g2,ncol=2)
+autoplot(acf(diff(ts.sim),plot=F)) #+ggtitle("ARIMA(3,1,0)")
+autoplot(pacf(diff(ts.sim),plot=F)) #+ggtitle("ARIMA(3,1,0)")
 ```
 
-Si la série temporelle suit un ARIMA(0, d, q) alors l' ACF et le PACF sur les **données différenciées** vérifient :
-
--   le PACF est décroissant exponentiellement ou sinusoidal;
--   Un pic significatif au lag $q$ pour l'ACF et pas après le lag $q$
+Pour illustrer la @prp-ARIMA, la @fig-exARIMA013 montre les autocorrélations et autocorrélations partielles empiriques pour les mesures différenciées une fois du processus 
+$$
+(I-B) X_t = (I-0.6 B -0.6 B^2 - 0.2 B^3)\varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)
+$$
 
 ```{r}
 #| echo: false
 #| fig-height: 4
+#| label: fig-exARIMA013
+#| layout-ncol: 2
+#| fig-cap: Résultats pour le processus ARIMA(0,1,3) $(I-B) X_t = (I-0.6 B -0.6 B^2 - 0.2 B^3)\varepsilon_t,\ (\varepsilon_t)_{t\in\Z}\sim \text{WN}(0,1)$
+#| fig-subcap:  
+#|  - Autocorrélations empiriques
+#|  - Autocorrélations partielles empiriques
 ts.sim<-arima.sim(list(order = c(0,1,3), ma = c(0.6,0.6,0.2)), n = 500)
-g1<-autoplot(acf(diff(ts.sim),plot=F))+ggtitle("ARIMA(0,1,3)")
-g2<-autoplot(pacf(diff(ts.sim),plot=F))+ggtitle("ARIMA(0,1,3)")
-grid.arrange(g1,g2,ncol=2)
+autoplot(acf(diff(ts.sim),plot=F))  #+ggtitle("ARIMA(0,1,3)")
+autoplot(pacf(diff(ts.sim),plot=F)) #+ggtitle("ARIMA(0,1,3)")
+#grid.arrange(g1,g2,ncol=2)
 ```
+
+:::
 
 ### Sélection de modèle
 
-Si on a plusieurs modèles ARIMA en compétition $\texttt{mod}_1,\ldots,\texttt{mod}_K$
+Quand on étudie une série temporelle, on peut être amené à hésiter entre plusieurs modèles pour la modéliser au mieux. 
+Supposons que l'on considère une collection de modèles ARIMA $\mathcal M = \left\{\texttt{mod}_1,\ldots,\texttt{mod}_K\right\}$. 
+On est dans le cadre classique d'un problème de sélection de modèles. On traite donc ce problème par les étapes suivantes :  
 
--   On estime les paramètres de chaque modèle $\texttt{mod}_k$ considéré (par maximum de vraisemblance le plus souvent)
+-   Ajustement de chaque modèle $\texttt{mod}_k$: Pour chaque modèle fixé, on estime les paramètres (par maximum de vraisemblance le plus souvent)
 
--   On utilise un critère pénalisé pour choisir le meilleur modèle
+-   On minimise un critère pénalisé pour choisir le meilleur modèle. Par exemple, 
 
-    -   $\mbox{AIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + 2 (p+q+1+\mathbb{1}_{c\neq 0})$
+    -   le critère AIC : $\mbox{AIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + 2 (p+q+1+\mathbb{1}_{c\neq 0})$
 
-    -   $\mbox{AICc}(\texttt{mod}_k) = \mbox{AIC}(\texttt{mod}_k) + \frac{2 (p+q+1+\mathbb{1}_{c\neq 0})(p+q+2+\mathbb{1}_{c\neq 0})}{n-p-q-2-\mathbb{1}_{c\neq 0}}$
+    -   le critère AIC corrigé : $\mbox{AICc}(\texttt{mod}_k) = \mbox{AIC}(\texttt{mod}_k) + \frac{2 (p+q+1+\mathbb{1}_{c\neq 0})(p+q+2+\mathbb{1}_{c\neq 0})}{n-p-q-2-\mathbb{1}_{c\neq 0}}$
 
-    -   $\mbox{BIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + (p+q+1+\mathbb{1}_{c\neq 0}) \log(n)$
+    -   le critère BIC : $\mbox{BIC}(\texttt{mod}_k) = -2 \mbox{ log. vrais.} + (p+q+1+\mathbb{1}_{c\neq 0}) \log(n)$
+
 
 ::: { .example #exm-selmod}
+Pour illustrer la sélection de modèle, on a ici simulées une série temporelle selon le modèle ARIMA(1,1,2) suivant
 
--   Données simulées sous un modèle ARIMA(1,1,2) $$
-    (I-0.8 B)(I-B) X_t = (I-0.3B+0.6 B^2)\varepsilon_t,\ \ (\varepsilon_t)_t\sim \text{WN}(0,1.5)
-    $$
+$$
+(I-0.8 B)(I-B) X_t = (I-0.3B+0.6 B^2)\varepsilon_t,\ \ (\varepsilon_t)_t\sim \text{WN}(0,1.5)
+$$
 
--   Sélection de modèles
+En @fig-exselmod, on trace la série temporelle étudiée $(X_t)_{t\in\Z}$ ainsi que les autocorrélations et autocorrélations partielles empiriques de $((I-B)X_t)_{t\in\Z}$. 
 
 ```{r}
 #| echo: false
-#| eval: true
+#| fig-height: 4
+#| label: fig-exselmod
+#| layout-ncol: 2
+#| fig-cap: Résultats pour une série temporelle simulées selon un modèle ARIMA(1,1,2).  
+#| fig-subcap:  
+#|  - Série temporelle observée sur les 200 premiers temps
+#|  - Autocorrélations empiriques
+#|  - Autocorrélations partielles empiriques
 ts.sim<-arima.sim(n=200,list(order = c(1,1,2),ar=c(0.8),ma=c(-0.3,0.6)),sd=sqrt(1.5))
-orderAux<-matrix(c(1,1,0,2,1,0,3,1,0,4,1,0,1,1,1,2,1,1,3,1,1,4,1,1,1,1,2,2,1,2,3,1,2),nrow=3)
+autoplot(ts.sim,series="Yt")
+autoplot(acf(diff(ts.sim),plot=F))  
+autoplot(pacf(diff(ts.sim),plot=F))
+```
+
+
+On considère la collection de modèles suivante $\mathcal M = \{ARIMA(p,1,q),\ p\in\{1,2,3,4\},\ q\in\{0,1,2\}\}$. On calcule les différents critères évoqués précédemment. Au vu des résultats ci-dessous, les trois critères sélectionnent un modèle ARIMA(1,1,2). 
+
+```{r,echo=F}
+orderAux<-matrix(c(1,1,0,2,1,0,3,1,0,4,1,0,1,1,1,2,1,1,3,1,1,4,1,1,1,1,2,2,1,2,3,1,2,4,1,2),nrow=3)
 AIC<-AICc<-BIC<-rep(0,ncol(orderAux))
 
 # doute sur le code, je ne comprends pas tout. 
@@ -1056,14 +1288,20 @@ df
 #rmarkdown::paged_table(df)
 ```
 
+:::
+
+
 ### SARIMA
 
-SARIMA = Seasonal ARIMA : extension des modèles ARIMA à des séries présentant une saisonnalité.
+Les modèles SARIMA, pour Seasonal ARIMA, sont une extension des modèles ARIMA à des séries temporelles présentant une saisonnalité.
 
-::: definition
-On dit qu'un processus $(X_t)_{t\in \Z}$ admet une représentation **SARIMA**$(p,d,q)(P,D,Q)[s]$ s'il vérifie l'équation : $$
+::: {.definition #def-SARIMA}
+On dit qu'un processus $(X_t)_{t\in \Z}$ admet une représentation [**SARIMA**$(p,d,q)(P,D,Q)[s]$]{style="color:blue;"} s'il vérifie l'équation : 
+$$
 \textcolor{red}{(I-B^s)^D\Phi_P(B^s)}\textcolor{blue}{\Phi_p(B)(I-B)^d}\ X_t=c + \textcolor{blue}{\Theta_q(B)}\textcolor{red}{\Theta_Q(B^s)}\varepsilon_t,\ \forall t\in\Z 
-$$ où \begin{eqnarray*} 
+$$ 
+où 
+\begin{eqnarray*} 
 & & c\in\mathbb{R}\\
 & & \Phi_p(B)=I-\varphi_1B-\varphi_2B^2-\cdots-\varphi_pB^p,\ (\varphi_1,\ldots, \varphi_p)\in\R^p,\ \varphi_p\neq0\\
 & & \Phi_P(B^s)=I-\phi_1B^s-\phi_2(B^s)^2-\cdots-\phi_P(B^s)^P,\ (\phi_1,\ldots, \phi_P)\in\R^P,\ \phi_P\neq 0\\
@@ -1073,7 +1311,7 @@ $$ où \begin{eqnarray*}
 \end{eqnarray*}
 :::
 
-#### Identification des ordres
+En pratique, voici comment on peut procéder pour "identifier" les différents ordres : 
 
 -   Choix de $d$, $D$ et $s$ :
 
@@ -1088,100 +1326,170 @@ $$ où \begin{eqnarray*}
     -   Décroissance très lente ou inexistante, il faut peut être encore différencier (mais avec parcimonie)
 
 ::: {#exm-sarima .example}
--   Données simulées selon un modèle SARIMA(0,1,1)(0,1,1)\[12\] $$
-    (I-B^{12})(I-B) X_t = (I+0.8 B)(I+0.4 B^{12})\varepsilon_t
-    $$
 
-```{r}
-#| echo: false
-#| fig.height: 4
-
-set.seed(1234)
-#Xt<-sarima.sim(d=1, ma=0.8, D=1, sma=0.4, S=12, n=360)
-Xt<-sarima.sim(d=1, ma=0.8, D=1, sma=0.4, S=12, n=600)
-g1<-autoplot(Xt)
-g2<-gglagplot(Xt,lags=12,do.lines=F)
-grid.arrange(g1,g2,ncol=2)
-```
-
-```{r}
-#| echo: false
-#| fig.height: 4
-g1<-autoplot(acf(Xt,lag.max=60,plot=F))
-g2<-autoplot(pacf(Xt,lag.max=60,plot=F))
-grid.arrange(g1,g2,ncol=2)
-```
-
-```{r}
-#| echo: false
-#| fig-height: 5
-g1<-autoplot(diff(Xt))
-g2<-autoplot(diff(diff(Xt),12))
-grid.arrange(g1,g2,nrow=2)
-```
-
+Dans cet exemple, on simule une série temporelle selon un modèle SARIMA(0,1,1)(0,1,1)\[12\] 
 $$
-Y_t = (I-B^{12})(I-B) X_t
+(I-B^{12})(I-B) X_t = (I+0.8 B)(I+0.4 B^{12})\varepsilon_t
 $$
+
+La série est représentée en @fig-exSARIMA1-Xt. 
 
 ```{r}
 #| echo: false
 #| fig-height: 4
-Yt<-diff(diff(Xt),12)
-g1<-autoplot(acf(Yt,lag.max=50,plot=F))
-g2<-autoplot(pacf(Yt,lag.max=50,plot=F))+ylab("pACF")
-grid.arrange(g1,g2,ncol=2)
+#| label: fig-exSARIMA1-Xt
+#| fig-cap: Série temporelle simulée selon un modèle SARIMA(0,1,1)(0,1,1)\[12\]
+set.seed(1234)
+#Xt<-sarima.sim(d=1, ma=0.8, D=1, sma=0.4, S=12, n=360)
+Xt<-sarima.sim(d=1, ma=0.8, D=1, sma=0.4, S=12, n=600)
+autoplot(Xt)
 ```
 
+La @fig-exSARIMAmonth permet de partir sur une saisonnalité par mois pour la série temporelle $(s=12)$. 
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| label: fig-exSARIMAmonth
+#| layout-ncol: 2
+#| fig-cap: Pour l'étude de la saisonnalité.  
+#| fig-subcap:  
+#|  - Tracé de la série par mois
+#|  - Tracé des points $(X_t,X_{t+h})$ pour $h\in\{1,\ldots,12\}$
+
+ggmonthplot(ts(Xt,frequency = 12))
+gglagplot(Xt,lags=12,do.lines=F)
+```
+
+
+On trace ensuite les autocorrélations et autocorrélations empiriques pour la série $(X_t)$ (voir @fig-exSARIMAACF)).
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| label: fig-exSARIMAACF
+#| layout-ncol: 2
+#| fig-cap: Autocorrélations et autocorrélations partielles de la série $(X_t)_{t\in\Z}$.  
+#| fig-subcap:  
+#|  - Autocorrélations empiriques
+#|  - Autocorrelations partielles empiriques
+autoplot(acf(Xt,lag.max=60,plot=F))
+autoplot(pacf(Xt,lag.max=60,plot=F))
+```
+
+La @fig-exSARIMAdiffXt (resp. @fig-exSARIMAdiff12Xt) représente la série temporelle différentiée $(I-B)X_t$ (resp. $(I-B^{12})X_t$)
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| label: fig-exSARIMAdiffXt
+#| fig-cap: Tracé de la série temporelle différenciée  $((I-B)X_t)_{t\in\Z}$.  
+autoplot(diff(Xt))
+```
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| label: fig-exSARIMAdiff12Xt
+#| fig-cap: Tracé de la série temporelle différenciée  $((I-B^{12})X_t)_{t\in\Z}$. 
+autoplot(diff(diff(Xt),12))
+```
+
+On trace ensuite en @fig-exSARIMAYt, les autocorrélations et autocorrélations partielles empiriques de la série
+$$
+Y_t = (I-B^{12})(I-B) X_t
+$$
+
+
+```{r}
+#| echo: false
+#| fig-height: 4
+#| label: fig-exSARIMAYt
+#| layout-ncol: 2
+#| fig-cap: Autocorrélations et autocorrélations partielles de la série $Y_t = (I-B^{12})(I-B) X_t$.  
+#| fig-subcap:  
+#|  - Autocorrélations empiriques
+#|  - Autocorrelations partielles empiriques
+Yt<-diff(diff(Xt),12)
+autoplot(acf(Yt,lag.max=50,plot=F))
+autoplot(pacf(Yt,lag.max=50,plot=F))+ylab("pACF")
+```
+
+On décide alors d'ajuster sur la série $(X_t)_{t\in\Z}$ un modèle SARIMA(0,1,1)(0,1,1)[12]. L'estimation des paramètres est donnée ici à l'aide de la fonction `arima()` et on teste ensuite la blancheur des résidus avec la fonction `Box.test()` :   
+
+\scriptsize
 ```{r}
 #| echo: true
 res<-arima(Xt,order=c(0,1,1),seasonal=list(order=c(0,1,1),period=12))
 res
 Box.test(res$residuals)
 ```
+\normalsize
 :::
+
+Pour finir ce chapitre, on étude un jeu de données réelles concernant la pollution en oxyde d'azote à Londre. 
 
 ::: {#exm-ozone .example}
 ## Pollution en oxyde d'azote à Londron
 
+La @fig-azoteLondre représente la mesure de pollution en oxyde d'azote à Londre par heure entre le 1/01/98 et le 21/01/98. On trace les autocorrélations empiriques (voir en @fig-azoteLondreACF) et les autocorrélations partielles empiriques (voir en @fig-azoteLondrepACF) de cette série temporelle $(X_t)$. 
+
 ```{r}
 #| echo: false
-#| fig-height: 4.5
+#| fig-height: 4
+#| label: fig-azoteLondre
+#| fig-cap: Mesure de l'oxyde d'azote dans l'air à Londre par heure entre le 1/01/98 et le 21/01/98. 
+set.seed(1234)
 polluant<-readRDS("../TP/dataEssaiTP/air_pollution_london_short.RDS")
 firstHour <- 24*(as.Date("1998-01-21 23:00:00")-as.Date("1998-01-01 00:00:00"))
 tt <- ts(polluant$nox,start=c(1998,firstHour),frequency=24*365)
 autoplot(tt)+ylab("oxyde d'azote")
 ```
 
--   ACF des données
-
 ```{r}
 #| echo: false
-#| fig-height: 4.5
+#| fig-height: 4
+#| label: fig-azoteLondreACF
+#| fig-cap: Autocorrélations de la série $X_t$
 tta<-ts(tt,start=1,frequency=24)
 autoplot(acf(tta,plot=F,lag.max=200))
 ```
 
--   ACF / pACF des données différenciées
+```{r}
+#| echo: false
+#| fig-height: 4
+#| label: fig-azoteLondrepACF
+#| fig-cap: Autocorrélations partielles de la série $X_t$
+tta<-ts(tt,start=1,frequency=24)
+autoplot(pacf(tta,plot=F,lag.max=200))
+```
+
+
+On analyse ensuite les autocorrélations et autocorrélations partielles empiriques de la série différenciée $Y_t = (I-B^{24}) X_t$ (voir @fig-azoteLondreACFdiff). 
+On peut alors considérer des modèles SARIMA avec $0\leq q\leq 12$, $0\leq p \leq 2$, $0\leq Q \leq 2$, $0\leq P \leq 1$. 
 
 ```{r}
 #| echo: false
-#| fig-height: 3.5
-g1<-autoplot(acf(diff(tta,24),plot=F,lag.max=100))
-g2<-autoplot(pacf(diff(tta,24),plot=F,lag.max = 100))
-grid.arrange(g1,g2,ncol=2)
+#| fig-height: 4
+#| label: fig-azoteLondreACFdiff
+#| layout-ncol: 2
+#| fig-cap: Autocorrélations et autocorrélations partielles de la série $Y_t = (I-B^{24})X_t$.  
+#| fig-subcap:  
+#|  - Autocorrélations empiriques
+#|  - Autocorrelations partielles empiriques
+autoplot(acf(diff(tta,24),plot=F,lag.max=100))
+autoplot(pacf(diff(tta,24),plot=F,lag.max = 100))
 ```
 
-$\Longrightarrow$ on peut considérer des modèles ARIMA avec
-
--   $0\leq q\leq 12$, $0\leq p \leq 2$
-
--   $0\leq Q \leq 2$, $0\leq P \leq 1$
-
--   Sélection de modèles ARIMA
+On met donc en place une sélection de modèles avec le critère AIC à l'aide de la fonction `auto.arima()`. On retient un modèle SARIMA$(0,1,1)(0,0,1)[24]$ et on contrôle la blancheur des résidus obtenus.
 
 ```{r}
 #| echo: true
+set.seed(1234)
 res<-auto.arima(tta,ic=c("aic"),
                 max.p=2,max.q=12,
                 max.P=1,max.Q=2,seasonal=TRUE)
@@ -1189,12 +1497,15 @@ res
 Box.test(res$residuals)
 ```
 
--   Résultat
+
+On représente en @fig-azoteLondrefitted la série temporelle ajustée par ce modèle par rapport à la série temporelle observée.  
 
 ```{r}
 #| echo: false
-#| eval: true
-#| fig-height: 5
+#| fig-height: 4
+#| label: fig-azoteLondrefitted
+#| fig-cap: Série temporelle estimée avec un modèle SARIMA(0,1,1)(0,0,1)(24) par rapport à la série temporelle observée.  
+
 g1<-autoplot(tta)+forecast::autolayer(res$fitted)
 g2<-autoplot(res$residuals)
 g1

@@ -37,7 +37,7 @@ library(forecast)
 
 <!----------------------------------->
 
-Dans ce chapitre, nous abordons quemques points d'inférence statistique dans le cadre de l'étude des séries temporelles. Nous allons nous intéresser à la construction d'estimateurs pour la moyenne, la fonction d'autocovariance, la fonction d'autocorrélation et la densité spectrale d'un processus stationnaire. Nous aborderons ensuite la problématique de la prévision des valeurs futures d'une série temporelle. Enfin, nous verrons quelques tests statistiques qui permettent de se prononcer sur la stationnarité d'un processus.
+Dans ce chapitre, nous abordons quelques points d'inférence statistique dans le cadre de l'étude des séries temporelles. Nous allons nous intéresser à la construction d'estimateurs pour la moyenne, la fonction d'autocovariance, la fonction d'autocorrélation et la densité spectrale d'un processus stationnaire. Nous aborderons ensuite la problématique de la prévision des valeurs futures d'une série temporelle. Enfin, nous verrons quelques tests statistiques qui permettent de se prononcer sur la stationnarité d'un processus.
 
 Dans tout ce chapitre, nous supposons que l'on observe le processus stationnaire $(X_t)_{t\in \Z}$ sur les instants $t=1,\ldots,n$.
 
@@ -63,10 +63,8 @@ Si $(X_t)_{t\in \Z}$ est un processus stationnaire de moyenne $\mu_X$ et de fonc
     $$
 :::
 
-<br>
-
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 On peut écrire \begin{eqnarray*}
 n \V(\bar X_n)
@@ -79,7 +77,7 @@ n \V(\bar X_n)
 \end{eqnarray*}
 
 Par le théorème de Césaro, on sait que l'on a la convergence de la moyenne de Césaro $$
-\lim_{n \to +\infty}\frac{1}{n}\sum_{h=1}^n |\gamma_X(h)|=\lim_{h\to\infty}|\gamma_X(h)|,
+\lim_{n \to +\infty}\frac{1}{n}\sum_{h=1}^n |\gamma_X(h)|=\lim_{h\to +\infty}|\gamma_X(h)|,
 $$ dès lors que cette dernière limite existe. Donc comme par hypothèse $\gamma_X(h)\underset{h\to +\infty}{\longrightarrow} 0$, on obtient que $\V (\bar X_n)\underset{n\to+\infty}{\longrightarrow} 0$.
 
 Maintenant, sous l'hypothèse\
@@ -101,20 +99,24 @@ Sous des hypothèses supplémentaires, on peut obtenir le comportement asymptoti
 ::: {#prp-cvestmoy .proposition}
 Soit $(X_t)_{t\in \Z}$ un processus stationnaire défini, pour tout $t\in \Z$, par $$
 X_t=\mu_X+\sum_{j\in \Z}\psi_j \varepsilon_{t-j}
-$$ où $(\varepsilon_t)_{t\in \Z}$ est un $\text{bbF}(0,\sigma^2)$ tel que $\E[\varepsilon_t^4]<+\infty$ et où la suite des coefficients $(\psi_j)_{j\in \Z}$ est sommable et de somme non nulle $$
+$$ où $(\varepsilon_t)_{t\in \Z}$ est un $\text{IID}(0,\sigma^2)$ tel que $\E[\varepsilon_t^4]<+\infty$ et où la suite des coefficients $(\psi_j)_{j\in \Z}$ est sommable et de somme non nulle $$
 \sum_{j\in \Z}|\psi_j | <+\infty \text{ et }\sum_{j\in \Z}\psi_j \neq 0.
 $$
 
-On a alors $$
+On a alors 
+$$
 \sqrt n \left( \bar X_n -\mu_X\right)\underset{n \to +\infty}{\overset{\mathcal L}{\longrightarrow}} \mathcal N\left(0,\sum_{h\in \Z}\gamma_X(h)\right).
 $$
 :::
 
 ### Estimateur de la fonction d'auto-covariance / -corrélation
 
-On rappelle que la fonction d'autocovariance est définie par $$
+On rappelle que la fonction d'autocovariance est définie par 
+$$
 \forall h\in\Z,\ \gamma_X(h) = \C(X_t,X_{t+h}) = \E\left[(X_t - \E[X_t])(X_{t+h} - \E[X_{t+h}])\right].
-$$ Donc à partir de $X_1,\ldots,X_n$, on peut estimer, pour les valeurs de $h$ telles que $|h|<n-1$, l'autocovariance $\gamma_X(h)$ par $$
+$$ 
+Donc à partir de $X_1,\ldots,X_n$, on peut estimer, pour les valeurs de $h$ telles que $|h|<n-1$, l'autocovariance $\gamma_X(h)$ par 
+$$
 \left\{\begin{array}{l l}
     \hat \gamma_{X,n}(h)=\displaystyle\frac{1}{n}\underset{t=1}{\stackrel{n-h}{\sum}}\left(X_{t+h} -\bar X_n \right)\left(X_{t} -\bar X_n \right) & \textrm{ si } h\geq0\\
     \\
@@ -132,7 +134,7 @@ En pratique, on utilise cet estimateur pour $h\leq \frac n 4$.
 
 ```{=html}
 <!--
-Si $(X_t)_{t\in\Z}\sim\text{bbF}(0,\sigma^2)$, on peut rendre cet estimateur sans biais en remplaçant le coefficient de normalisation $\frac 1 n$ par $\frac{1}{n-(|h|+1)}$.
+Si $(X_t)_{t\in\Z}\sim\text{IID}(0,\sigma^2)$, on peut rendre cet estimateur sans biais en remplaçant le coefficient de normalisation $\frac 1 n$ par $\frac{1}{n-(|h|+1)}$.
 -->
 ```
 A partir de l'estimateur de la fonction covariance, on en déduit l'estimateur suivant pour la fonction d'autocorrélation : Pour tout $|h|<n-1$, $$
@@ -148,9 +150,10 @@ En pratique on estime $\rho_X(h)$ pour $h \leq \frac n 4$.
 On a de plus le comportement asymptotique suivant :
 
 ::: {#prp-estrho .proposition}
-Soit $(X_t)_{t\in \Z}$ un processus stationnaire défini par $X_t=\mu_X+\underset{j\in \Z}{\sum}\psi_j \varepsilon_{t-j}$ où $(\varepsilon_t)_{t\in \Z}\sim\text{bbF}(0,\sigma^2)$ tel que $\E[\varepsilon_t^4]<+\infty$ et où la suite des coefficients $(\psi_j)_{j\in \Z}$ est sommable ($\underset{j\in \Z}{\sum}|\psi_j|<+\infty$ et de somme non nulle ($\underset{j\in \Z}{\sum}\psi_j\neq 0$).
+Soit $(X_t)_{t\in \Z}$ un processus stationnaire défini par $X_t=\mu_X+\underset{j\in \Z}{\sum}\psi_j \varepsilon_{t-j}$ où $(\varepsilon_t)_{t\in \Z}\sim\text{IID}(0,\sigma^2)$ tel que $\E[\varepsilon_t^4]<+\infty$ et où la suite des coefficients $(\psi_j)_{j\in \Z}$ est sommable ($\underset{j\in \Z}{\sum}|\psi_j|<+\infty$) et de somme non nulle ($\underset{j\in \Z}{\sum}\psi_j\neq 0$).
 
-On a alors, pour tout $k>0$ fixé, $$
+On a alors, pour tout $k>0$ fixé, 
+$$
 \sqrt n \left( 
 \begin{array}{c}
  \hat \rho_{X,n}(1) - \rho_X(1)   \\
@@ -158,9 +161,11 @@ On a alors, pour tout $k>0$ fixé, $$
  \hat \rho_{X,n}(k) - \rho_X(k)
  \end{array}
 \right)\underset{n\to +\infty}{\overset{\mathcal L}{\longrightarrow}}\mathcal{N}\left(0,\Sigma^{[k]}\right),
-$$ où $\Sigma^{[k]}=\left(\Sigma_{ij}^{[k]}\right)_{1\leq i,j\leq k}$ est la matrice de covariance asymptotique déterminée par $$
+$$ 
+où $\Sigma^{[k]}=\left(\Sigma_{ij}^{[k]}\right)_{1\leq i,j\leq k}$ est la matrice de covariance asymptotique déterminée par 
+$$
 \Sigma_{ij}^{[k]}
-=\sum_{h\in \Z}\left\{\left(\rho_X(h+i)+\rho_X(h-i)-2\rho_X(i)\rho_X(h)\right) \times  \left( \rho_X(h+j)+\rho_X(h-j)-2\rho_X(j)\rho_X(h)\right)\right\}
+=\sum_{h\in \Z}\left\{\left[\rho_X(h+i)+\rho_X(h-i)-2\rho_X(i)\rho_X(h)\right] \times  \left[ \rho_X(h+j)+\rho_X(h-j)-2\rho_X(j)\rho_X(h)\right]\right\}
 $$ (formule de Bartlett).
 :::
 
@@ -169,7 +174,8 @@ $$ (formule de Bartlett).
 On s'intéresse maintenant à l'estimation des matrices d'autocovariance et d'autocorrélation.
 
 ::: {#def-estmatcov .definition}
-La matrice $$
+La matrice 
+$$
 \hat \Gamma_{X,n} := \left(
 \begin{array}{c c c c}
 \hat \gamma_{X,n}(0)& \hat \gamma_{X,n}(1) & \ldots & \hat \gamma_{X,n}(n-1)\\
@@ -192,7 +198,7 @@ Les matrices $\hat \Gamma_{X,n}$ et $\hat R_{X,n}$ sont des matrices semi-défin
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 On commence par remarquer que l'on peut écrire $\hat \Gamma_{X,n}= \frac 1 n T T'$ avec $$
 T=\left(
@@ -219,12 +225,11 @@ Pour rappel, $f_X(.)$ est une fonction paire, $2\pi$-périodique, continue, posi
 Pour construire un estimateur de la densité spectrale, on commence par définir le périodogramme.
 
 ::: {#def-period .definition}
-Le **périodogramme** associé à $(X_1,\ldots,X_n)$ est défini par $$
+Le [**périodogramme**]{style="color:blue;"} associé à $(X_1,\ldots,X_n)$ est défini par 
+$$
 I_n(\omega_j) = \frac 1 n \left|\underset{t=1}{\stackrel{n}{\sum}} X_t e^{-i t \omega_j} \right|^2,\ \forall\omega_j\in \Omega_n:= \left\{\omega_j=\frac{2\pi j}{n};\ \omega_j\in]-\pi,\pi]\right\}
 $$
 :::
-
-<br>
 
 Nous allons maintenant relier le périodogramme et l'estimateur $\hat \gamma_{X,n}$.
 
@@ -236,23 +241,25 @@ I_n(0) = n |\bar X_n|^2 & \\
 I_n(\omega_j) = \underset{|h|<n}{\sum} \hat \gamma_{X,n}(h)e^{-ih\omega_j} & \textrm{ si }\omega_j\in\Omega_n,\ \omega_j\neq 0 
 \end{array}\right.
 $$
+<br>
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 <br> 
 
 - Pour $\omega_j=0$ : $I_n(0)=\frac 1 n \left|\underset{t=1}{\stackrel{n}{\sum}} X_t\right|^2 = n |\bar X_n|^2$
 
--   Soit $\omega_j\neq 0$. On a \begin{eqnarray*}
+- Soit $\omega_j\neq 0$. On a 
+\begin{eqnarray*}
     I_n(\omega_j) 
     &=& \frac 1 n \left|\underset{t=1}{\stackrel{n}{\sum}} X_t e^{-i t \omega_j} \right|^2 \\
     &=& \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} X_s X_t e^{-i t \omega_j} e^{i s \omega_j} \\
     &=& \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} (X_s-\bar X_n) (X_t-\bar X_n) e^{-i (t-s) \omega_j}\\
     &+& \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} \bar X_n X_t e^{-i (t-s) \omega_j}\\
     &+& \frac 1 n \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} X_s\bar X_n e^{-i (t-s) \omega_j}\\
-    &-& \frac 1 n (\bar X_n)^2 \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} e^{-i (t-s) \omega_j}\\
-    \end{eqnarray*}
+    &-& \frac 1 n (\bar X_n)^2 \underset{s=1}{\stackrel{n}{\sum}}\underset{t=1}{\stackrel{n}{\sum}} e^{-i (t-s) \omega_j}.\\
+\end{eqnarray*}
 
 Or $\underset{s=1}{\stackrel{n}{\sum}} e^{i s \omega_j} = \underset{t=1}{\stackrel{n}{\sum}} e^{- i t \omega_j} =0$ si $\omega_j\neq 0$, donc les trois dernières sommes sont nulles. Ainsi
 
@@ -290,49 +297,104 @@ $$
 Si $(X_t)_{t\in\Z}$ est un processus stationnaire de moyenne $\mu_X$ et de fonction d'autocovariance $\gamma_X(.)$ telle que $\underset{h\in\Z}{\sum}|\gamma_X(h)|<+\infty$, alors
 
 -   $\E\left[I_n(0)\right] - n\mu_X^2 \underset{n\to +\infty}{\longrightarrow} 2\pi f_X(0)$
--   $\E\left[I_n(\omega)\right] \underset{n\to +\infty}{\longrightarrow} 2\pi f_X(\omega)$ si $\omega\neq 0$
+-   $\E\left[\hat f_X(\omega)\right] \underset{n\to +\infty}{\longrightarrow} f_X(\omega)$ si $\omega\neq 0$
 :::
 
 ::: {.callout-warning collapse="false" icon="false"}
-### Proof
+### Preuve
+- $\E\left[I_n(0)\right] - n\mu_X^2 = \E\left[n\bar X_n^2\right] - n\mu_X^2= n\V(\bar X_n)\underset{n\to +\infty}{\longrightarrow}\underset{h\in\Z}{\sum} \gamma_X(h)=2\pi f(0)$
+d'après @thm-estmoy. 
 
-A FAIRE - Peut-être écrire la proposition précédente par rapport à $\hat f_X(.)$
+- Soit $\omega\in]0,\pi]$. Soit $g(n,\omega)$ le multiple de $\frac{2\pi}{n}$ le plus proche de $\omega$. Pour $n$ assez grand, on a que $g(n,\omega)\neq 0$. Alors
+\begin{eqnarray*}
+2\pi \E\left[\hat f_X(\omega)\right] &=& \E\left[I_n(\omega)\right]\\ &=& \E\left[I_n(g(n,\omega))\right]\\
+&=& \E\left[\underset{|h|<n}{\sum} \hat\gamma_{X,n}(h) e^{-ih  g(n,\omega)}\right]\\
+&=& \E\left[\underset{|h|<n}{\sum} \frac 1 n \underset{t=1}{\stackrel{n-|h|}{\sum}}(X_t - \bar X_n)(X_{t+h}-\bar X_n) e^{-ih  g(n,\omega)}\right]\\
+&=& \E\left[\underset{|h|<n}{\sum}\frac 1 n \underset{t=1}{\stackrel{n-|h|}{\sum}} (X_t - \mu)(X_{t+h}-\mu) e^{-i h g(n,\omega)}\right]\\
+&=& \underset{|h|<n}{\sum} \E\left[(X_t - \mu)(X_{t+h}-\mu)\right] e^{-ih  g(n,\omega)}\\
+&=& \underset{|h|<n}{\sum} \frac 1 n \underset{t=1}{\stackrel{n-|h|}{\sum}}\gamma_X(h) e^{-ih  g(n,\omega)}\\
+&=& \underset{|h|<n}{\sum} \frac{n-|h|}{n}\gamma_X(h) e^{-ih  g(n,\omega)}\\
+&=& \underset{|h|<n}{\sum} \left(1-\frac{|h|}{n}\right)\gamma_X(h) e^{-i h g(n,\omega)}.
+\end{eqnarray*}
+Comme $\underset{h\in\Z}{\sum}|\gamma_X(h)|<+\infty$, par convergence dominée
+$$
+\underset{h\in\Z}{\sum} \left(1-\frac{|h|}{n}\right)\gamma_X(h) e^{-ih\lambda} 1_{|h|<n} \underset{n\rightarrow +\infty}{\longrightarrow} \underset{h\in\Z}{\sum} \gamma_X(h) e^{-ih\lambda}= 2\pi f(\lambda),
+$$
+et $g(n,\omega)\underset{n\rightarrow +\infty}{\longrightarrow}\omega$. Donc 
+$$
+\E\left[I_n(\omega)\right]\underset{n\rightarrow +\infty}{\longrightarrow} 2\pi f(\omega).
+$$
+
 :::
 
 Une autre stratégie est d'utiliser un noyau sur les $I_n(\omega_j)$ pour construire un estimateur lissé. 
 
 ::: definition
-Soit $(m_n)_n$ une suite d'entiers positifs tels que $m_n\underset{n\to +\infty}{\longrightarrow} +\infty$ et $\frac{m_n}{n}\underset{n\to +\infty}{\longrightarrow} 0$. Soit un noyau $W_n(.)$ tel que
+Soit $(m_n)_n$ une suite d'entiers positifs tels que $m_n\underset{n\to +\infty}{\longrightarrow} +\infty$ et $\frac{m_n}{n}\underset{n\to +\infty}{\longrightarrow} 0$.<br> 
+Soit un noyau $W_n(.)$ tel que
 
 -   $W_n(-j)=W_n(j) \geq 0,\ \forall j$
 -   $\underset{|j|\leq m_n}{\sum}W_n(j)=1$
 -   $\underset{|j|\leq m_n}{\sum}W_n(j)^2\underset{n\to +\infty}{\longrightarrow}0$
 
-Soit $g(n,\omega)=\underset{\omega_k\in\Omega_n}{\mbox{argmin}} \left|\omega_k - \omega\right|$
-
-Alors $$
-\hat f_X(\omega) = \frac{1}{2\pi}\underset{|j|\leq m_n}{\sum}W_n(j)\ I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right)
+Alors on définit l'estimateur 
 $$
-:::
+\tilde f_X(\omega) = \frac{1}{2\pi}\underset{|j|\leq m_n}{\sum}W_n(j)\ I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right) \textrm{ où } g(n,\omega)=\underset{\omega_k\in\Omega_n}{\mbox{argmin}} \left|\omega_k - \omega\right|.
+$$
 
+:::
 <br>
 
-Par les hypothèses sur la suite $(M-n)_n$ et le noyau $W_n$, on a que cet estimateur lissé $\hat f_X(.)$ est asymptotiquement sans biais.
-
 ::: {#prp-p2 .proposition}
+Par les hypothèses sur la suite $(m_n)_n$ et le noyau $W_n$, l'estimateur lissé $\tilde f_X(.)$ est asymptotiquement sans biais.
 $$
-\forall \omega,\ \E\left[\hat f(\omega)\right] \underset{n\to +\infty}{\longrightarrow} f_X(\omega). 
+\forall \omega,\ \E\left[\tilde f_X(\omega)\right] \underset{n\to +\infty}{\longrightarrow} f_X(\omega). 
 $$
 :::
 
 ::: {.callout-warning collapse="false" icon="false"}
-### Proof
+### Preuve
 
-A FAIRE
+\begin{eqnarray*}
+\left| \E[\tilde f_X(\omega) - f_X(\omega)] \right|
+&=& \left| \underset{|j|\leq m_n}{\sum}\frac{W_n(j)}{2\pi} \E\left[I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right)\right]- f_X(\omega)\right|\\
+&=& \left| \underset{|j|\leq m_n}{\sum} W_n(j) \left\{\frac{ \E\left[I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right)\right]}{2\pi}-f_X\left(g(n,\omega)+\frac{2\pi}{j}\right) +f_X\left(g(n,\omega)+\frac{2\pi}{j}\right) - f_X(\omega)\right\}\right|\\
+\end{eqnarray*}
+car $\underset{|j|\leq m_n}{\sum} W_n(j) =1$. 
+
+L'hypothèse sur $(m_n)_n$ implique que 
+$$
+\underset{|j|\leq m_n}{\max} \left|g(n,\omega) + \frac{2\pi j}{n} -\omega\right|\underset{n\rightarrow +\infty}{\longrightarrow}0.
+$$
+Pour tout $\varepsilon>0$, avec la continuité de $f_X(.)$, pour $n$ assez grand
+$$
+\underset{|j|\leq m_n}{\max} \left|f_X\left(g(n,\omega) + \frac{2\pi j}{n} \right)-f_X(\omega)\right|\leq \frac \varepsilon 2.
+$$
+
+De plus, $\E[I_n(\omega)]\underset{n\rightarrow +\infty}{\longrightarrow} 2\pi f_X(\omega),\ \forall \omega \neq 0$ donc pour $n$ assez grand
+$$
+\underset{|j|\leq m_n}{\max} \left|\frac{ \E\left[I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right)\right]}{2\pi} -
+f_X\left(g(n,\omega)+\frac{2\pi}{j}\right)
+\right|\leq \frac \varepsilon 2.
+$$
+
+Ainsi, pour $n$ assez grand,
+\begin{eqnarray*}
+\left| \E[\tilde f_X(\omega) - f_X(\omega)] \right|
+&\leq&
+\underset{|j|\leq m_n}{\sum} W_n(j) \left\{
+\left| \frac{ \E\left[I_n \left(g(n,\omega)+\frac{2\pi j}{n}\right)\right]}{2\pi}-f_X\left(g(n,\omega)+\frac{2\pi}{j}\right)\right| 
++\left|f_X\left(g(n,\omega)+\frac{2\pi}{j}\right) - f_X(\omega)\right|\right\}\\
+&\leq & \underset{|j|\leq m_n}{\sum} W_n(j) \left(\frac \varepsilon 2+\frac \varepsilon 2\right)\leq \varepsilon.
+\end{eqnarray*}
+Donc 
+$$
+\E\left[\tilde f_X(\omega)\right] \underset{n\to +\infty}{\longrightarrow} f_X(\omega). 
+$$
 :::
 
 ::: {#exm-MAestf .example}
-Soit le processus $(X_t)\_{t\in\Z}$ défini par $X_t = \varepsilon_t + 0.7 \varepsilon_{t-1},\ (\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,1)$.
+Soit le processus $(X_t)_{t\in\Z}$ défini par $X_t = \varepsilon_t + 0.7 \varepsilon_{t-1},\ (\varepsilon_t)_{t\in\Z}\sim\text{WN}(0,1)$.
 
 D'après @exm-ACVFMA1, la fonction d'autocovariance de ce processus MA(1) vaut $$
 \gamma_X(h)=\left\{
@@ -394,11 +456,11 @@ Soit $(X_t)_{t\in \Z}$, un processus du second ordre. On appelle [**espace vecto
 <br>
 
 ::: {#prp-p3 .proposition}
-Le sous-espace vectoriel fermé engendré par une famille **finie** $(X_t)_{t\in I}$, où $I \subset \Z$, est l'ensemble de toutes les combinaisons linéaires, i.e. l'ensemble des v.a. $Y$ de la forme $Y=\sum_{i\in I}\alpha_i X_i$.
+Le sous-espace vectoriel fermé engendré par une famille **finie** $(X_i)_{i\in I}$, où $I \subset \Z$, est l'ensemble de toutes les combinaisons linéaires, i.e. l'ensemble des v.a. $Y$ de la forme $Y=\sum_{i\in I}\alpha_i X_i$.
 :::
 
 ::: {#def-proj .definition}
-Soit l'espace vectoriel fermé engendré par une famille finie $(X_t)_{t\in I}$ de v.a. de $L^2 (\Omega,\mathcal A,P)$, où $I\subset\Z$ fini : $\mathcal H=\overline{\text{Vect}}(X_t,t\in I)$.
+Soit l'espace vectoriel fermé engendré par une famille **finie** $(X_i)_{i\in I}$ de v.a. de $L^2 (\Omega,\mathcal A,P)$, où $I\subset\Z$ **fini** : $\mathcal H=\overline{\text{Vect}}(X_i,i\in I)$.
 
 La [**projection orthogonale**]{style="color:blue;"} d'une v.a. $X$ sur $\mathcal H$ est l'unique élément
 
@@ -422,9 +484,7 @@ Pour prédire $X_{n+1}$ (ou $X_{n+h}$) à partir de l'observation des $X_1,\ldot
 \hat X&=&\E[X|\sigma(X_1,\ldots,X_n)]\\
     &=&P_{\mathcal M(X_1,\ldots,X_n)}(X)\\
     &=&\mbox{arg inf}_{Y\in  \mathcal M(X_1,\ldots,X_n)}||X-Y||_{L^2}
-\end{eqnarray*} où $\mathcal M(X_1,\ldots,X_n)=\left\{g(X_1,\ldots,X_n); g \text{ fonction borélienne de } \R^n \text{ vers } \R\right\}$ et $\sigma(X_1,\ldots,X_n)$ est la tribu engendrée par les v.a. $X_1,\ldots,X_n$.
-
-Mais une telle espérance conditionnelle est souvent difficilement calculable. Aussi l'idée est de se restreindre à un espace plus simple, inclus dans $\mathcal M(X_1,\ldots,X_n)$ pour lequel l'espérance conditionnelle est accessible. On va donc ici se restreindre à projeter sur l'espace vectoriel fermé $\mathcal H^n_1: =\overline{\text{Vect}}(1,X_1,\ldots, X_n) \subset \mathcal M(X_1,\ldots,X_n)$. Ainsi on cherche une v.a. $\hat X$ comme une combinaison linéaire des v.a. $1,X_1,\ldots, X_n$ plutôt qu'une fonction mesurable quelconque de ces variables.
+\end{eqnarray*} où $\mathcal M(X_1,\ldots,X_n)=\left\{g(X_1,\ldots,X_n); g \text{ fonction borélienne de } \R^n \text{ vers } \R\right\}$ et $\sigma(X_1,\ldots,X_n)$ est la tribu engendrée par les v.a. $X_1,\ldots,X_n$. Mais une telle espérance conditionnelle est souvent difficilement calculable. Aussi l'idée est de se restreindre à un espace plus simple, inclus dans $\mathcal M(X_1,\ldots,X_n)$ pour lequel l'espérance conditionnelle est accessible. On va donc ici se restreindre à projeter sur l'espace vectoriel fermé $\mathcal H^n_1: =\overline{\text{Vect}}(1,X_1,\ldots, X_n) \subset \mathcal M(X_1,\ldots,X_n)$. Ainsi on cherche une v.a. $\hat X$ comme une combinaison linéaire des v.a. $1,X_1,\ldots, X_n$ plutôt qu'une fonction mesurable quelconque de ces variables.
 
 ::: {#def-reglin .definition}
 On appelle [**régression linéaire**]{style="color:blue;"} d'une v.a. $Y$ de $L^2(\Omega,\mathcal A,P)$ sur $\mathcal H^n_1=\overline{\text{Vect}}(1,X_1,\ldots, X_n),$ la projection orthogonale, au sens de la norme $L^2$, de $Y$ sur cet espace. On la note $\EL(Y|\mathcal H^n_1)$.
@@ -437,11 +497,11 @@ On appelle [**régression linéaire**]{style="color:blue;"} d'une v.a. $Y$ de $L
 
 <br>
 
-Soit $Y$ dans $L^2(\Omega,\mathcal A,P)$. La régression linéaire $\hat Y=\EL(Y|\mathcal H^n_1)$ est la v.a. $$\hat Y= \alpha_0 +\sum_{t=1}^n \alpha_t X_t$$ telle que $\E[\hat Y]=\E[Y]$ et $\E[\hat Y X_t]=\E[Y X_t]$ pour $t=1,\ldots,n$.
+Soit $Y\in L^2(\Omega,\mathcal A,P)$. La régression linéaire $\hat Y=\EL(Y|\mathcal H^n_1)$ est la v.a. $$\hat Y= \alpha_0 +\sum_{t=1}^n \alpha_t X_t$$ telle que $\E[\hat Y]=\E[Y]$ et $\E[\hat Y X_t]=\E[Y X_t]$ pour $t=1,\ldots,n$.
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 Pour la preuve, il suffit de traduire que $Y-\hat Y$ est orthogonal à $1,X_1,\ldots,X_n$ donc\
 \begin{eqnarray*}
@@ -477,23 +537,17 @@ Le processus des innovations $(\varepsilon_t)_{t\in \Z}$ est un bruit blanc.
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
-
+### Preuve
 <br>
-
--   Par définition de $\H^{t-1}_{-\infty}$ et de $\hat X_t$, on a $$
-    \langle X_t-\hat X_t,1\rangle_{L^2}=0
-    $$ donc $\E[X_t]=\E[\hat X_t]$, ce qui prouve que le processus des innovations est centré.
+-   Par définition de $\H^{t-1}_{-\infty}$ et de $\hat X_t$, on a 
+$\langle X_t-\hat X_t,1\rangle_{L^2}=0$ donc $\E[X_t]=\E[\hat X_t]$, ce qui prouve que le processus des innovations est centré.
 
 -   Soit $h\in \N^*$. On a aussi $$
     \C(\varepsilon_t,\varepsilon_{t+h}) = \E[\varepsilon_t\varepsilon_{t+h}]=\langle \varepsilon_t,\varepsilon_{t+h} \rangle.
     $$
 
 Or $\varepsilon_{t+h} \perp \mathcal{H}_{-\infty}^{t+h-1}$ et $\varepsilon_t = X_t - \EL(X_t|\mathcal{H}_{-\infty}^{t-1}) \subset \mathcal{H}_{-\infty}^{t+h-1}$. Donc
-
-$$
-\C(\varepsilon_t,\varepsilon_{t+h}) =\langle \varepsilon_t,\varepsilon_{t+h} \rangle = 0. 
-$$
+$\C(\varepsilon_t,\varepsilon_{t+h}) =\langle \varepsilon_t,\varepsilon_{t+h} \rangle = 0.$
 
 -   Montrons que la variance du processus des innovations est constante :
 
@@ -512,7 +566,7 @@ Tout élément de $\H^{t-1}_{-\infty}$ s'écrit sous la forme $\sum_{i=1}^{+\inf
 On se place ici dans le cas particulier où l'on observe qu'un passé fini $X_1,\ldots,X_n$ et on souhaite prédire des valeurs futures.
 
 ::: {#prp-ELO .proposition}
-Soit $(X_t)_{t\in \Z}$ un série temporelle stationnaire de moyenne $\mu_X$ et d'ACVF $\gamma_X(\cdot)$. La **prévision linéaire optimale** de $X_{n+h}$, pour $h\in \N^*$, ayant observé le passé $X_1,\ldots,X_n$, est $$
+Soit $(X_t)_{t\in \Z}$ une série temporelle stationnaire de moyenne $\mu_X$ et d'ACVF $\gamma_X(\cdot)$. La **prévision linéaire optimale** de $X_{n+h}$, pour $h\in \N^*$, ayant observé le passé $X_1,\ldots,X_n$, est $$
 \hat X_{n}(h)=\hat X_{n +h}=\alpha_0 +\sum_{t=1}^n \alpha_t X_t,
 $$
 
@@ -550,7 +604,7 @@ Notons que si le processus $(X_t)_{t\in \Z}$ est centré, alors le premier coeff
 $$
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 Par définition de la prévision linéaire optimale et grâce à la @prp-caractproj, on a que \begin{eqnarray*}
 \E[\hat X_{n}(h)]=\E[X_{n +h}]
@@ -649,15 +703,17 @@ $$
 Si on augmente la taille de la mémoire, il faut à chaque instant d'observation supplémentaire inverser la matrice de corrélation d'après l'expression précédente. Nous allons donc chercher une **méthode itérative** permettant de déterminer les nouveaux coefficients (avec une mémoire de taille $k+1$) en fonction des anciens (avec une mémoire de taille $k$). Pour cela, nous avons besoin de quelques lemmes techniques.
 
 ::: {#lem-lemma1 .lemma}
-Les coefficients de la régression de $X_t$ sur le passé de taille de mémoire $k$ sont les mêmes que ceux de la régression de $X_t$ sur les $k$ prochaines variables du processus : $$
+Les coefficients de la régression de $X_t$ sur le passé de taille de mémoire $k$ sont les mêmes que ceux de la régression de $X_t$ sur les $k$ prochaines variables du processus : 
+$$
 \EL(X_t|\mathcal H_{t-k}^{t-1})=\sum_{i=1}^k\alpha_i(k)X_{t-i}\implies \EL(X_t|\mathcal H_{t+1}^{t+k})=\sum_{i=1}^k\alpha_i(k)X_{t+i}
 $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
-On note $\beta_1(k), \ldots,\beta_k(k)$ les coefficients de la régression de $X_t$ sur $\mathcal H_{t+1}^{t+k}$ (engendré par les $k$ variables futures). Par le même raisonnement, ces coefficients vérifient $$
+On note $\beta_1(k), \ldots,\beta_k(k)$ les coefficients de la régression de $X_t$ sur $\mathcal H_{t+1}^{t+k}$ (engendré par les $k$ variables futures). Par le même raisonnement, ces coefficients vérifient 
+$$
 \left(
 \begin{array}{c}
   \beta_1(k)  \\
@@ -671,7 +727,8 @@ On note $\beta_1(k), \ldots,\beta_k(k)$ les coefficients de la régression de $X
   \rho_X(-k)   
 \end{array}
 \right),
-$$ puisque la matrice de corrélation ne dépend que des écarts temporels. Par parité de la fonction d'autocorrélation, le vecteur des corrélations à droite n'est autre que le vecteur $(\rho_X(1),\ldots, \rho_X(k))$. Ainsi les $\beta_i(k)$ et les $:alpha_i(k)$ satisfont la même équation donc $\alpha_i(k)=\beta_i(k)$, pour $i=1,\ldots,k$.
+$$ 
+puisque la matrice de corrélation ne dépend que des écarts temporels. Par parité de la fonction d'autocorrélation, le vecteur des corrélations à droite n'est autre que le vecteur $(\rho_X(1),\ldots, \rho_X(k))$. Ainsi les $\beta_i(k)$ et les $\alpha_i(k)$ satisfont la même équation donc $\alpha_i(k)=\beta_i(k)$, pour $i=1,\ldots,k$.
 :::
 
 ::: {#lem-lemma2 .lemma}
@@ -681,9 +738,10 @@ $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
-On commence par remarquer que $$
+On commence par remarquer que 
+$$
 \mathcal H_{t-(k-1)}^{t-1} = \overline{\text{Vect}}(X_{t-(k-1)},\ldots,X_{t-1})
 \subset \overline{\text{Vect}}(X_{t-(k-1)},\ldots,X_{t}) =\mathcal H_{t-(k-1)}^{t}
 $$
@@ -692,13 +750,19 @@ donc en terme de projection orthogonale, on a que
 
 $$
 P_{\H_{t-(k-1)}^{t-1}}(X_t)=P_{\H_{t-(k-1)}^{t-1}}\circ P_{\H_{t-k}^{t-1}} (X_t).
-$$ Ainsi, on a : \begin{eqnarray*}
+$$ 
+Ainsi, on a : 
+\begin{eqnarray*}
 \EL(X_t|\H_{t-(k-1)}^{t-1})&=&
 P_{\H_{t-(k-1)}^{t-1}}\left(\alpha_1(k)X_{t-1}+\cdots+\alpha_{k-1}(k)X_{t-(k-1)}+\alpha_k(k) x_{t-k}\right)\\
 &=&\alpha_1(k)X_{t-1}+\cdots+\alpha_{k-1}(k)X_{t-(k-1)}+\alpha_k(k)\EL(X_{t-k}|\H_{t-(k-1)}^{t-1}).
-\end{eqnarray*} Mais on a aussi que $$
+\end{eqnarray*} 
+Mais on a aussi que 
+$$
 \EL(X_t|\H_{t-(k-1)}^{t-1})=\alpha_1(k-1)X_{t-1}+\cdots+\alpha_{k-1}(k-1)X_{t-(k-1)}.
-$$ Or d'après le @lem-lemma1, \begin{eqnarray*}
+$$ 
+Or d'après le @lem-lemma1, 
+\begin{eqnarray*}
 \EL(X_{t-k}|\H_{t-(k-1)}^{t-1})
 &=& \EL(X_{t-k}|\H_{t-k+1}^{(t-k)+(k-1)})\\
 &=& \sum_{i=1}^{k-1} \alpha_i(k-1) X_{(t-k)+i}\\
@@ -731,7 +795,7 @@ $$
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 On revient à l'équation matricielle : \begin{eqnarray*}
 \left(
@@ -778,7 +842,7 @@ Avec le @lem-lemma2 et le @lem-lemma3, on en déduit l'algorithme de Durbin-Levi
 
 ::: {#prp-AlgoDurbin .proposition}
 ## Algorithme de Durbin-Levinson
-
+<br>
 Les coefficients de la régression linéaire $\EL(X_t|\mathcal H_{t-k}^{t-1})$ pour une mémoire de taille $k$ s'obtiennent en fonction de ceux de la régression linéaire $\EL(X_t|\mathcal H_{t-(k-1)}^{t-1})$ pour une mémoire de taille $k-1$ grâce aux formules récursives suivantes $$
 \left\{
 \begin{array}{l l l}
@@ -803,7 +867,7 @@ $$ correspond au **coefficient de corrélation** entre les variables $X_t-\EL(X_
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-### Proof
+### Preuve
 
 Par définition de la prévision linéaire optimale, on a $$
 \EL(X_t|\H_{t-k}^{t-1})=\sum_{i=1}^k \alpha_i(k) X_{t-i}.
@@ -905,7 +969,7 @@ autoplot(pacf(B1,plot=FALSE))
 
 Quand on va aborder les modèles ARMA, on va chercher à décomposer la partie stationnaire de la série (après avoir estimé ou éliminé tendance et saisonnalité) en une partie exploitable pour la prévision et une partie de bruit blanc. Aussi on a besoin de pouvoir tester la blancheur des résidus.
 
-On souhaite donc ici à tester l'hypothèse
+On souhaite donc ici tester l'hypothèse
 
 $$
     \mathcal H_0 : (X_t)_{t\in \Z} \text{ est un bruit blanc}
@@ -938,15 +1002,14 @@ Sous l'hypothèse $\mathcal H_0$ (bruit blanc), on a vu que les autocorrélation
 ::: {#prp-test .proposition}
 ## Procédures de test
 
-<br> On rejette $\mathcal H_0$ au risque $\alpha$ si $Q_k$ ou $Q_k^*$ est supérieure au $(1-\alpha)$-quantile de la loi du $\chi^2(k)$.
+<br> On rejette $\mathcal H_0$ au risque $\alpha$ si $Q_k$ (resp. $Q_k^*$) est supérieure à $q_{1-\alpha,k}$, le $(1-\alpha)$-quantile de la loi $\chi^2(k)$
 
-Zone de rejet : $$
-\mathcal R_\alpha^{(k)}=\left\{Q_k^* > q_{1-\alpha,k}\right\}
-\textrm{ où }
-\mathcal R_\alpha^{(k)}=\left\{Q_k > q_{1-\alpha,k}\right\}
-$$ avec $q_{1-\alpha,k}$ est le $(1-\alpha)$-quantile de la loi $\chi^2(k)$ car $$
-\mathbb{P}_{\mathcal H_0}(Q_k^* > q_{1-\alpha,k}) \underset{n\to +\infty}{\longrightarrow} \mathbb{P}(\chi^2(k)>q_{1-\alpha,k})=\alpha.
+Zone de rejet : 
 $$
+\mathcal R_\alpha^{(k)}=\left\{Q_k^* > q_{1-\alpha,k}\right\}
+\textrm{ (resp. }
+\mathcal R_\alpha^{(k)}=\left\{Q_k > q_{1-\alpha,k}\right\}).
+$$ 
 :::
 
 Remarquons que l'on a un test pour chaque valeur de $k$ !

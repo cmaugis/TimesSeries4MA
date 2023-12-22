@@ -15,12 +15,12 @@ library(latex2exp)
 
 ## Décomposition d'une série temporelle
 
-Comme on a pu le constater dans les exemples de l' [introduction](intro.qmd), quitte à faire une transformation des données au préalable, on peut décomposer une série temporelle en un modèle additif composé de trois termes de la façon suivante.
+Comme on a pu le constater dans les exemples de l' [introduction](intro.qmd), quitte à faire une transformation des données au préalable, on peut décomposer une série temporelle en un **modèle additif** composé de trois termes de la façon suivante.
 
 ::: {#def-modadd .definition}
 ### Décomposition en modèle additif
 
-La série temporelle $(Y_t)_{t\in T}$ se décompose en
+<br> La série temporelle $(Y_t)_{t\in T}$ se décompose en
 
 $$
 Y_t=m_t+s_t+X_t,\ \forall t\in T
@@ -33,15 +33,13 @@ où
 -   $X_t$ est un [**bruit aléatoire stationnaire**]{style="color:blue;"} appelé parfois résidu. Ce terme sera à définir dans la suite.
 :::
 
-::: {.callout-note collapse="false"}
-### Hypothèse de somme nulle de la saisonnalité sur la période $r$
-
-Cette hypothèse n'est pas contraignante. En effet, on peut s'y ramener facilement en modifiant la tendance : si $\sum_{h=1}^rs_{t+h}= a$ alors on définit $\tilde s_{t} = s_t - \frac a r$ et $\tilde m_t = m_t + \frac a r$.
+::: {.callout-note collapse="false" icon="false" title="Remarque"}
+L'hypothèse de somme nulle de la saisonnalité sur la période $r$ n'est pas une hypothèse contraignante. En effet, on peut s'y ramener facilement en modifiant la tendance : si $\sum_{h=1}^rs_{t+h}= a$ alors on définit $\tilde s_{t} = s_t - \frac a r$ et $\tilde m_t = m_t + \frac a r$.
 :::
 
 Si la saisonnalité et les variations semblent croître, on peut parfois atténuer ce phénomène en tentant une transformation des données. C'est en particulier ce que l'on peut constater sur les données *AirPassengers* quand on prend leur logarithme (voir @fig-AirP). Donc quitte à faire une transformation des données, on peut supposer le modèle additif (@eq-mod-add).
 
-::: {.callout-important collapse="false"}
+::: {.callout-important icon="false"}
 ### Objectif du cours
 
 -   Apprendre à modéliser et estimer les composantes tendance $(m_t)_{t\in T}$ et saisonnalité $(s_t)_{t\in T}$
@@ -51,14 +49,14 @@ Si la saisonnalité et les variations semblent croître, on peut parfois atténu
 
 La méthode générale pour étudier une série temporelle est la suivante :
 
-::: {.callout-important collapse="false"}
+::: {.callout-important icon="false"}
 ### Méthode générale d'étude
 
 -   **Etape 1** : on trace la série des données observées $(Y_1,\ldots, Y_n)$ et on essaie de déceler ses principales caractéristiques : une tendance, une composante saisonnière, une ou des ruptures dans le comportement de la série, une ou des observations aberrantes.
 
--   **Etape 2** : On estime / supprime la tendance $(m_t)_{t\in T}$ et la composante saisonnière $(s_t)_{t\in T}$ pour obtenir une série $(X_t)_{t\in T}$ de résidus stationnaires. On peut utiliser pour cela plusieurs techniques : transformer les données, estimer les tendances et composantes saisonnières puis les supprimer des données, différencier la série.
+-   **Etape 2** : On estime / supprime la tendance $(m_t)_{t\in T}$ et la composante saisonnière $(s_t)_{t\in T}$ pour obtenir une série $(X_t)_{t\in T}$ de résidus stationnaires. Pour cela, on peut utiliser plusieurs techniques: transformer les données, estimer les tendances et composantes saisonnières puis les supprimer des données, différencier la série.
 
--   **Etape 3** : Choisir un modèle de série stationnaire pour les résidus
+-   **Etape 3** : Choisir un modèle de processus stationnaire pour la série des résidus
 
 -   **Etape 4** : Prévoir les valeurs futures de la série en prévoyant d'abord celles des résidus puis remonter jusqu'à la série initiale en utilisant les transformations inverses.
 :::
@@ -79,7 +77,7 @@ Sans exhaustivité, la fonction tendance peut prendre l'une de ces formes
 
 -   Tendance linéaire : $m_t=\alpha_0+\alpha_1 t$
 -   Tendance quadratique : $m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2$
--   Tendance polynomiale : $m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2+\cdots+\alpha_n t^n$
+-   Tendance polynomiale : $m_t=\alpha_0+\alpha_1 t+\alpha_2 t^2+\cdots+\alpha_k t^k$
 -   Tendance exponentielle : $m_t=c_0+c_1\alpha^t$
 -   Tendance de Gompertz : $m_t=\exp(c_0+c_1\alpha^t)$
 -   Tendance Logistique : $m_t=1/(c_0+c_1\alpha^t)$
@@ -97,7 +95,7 @@ Pour déterminer $m_t$, on cherche donc à estimer les coefficients inconnus $\a
 \begin{eqnarray*}
 (\hat \alpha_1,\ldots,\hat \alpha_p)
 &=&\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n(Y_t-m_t)^2 \\
-&=&\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n \left(Y_t-\alpha_1 m_t^{(1)}-\ldots - \alpha_p m_t^{(p)}\right)^2 
+&=&\underset{(\alpha_1,...,\alpha_p)\in \mathbb R^p}{\mbox{argmin}} \sum_{t=1}^n \left(Y_t-\alpha_1 m_t^{(1)}-\ldots - \alpha_p m_t^{(p)}\right)^2. 
 \end{eqnarray*}
 ```
 On peut constater que l'on se ramène à un problème de régression linéaire de la forme
@@ -178,10 +176,14 @@ reg3<-lm(y~.,data=dataaux)
 
 -   pour une tendance linéaire :
 
+\tiny
+
 ```{r}
 #| echo: false
-print(reg1)
+reg1
 ```
+
+\normalsize
 
 -   pour une tendance quadratique :
 
@@ -245,11 +247,9 @@ L'[**ordre**]{style="color:blue;"} de la moyenne mobile est l'entier $m_1+m_2+1$
 
 La moyenne mobile est dite
 
--   [**normalisée**]{style="color:blue;"} si $$
-    \sum_{h=-m_1}^{m_2} \theta_h=1 
-    $$
--   [**centrée**]{style="color:blue;"} si $m_1=m_2$
--   [**symétrique**]{style="color:blue;"} si $m_1=m_2=m$ et $\theta_h=\theta_{-h}$, pour $h=1,\ldots,m$.
+-   [**normalisée**]{style="color:blue;"} si $\sum_{h=-m_1}^{m_2} \theta_h=1.$ <br> Il s'agit alors d'une moyenne au sens où on l'entend habituellement.
+-   [**centrée**]{style="color:blue;"} si $m_1=m_2$ <br> On prend autant d'instants du passé que du futur.
+-   [**symétrique**]{style="color:blue;"} si $m_1=m_2=m$ et $\theta_h=\theta_{-h}$, pour $h=1,\ldots,m$. <br> On donne des poids identiques aux instants passés et futurs de même ordre.
 :::
 
 <br>
@@ -276,10 +276,10 @@ Appliquer l'opérateur $M$ revient donc à faire une "moyenne locale pondérée"
 
 <br> Soit $q\in \mathbb N^*$. On considère la moyenne mobile $M_{2q+1}$ définie par\
 $$
-M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{j=-q}^qY_{t-j}
+M_{2q+1}Y_t=\frac{1}{2q+1} \sum_{j=-q}^qY_{t-j}.
 $$ $M_{2q+1}$ est une moyenne mobile avec $m_1=m_2=q$ et $\theta_h=\frac{1}{1+2q} \mathbb 1_{|h|\leq q}$. C'est donc une moyenne mobile finie, symétrique et normalisée d'ordre $2q+1$. Au vu de la définition des coefficients, cette moyenne mobile peut être vue comme un filtre "passe-bas".
 
-La moyenne mobile $M_{2q+1}$ laisse invariante les tendances linéaires : si $m_t=a+bt$ alors $$
+La moyenne mobile $M_{2q+1}$ laisse invariante les tendances linéaires :<br> si $m_t=a+bt$ alors $$
 M_{2q+1}m_t = \frac{1}{2q+1}\sum_{j=-q}^qm_{t-j}=
 \frac{1}{2q+1}\sum_{j=-q}^q (a + bt -b j) = a+bt = m_t.
 $$
@@ -288,9 +288,9 @@ Soit une série temporelle $(Y_t)_{t\in T}$ de la forme $Y_t=m_t+X_t$, où $m_t$
 M_{2q+1}Y_t=\frac{1}{2q+1}\sum_{j=-q}^qm_{t-j}+\frac{1}{2q+1}\sum_{j=-q}^qX_{t-j}\approx m_t.
 $$
 
-$\Longrightarrow$ la moyenne mobile nous donne une estimation de la tendance quand elle est pratiquement linéaire.
+[$\Longrightarrow$ la moyenne mobile nous donne une estimation de la tendance quand elle est pratiquement linéaire.]{style="color:red;"}
 
-Pour illustrer ce point, on observe les $50$ premières réalisations d'une série temporelle $(Y_t)_{t\in \mathbb N}$ définie par $Y_t = (5+0.1 t) + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,1)$.\
+Pour illustrer ce point, on observe les $50$ premières réalisations d'une série temporelle $(Y_t)_{t\in \mathbb N}$ définie par $Y_t = (5+0.1 t) + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d }}{\sim} \mathcal{N}(0,1)$.\
 La @fig-ExMM montre l'estimation de la tendance par la moyenne mobile $M_{2q+1}$ $$
   \hat m_t = \frac{1}{2q+1}\underset{j=-q}{\stackrel{q}{\sum}}\ Y_{t-j},\ \ \forall q+1\leq t \leq n-q
 $$ pour $2q+1=3$ et $2q+1=7$.
@@ -415,7 +415,12 @@ On applique le lissage exponentiel simple pour deux valeurs de $\alpha$ sur les 
 ```{r}
 #| echo: false
 #| fig-height: 7
+#| layout-ncol: 2
 #| fig-cap: Exemples de lissage exponentiel simple
+#| fig-subcap: 
+#| - La série temporelle $Y_t^{[1]}$
+#| - La série temporelle $Y_t^{[2]}$
+#| - La série temporelle $Y_t^{[3]}$
 #| label: fig-exlissexpo
 lissexp<-function(ytex){
   mt2<-mt5<-mt8<-ytex[1]
@@ -449,12 +454,11 @@ ytex1<-1 + rnorm(length(t),0,0.01)
 ytex2<-1 + 0.05*t + rnorm(length(t),0,0.25)
 ytex3<-c(rep(c(1,2),each=tau/2)) + rnorm(length(t),0,0.1)
 
-g1<-sesplot(ytex1)
-g2<-sesplot(ytex2)
-g3<-sesplot(ytex3)
+sesplot(ytex1)
+sesplot(ytex2)
+sesplot(ytex3)
 
-
-grid.arrange(g1,g2,g3,ncol=2)
+#grid.arrange(g1,g2,g3,ncol=2)
 
 # Rem: avec la fonction ets(ts(ytex),model="ANN",alpha= 1-alpha) l'initialisation n'est pas sur la première valeur d'où la différence de résultat. Je n'ai pas réussi à modifier. 
 ```
@@ -476,11 +480,19 @@ $$
 
 Dans la même famille de méthode, on peut citer la méthode de Holt-Winters qui est un lissage exponentiel double avec une formule de mise à jour différente (voir @fig-exlissexpoHW).
 
+::: {#exm-lissexpodouble .example}
+On reprend les trois séries de l'exemple @exm-lissexpo et on applique un lissage exponentiel double avec la méthode de Holt-Winters.
+
 ```{r}
 #| echo: false
 #| eval: true
 #| fig-height: 7
+#| layout-ncol: 2
 #| fig-cap: Reprise des exemples précédents avec ici la méthode de Holt-Winters.
+#| fig-subcap: 
+#| - La série temporelle $Y_t^{[1]}$
+#| - La série temporelle $Y_t^{[2]}$
+#| - La série temporelle $Y_t^{[3]}$
 #| label: fig-exlissexpoHW
 
 HWplot<-function(ytex){
@@ -501,11 +513,11 @@ g<-autoplot(ts(ytex),series="Yt")+
 return(g)
 }
 
-g1<-HWplot(ytex1)
-g2<-HWplot(ytex2)
-g3<-HWplot(ytex3)
-grid.arrange(g1,g2,g3,ncol=2)
+HWplot(ytex1)
+HWplot(ytex2)
+HWplot(ytex3)
 ```
+:::
 
 ### Elimination de la tendance par différenciation
 
@@ -519,8 +531,8 @@ $$ La [**différenciation à l'ordre** $k$]{style="color:blue;"} de la série $(
 $$
 :::
 
-::: callout-warning
-Attention à la manipulation de cet opérateur.
+::: {.callout-warning icon="true"}
+### Attention à la manipulation de cet opérateur.
 
 -   $\nabla^2 Y_t = (I-B)(I-B) Y_t = Y_t - 2 Y_{t-1} + Y_{t-2}$
 -   $\nabla^3 Y_t = (I-B)\nabla^2 Y_t = Y_t - 3 Y_{t-1} + 3 Y_{t-2} - Y_{t-3}$
@@ -531,27 +543,33 @@ Une tendance polynomiale $m_t$ de degré $k$ est réduite à une constante par u
 :::
 
 ::: {.callout-warning collapse="true" icon="false"}
-## Preuve 
-On raisonne par récurrence. 
+## Preuve
+
+On raisonne par récurrence.
+
 -   Pour $k=1$ : pour une tendance linéaire $m_t=a+bt$, on a $\nabla m_t=a+bt-a -b(t-1)=b.$
 -   On suppose la proposition vraie au rang $k$
 -   Au rang $k+1$: soit la tendance $m_t = \underset{j=0}{\stackrel{k+1}{\sum}} a_j t^j = a_{k+1} t^{k+1} + P_k(t)$. Alors \begin{eqnarray*}
-    \nabla^{k+1} m_t &=& \nabla^k (I-B)(a_{k+1} t^{k+1} + P_k(t))\\
-    &=& \nabla^k \left[a_{k+1} (t^{k+1} - (t-1)^{k+1}) + P_k(t) - P_k(t-1)\right]\\
-    &=& \nabla^k \left[a_{k+1} (t-t+1) Q_{k}(t) + P_k(t) - P_k(t-1)\right]\\
-    &=& \textrm{constante}
-    \end{eqnarray*}
+      \nabla^{k+1} m_t &=& \nabla^k (I-B)(a_{k+1} t^{k+1} + P_k(t))\\
+      &=& \nabla^k \left[a_{k+1} (t^{k+1} - (t-1)^{k+1}) + P_k(t) - P_k(t-1)\right]\\
+      &=& \nabla^k \left[a_{k+1} (t-t+1) Q_{k}(t) + P_k(t) - P_k(t-1)\right]\\
+      &=& \textrm{constante}
+      \end{eqnarray*}
 :::
 
 La différenciation permet d'éliminer les tendances polynomiales et donc pratiquement toutes les tendances car elles peuvent très souvent être approchées par des polynômes. Attention, il faut bien noter que cette technique permet d'éliminer la tendance mais ne l'estime pas.
 
 ::: {#exm-diff1 .example}
-En @fig-exdiff1, on a simulé une série temporelle définie par $Y_t = 1 + \frac{1}{20} t + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,0.25)$. On voit que la différenciation de la série $\nabla Y_t$ élimine la tendance linéaire.
+En @fig-exdiff1, on a simulé une série temporelle définie par $Y_t = 1 + \frac{1}{20} t + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d }}{\sim} \mathcal{N}(0,0.25)$. On voit que la différenciation de la série $\nabla Y_t$ élimine la tendance linéaire.
 
 ```{r}
 #| echo: false
 #| fig-height: 6
-#| fig-cap: Illustration de l'élimination d'une tendance liéanire par la différenciation à l'ordre 1.
+#| layout-ncol: 2
+#| fig-cap: Illustration de l'élimination d'une tendance linéaire par la différenciation à l'ordre 1.
+#| fig-subcap: 
+#| - Représentation de la série $(Y_t)_{t\in T}$ et la tendance linéaire $t\mapsto 1 + \frac{1}{20} t$ en bleu
+#| - Représentation de la différenciation de la série $\nabla Y_t$
 #| label: fig-exdiff1
 
 set.seed(1234)
@@ -565,24 +583,29 @@ eps<-rnorm(n,0,0.5)
 Y<-T+eps
 
 palette<-c("blue","black")
-g1<-autoplot(ts(Y),series="Yt")+
+autoplot(ts(Y),series="Yt")+
   forecast::autolayer(ts(T),series="Tendance")+
   scale_colour_manual(values=palette)+ylab("")+xlab("")+theme(legend.position="none")
-g2<-autoplot(ts(diff(Y)))+ylab("")+xlab("")
-grid.arrange(g1,g2,nrow=2)
+autoplot(ts(diff(Y)))+ylab("")+xlab("")
 ```
 :::
 
 <br>
 
 ::: {#exm-diff2 .example}
-Dans cet exemple, on a simulé une série temporelle définie par $Y_t = 1 - 5\ t + 0.25\ t^2 + X_t \textrm{ avec } X_t \textrm{ i.i.d } \mathcal{N}(0,100)$.
+Dans cet exemple, on a simulé une série temporelle définie par $Y_t = 1 - 5\ t + 0.25\ t^2 + X_t \textrm{ avec } X_t \underset{\textrm{ i.i.d }}{\sim} \mathcal{N}(0,100)$.
 
 ```{r}
 #| echo: false
 #| message: false
-#| warning: false
+#| layout-ncol: 2
 #| fig-height: 3
+#| fig-cap: Illustration de l'élimination d'une tendance quadratique par une différenciation d'ordre 2 mais pas d'ordre 1
+#| fig-subcap: 
+#| - Représentation de la série $(Y_t)_t$ et de la tendance quadratique en rouge
+#| - Différenciation à l'ordre 1
+#| - Différenciation à l'ordre 2
+#| label: fig-exdiff2
 
 n<-50
 t<-c(1:n)
@@ -598,19 +621,15 @@ yts1<-diff(yts)
 yts2<-diff(yts1)
 
 g1<-autoplot(yts,series="Yt")+
-  scale_colour_manual(values=palette)+ylab("")+xlab("")+theme(legend.position="none")
-g2<-autoplot(yts1)+geom_smooth(formula = y~x,method="lm",se=FALSE)+ylab("")+xlab("")
-g3<-autoplot(yts2)+geom_smooth(formula = y~x, method="lm",se=FALSE)+ylab("")+xlab("")
+  scale_colour_manual(values=palette)+ylab("")+xlab("")+theme(legend.position="none")+
+  geom_line(data=data.frame(x=t,y=T),aes(x=x,y=y),col="red")
 g1
-```
 
-```{r}
-#| echo: false
-#| fig-height: 3
-#| fig-cap: Illustration de l'élimination d'une tendance quadratique par une différenciation d'ordre 2 mais pas d'ordre 1
-#| label: fig-exdiff2
+g2<-autoplot(yts1)+geom_smooth(formula = y~x,method="lm",se=FALSE)+ylab("")+xlab("")
+g2
 
-grid.arrange(g2,g3,ncol=2)
+g3<-autoplot(yts2)+geom_smooth(formula = y~x, method="lm",se=FALSE)+ylab("")+xlab("")
+g3
 ```
 :::
 
@@ -626,8 +645,7 @@ avec $\mathbb E[X_t]=0$, $s_{t+r}=s_t$ et $\underset{k=1}{\stackrel{r}{\sum}} s_
 
 ### Estimation par moindres carrés
 
-On peut reprendre la méthode des moindres carrés en supposant cette fois-ci que la tendance mais aussi la composante saisonnière sont des combinaisons linéaires de fonctions connues. On suppose donc qu'il existe des fonctions $m_t^{(j)}$ pour $j=1,\ldots,p$, et $s_t^{(\ell)}$ pour $\ell=1,\ldots,q$ telles que : 
-$$
+On peut reprendre la méthode des moindres carrés en supposant cette fois-ci que la tendance mais aussi la composante saisonnière sont des combinaisons linéaires de fonctions connues. On suppose donc qu'il existe des fonctions $m_t^{(j)}$ pour $j=1,\ldots,p$, et $s_t^{(\ell)}$ pour $\ell=1,\ldots,q$ telles que : $$
 Y_t=\sum_{j=1}^p\alpha_j m_t^{(j)}+\sum_{\ell=1}^q\beta_\ell s_t^{(\ell)}+X_t,\ \forall t\in T.
 $$
 
@@ -646,7 +664,7 @@ Pour les fonctions de saisonnalité $s_t^{(\ell)}$, on peut par exemple considé
 
 On peut noter que les saisonnalités $s_t^{(\ell)}$ peuvent avoir des périodes différentes.
 
-On cherche donc à estimer le vecteur des coefficients inconnus $\theta = (\alpha_1,\ldots,\alpha_p,\beta_1,\ldots,\beta_q)$ par la méthode des moindres carrés. On obtient alors les estimateurs $\hat \theta = (\hat\alpha_1,\ldots,\hat\alpha_p,\hat\beta_1,\ldots,\hat\beta_q)$ et on récupère les données ajustées
+On cherche donc à estimer le vecteur des coefficients inconnus $\theta = (\alpha_1,\ldots,\alpha_p,\beta_1,\ldots,\beta_q)'$ par la méthode des moindres carrés. On obtient alors les estimateurs $\hat \theta = (\hat\alpha_1,\ldots,\hat\alpha_p,\hat\beta_1,\ldots,\hat\beta_q)'$ et on récupère les données ajustées
 
 $$
 \hat Y_t=\hat m_t+\hat s_t=\sum_{j=1}^p\hat \alpha_j m_t^{(j)}+\sum_{\ell=1}^q \hat\beta_\ell s_t^{(\ell)},\ \forall t \in T.
@@ -657,7 +675,7 @@ La **série corrigée des variations saisonnières** (CVS) est alors définie pa
 $$\hat Y^{\text{CVS}}_t=Y_t-\hat s_t.$$
 
 ::: {#exm-MSEms .example}
-Dans cet exemple, on s'intéresse à la série temporelle $Y_t = 0.5 t + 3 \mbox{cos}\left(\frac{\pi\ t}{6}\right)+X_t,\ X_t \textrm{ i.i.d }\mathcal{N}(0,1)$. On considère les fonctions de tendance polynomiales $m_t^{(j)}=t^j$ pour $j\in\{1,2,3\}$ et les fonctions de saisonnalité définies par $s_t^{(\ell)}=\mbox{cos}(\theta_{\ell} t)$ avec $(\theta_1,\theta_2,\theta_3)=(\frac{\pi}{6},\frac{\pi}{4},\frac{\pi}{3})$. A l'aide de la fonction `lm()`, on ajuste un modèle de régression linéaire
+Dans cet exemple, on s'intéresse à la série temporelle $Y_t = 0.5 t + 3 \mbox{cos}\left(\frac{\pi\ t}{6}\right)+X_t,\ X_t \underset{\textrm{ i.i.d }}{\sim}\mathcal{N}(0,1)$. On considère les fonctions de tendance polynomiales $m_t^{(j)}=t^j$ pour $j\in\{1,2,3\}$ et les fonctions de saisonnalité définies par $s_t^{(\ell)}=\mbox{cos}(\theta_{\ell} t)$ avec $(\theta_1,\theta_2,\theta_3)=(\frac{\pi}{6},\frac{\pi}{4},\frac{\pi}{3})$. A l'aide de la fonction `lm()`, on ajuste un modèle de régression linéaire
 
 ```{r}
 #| echo: false
@@ -728,7 +746,7 @@ Pour $k=1,\ldots,r$, on calcule la moyenne $\omega_k$ des valeurs de la série c
 \omega_k=\frac{1}{\text{Card}\{j:q<k+jr\le n-q\}}\sum_{\{j:q<k+jr\le n-q\}}\hat Y^{\text{CT}}_{k+jr}
 $$
 
-Mais comme les termes $\omega_k$ ne sont pas nécessairement de somme nulle, on définit comme estimateur de la composante saisonnière  \begin{eqnarray*}
+Mais comme les termes $\omega_k$ ne sont pas nécessairement de somme nulle, on définit comme estimateur de la composante saisonnière \begin{eqnarray*}
 \hat s_k=\left\{
 \begin{array}{ll}
 \omega_k-\frac{1}{r}\underset{i=1}{\stackrel{r}{\sum}}\ \omega_i &\textrm{pour }k=1,\ldots,r\\
@@ -741,9 +759,7 @@ Mais comme les termes $\omega_k$ ne sont pas nécessairement de somme nulle, on 
 
 Si la périodicité est paire $r=2q$, on peut utiliser une approche similaire en considérant la moyenne mobile symétrique normalisée : $$
 M_{2q}Y_t=\frac{1}{2q}\left(Y_{t-q+\frac{1}{2}}+\ldots+Y_{t-\frac{1}{2}}+Y_{t+\frac{1}{2}}+\ldots+Y_{t+q-\frac{1}{2}}\right),
-\textrm{ où }
-Y_{t-\frac{1}{2}}=\frac{1}{2}\left(Y_{t-1}+Y_t\right)
-$$ pour estimer la tendance et éliminer la saisonnalité.
+$$ où $Y_{t-\frac{1}{2}}=\frac{1}{2}\left(Y_{t-1}+Y_t\right)$ pour estimer la tendance et éliminer la saisonnalité.
 
 Pour se convaincre que la saisonnalité est éliminée, on peut réécrire $M_{2q}Y_t$ : \begin{eqnarray*}
 M_{2q}Y_t &=& \frac{1}{2q} \underset{h=-(q-1)}{\stackrel{q}{\sum}} Y_{(t+h)-\frac 1 2} \\
@@ -787,7 +803,9 @@ grid.arrange(g1,g2,ncol=2)
 
 ```{r}
 #| echo: false
-A<-decompose(ts(data=elec,start=c(1997,1),end=c(1999,4),frequency=4),type="additive")
+A<-decompose(ts(data=elec,
+                start=c(1997,1),end=c(1999,4),
+                frequency=4),type="additive")
 ```
 
 On commence donc par appliquer la moyenne mobile $M_4$ sur la série $Y_t$ pour estimer la tendance : $\hat m_t = M_4 Y_t$
@@ -837,7 +855,7 @@ On reprend la série *AirPassengers* (voir @exm-AirP). La @fig-AirPdecompo donne
 #| echo: true
 #| label: fig-AirPdecompo
 #| fig-height: 5
-#| fig-cap: Sortie de la fonction decompose sur la série AirPassengers logtransformée. 
+#| fig-cap: Sortie de la fonction decompose() sur la série AirPassengers logtransformée. 
 autoplot(decompose(log(AirPassengers),type="additive"))
 ```
 :::
@@ -853,6 +871,8 @@ Cette série ne contient plus de saisonnalité car $\nabla_r Y_t=m_t-m_{t-r}+X_t
 On peut alors utiliser une des techniques vues précédemment pour estimer / éliminer la tendance en l'absence de saisonnalité sur la série désaisonnalisée $(\nabla_r Y_t)_{t\geq r}$.
 
 ::: callout-warning
+### $\nabla_r \neq \nabla^r$
+
 Attention à ne pas confondre l'opérateur $\nabla_r$ et l'opérateur $\nabla^k$ (voir @def-opdiff).
 :::
 
