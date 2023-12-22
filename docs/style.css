@@ -41,6 +41,14 @@ pre code {
   border-left: 2px solid red;
 }
 
+.corollary {
+  padding: 0.5em;
+  background: #FFF3F1 ;
+  color: black;
+  padding-bottom: 0;
+  border-left: 2px solid red;
+}
+
 .example {
   padding: 0.5em;
   color: black;
